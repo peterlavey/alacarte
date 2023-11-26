@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import QrReader from 'react-qr-scanner'
 
 const config = {
+    facingMode: 'rear',
     delay: 100,
     style: {
         height: 240,
@@ -19,6 +20,7 @@ const QrScanner = () => {
             <QrReader
                 delay={config.delay}
                 style={config.style}
+                facingMode={config.facingMode}
                 onError={handleError}
                 onScan={handleScan}
             />
