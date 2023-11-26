@@ -1,18 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {Html5Qrcode, Html5QrcodeScanner, Html5QrcodeScanType} from "html5-qrcode";
-
-const config = {
-    facingMode: 'rear',
-    delay: 100,
-    style: {
-        height: 240,
-        width: 320,
-    }
-};
+import {Html5QrcodeScanner, Html5QrcodeScanType} from "html5-qrcode";
 
 const QrScanner = () => {
     const [ result, setResult ] = useState();
-    const onScanSuccess = (decodedText, decodedResult) => console.log(`Code matched = ${decodedText}`, decodedResult);
+    const onScanSuccess = (decodedText, decodedResult) => setResult(decodedResult);
 
     useEffect(() => {
         let config = {
@@ -33,6 +24,7 @@ const QrScanner = () => {
     return (
         <>
             <div id="reader"></div>
+            <span>{JSON.stringify(result)}</span>
         </>
     )
 };
