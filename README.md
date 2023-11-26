@@ -7,7 +7,7 @@ saved, else will display qr scanner to save a new url.
 ## Pending work
 - [X] Implement a QR sanner
 - [ ] Optimize QR Scanner (autoset cam)
-- [ ] Make a system to save in a json file (no database)
+- [X] Make a system to save in a json file (no database)
 - [ ] Save URLs
 - [ ] Get URLs
 - [ ] Get location

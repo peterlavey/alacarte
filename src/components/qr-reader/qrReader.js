@@ -1,26 +1,28 @@
 import React, {useEffect, useState} from "react";
 import {Html5QrcodeScanner, Html5QrcodeScanType} from "html5-qrcode";
+import {read, save} from "../../services/file";
 
 const config = {
     fps: 10,
     qrbox: {width: 100, height: 100},
     rememberLastUsedCamera: true,
-    // Only support camera scan type.
     supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]
 };
 
 const QrScanner = () => {
     const [ result, setResult ] = useState();
-    const onScanSuccess = (decodedText, decodedResult) => setResult(decodedResult);
+    const init = () => {
+        let html5QrcodeScanner = new Html5QrcodeScanner("reader", config, false);
+        html5QrcodeScanner.render(decodedText => {
+            setResult(decodedText)
+        });
+        // html5QrCode.clear();
+    }
 
     useEffect(() => {
-        let html5QrcodeScanner = new Html5QrcodeScanner(
-            "reader",
-            config,
-            false);
-        html5QrcodeScanner.render(onScanSuccess);
-        // html5QrCode.clear();
-
+        // init();
+        // save('test').then(r => console.log(r));
+        read().then(r => setResult(r));
     }, []);
 
     return (
