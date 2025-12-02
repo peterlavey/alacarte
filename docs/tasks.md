@@ -75,13 +75,9 @@
     - *(Plan: 3.1)*
 
 ## Phase 4: Polish & Verification
-- [ ] **Permission UI**
+- [x] **Permission UI**
     - Add friendly UI prompts for allowing camera/location access.
     - *(Plan: 4.1)*
-- [ ] **Mobile Layout**
+- [x] **Mobile Layout**
     - Apply CSS media queries for mobile-first view.
-    - *(Plan: 4.2)*node_modules/
-      dist/
-      .env
-      .DS_Store
-      coverage/
+    - *(Plan: 4.2)*

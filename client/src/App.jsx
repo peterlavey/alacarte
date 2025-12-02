@@ -67,8 +67,34 @@ export default function App() {
     setScannerActive(false)
   }
 
+  function requestLocation() {
+    if (!('geolocation' in navigator)) {
+      setError('Geolocation not supported by this browser')
+      setStatus('error')
+      return
+    }
+    setStatus('checking')
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const { latitude, longitude } = pos.coords || {}
+        setCoords({ lat: latitude, lon: longitude })
+      },
+      (err) => {
+        setError(err?.message || 'Failed to get location')
+        setStatus('error')
+      },
+      { enableHighAccuracy: true, timeout: 10000 }
+    )
+  }
+
+  const cameraHelp = (
+    <div className="hint">
+      Allow camera permission when prompted. If blocked, enable camera access in your browser settings and reload.
+    </div>
+  )
+
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', height: '100vh' }}>
+    <div className="app-grid">
       <GeoHandler
         onCoords={(c) => setCoords(c)}
         onError={(err) => {
@@ -77,28 +103,36 @@ export default function App() {
         }}
       />
 
-      <aside style={{ borderRight: '1px solid #eee', padding: 12, overflow: 'auto' }}>
+      <aside className="sidebar">
         <h3 style={{ marginTop: 0 }}>History</h3>
         <History records={history} onSelect={(r) => setContent(r.content)} />
       </aside>
 
-      <main style={{ padding: 16, display: 'grid', gridTemplateRows: 'auto auto 1fr', gap: 12 }}>
-        <header style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+      <main className="main">
+        <header className="topbar">
           <strong>Status:</strong> <span>{status}</span>
           {coords && (
-            <span style={{ marginLeft: 12, color: '#666' }}>
+            <span className="coords">
               @ {coords.lat.toFixed(5)}, {coords.lon.toFixed(5)}
             </span>
           )}
-          <span style={{ flex: 1 }} />
-          <button type="button" onClick={() => setScannerActive((v) => !v)}>
+          <span className="spacer" />
+          <button type="button" onClick={requestLocation} className="btn">
+            Request Location
+          </button>
+          <button type="button" onClick={() => setScannerActive((v) => !v)} className="btn">
             {scannerActive ? 'Hide Scanner' : 'Scan QR'}
           </button>
         </header>
 
-        {error && (
-          <div style={{ color: 'red' }}>{error}</div>
-        )}
+        <div className="permissions">
+          <div className="hint">
+            Tip: To load nearby content, allow location permission when prompted. You can also tap "Request Location" anytime.
+          </div>
+          {cameraHelp}
+        </div>
+
+        {error && <div className="error">{error}</div>}
 
         {scannerActive && (
           <Scanner
@@ -109,7 +143,7 @@ export default function App() {
           />
         )}
 
-        <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+        <section className="two-col">
           <div>
             <h3>Current Content</h3>
             <Canvas content={content} />
@@ -117,7 +151,7 @@ export default function App() {
           <div>
             <h3>Manual JSON Input</h3>
             <JsonInput onSubmit={handleRegisterContent} disabled={!canRegister} />
-            {!canRegister && <div style={{ color: '#666', marginTop: 6 }}>Waiting for location to register content…</div>}
+            {!canRegister && <div className="hint" style={{ marginTop: 6 }}>Waiting for location to register content…</div>}
           </div>
         </section>
       </main>
