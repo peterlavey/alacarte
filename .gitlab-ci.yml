@@ -41,7 +41,7 @@ client:build:
     - cd client
     - npm ci --cache .npm --prefer-offline
   script:
-    - npm run build -- --base "/${CI_PROJECT_NAME}/"
+    - npm run build
   artifacts:
     paths:
       - client/dist
@@ -58,6 +58,8 @@ pages:
   script:
     - rm -rf public
     - mv client/dist public
+    - echo "" > public/.nojekyll
+    - if (Test-Path public/index.html) { Copy-Item public/index.html public/404.html -Force }
   artifacts:
     paths:
       - public
@@ -77,7 +79,7 @@ server:image:build:
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
   before_script:
-    - echo "Logging in to GitLab Container Registry: $CI_REGISTRY"
+    - echo "Logging in to GitLab Container Registry $CI_REGISTRY"
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
   script:
     - docker build -t "$CI_REGISTRY_IMAGE/server:latest" server
