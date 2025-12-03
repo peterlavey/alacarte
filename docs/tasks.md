@@ -81,3 +81,33 @@
 - [x] **Mobile Layout**
     - Apply CSS media queries for mobile-first view.
     - *(Plan: 4.2)*
+## Phase 5: Persistence
+- [x] **Database**
+    - Implement persistent storage (e.g., MongoDB).
+    - Use a free tier for development.
+    - *(Plan: 5.1)*
+    - Use repository pattern to isolate storage logic.
+    - *(Plan: 5.2)*
+    - Add tests for storage module.
+    - *(Plan: 5.3)*
+
+## Phase 6: CI/CD & Deployment
+- [x] **CI Pipeline Definition**
+    - Add GitLab CI pipeline with stages `test`, `build`, `deploy`.
+    - Runs server tests on pushes and MRs.
+    - *(Plan: 6.1, Req: 6)*
+- [x] **Frontend Deploy via GitLab Pages**
+    - Build Vite client with correct base path for Pages.
+    - Publish `public/` artifact using `pages` job on default branch.
+    - *(Plan: 6.2, Req: 6)*
+- [x] **Backend Docker Image**
+    - Add `server/Dockerfile` and build/push `server:latest` image to GitLab Container Registry on default branch.
+    - *(Plan: 6.3, Req: 6)*
+- [ ] **Secrets Management Setup**
+    - Define required CI/CD variables in GitLab project settings (e.g., `MONGO_URL`, `MONGO_DB`, optional `PORT`).
+    - Remove reliance on committed `.env` for pipeline execution.
+    - *(Plan: 6.4, Req: 6)*
+- [ ] **Backend Runtime Deployment**
+    - Provision a runtime (e.g., GitLab Deploy to a VM/Heroku/Fly.io) consuming the pushed container image.
+    - Add deployment job or documentation with commands to run the container.
+    - *(Plan: 6.3, Req: 6)*

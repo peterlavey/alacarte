@@ -1,9 +1,11 @@
 import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
+import dotenv from 'dotenv'
 import { getDistanceFromLatLonInMeters } from './utils/geo.js'
-import { saveRecord, findNearestRecord, getAllRecords } from './storage.js'
+import { initStorage, closeStorage, saveRecord, findNearestRecord, getAllRecords } from './storage.js'
 
+dotenv.config()
 const app = express()
 const PORT = process.env.PORT || 3001
 
@@ -17,7 +19,7 @@ app.get('/api/health', (req, res) => {
 })
 
 // Resolve API — finds nearest record within threshold and returns its content
-app.post('/api/resolve', (req, res) => {
+app.post('/api/resolve', async (req, res) => {
   const { lat, lon, thresholdMeters } = req.body || {}
 
   if (typeof lat !== 'number' || typeof lon !== 'number') {
@@ -25,7 +27,7 @@ app.post('/api/resolve', (req, res) => {
   }
 
   const threshold = typeof thresholdMeters === 'number' ? thresholdMeters : 50 // default 50m
-  const result = findNearestRecord(lat, lon, threshold)
+  const result = await findNearestRecord(lat, lon, threshold)
 
   if (!result) {
     return res.status(404).json({ error: 'No record found within threshold' })
@@ -35,7 +37,7 @@ app.post('/api/resolve', (req, res) => {
 })
 
 // Register API — store a new record
-app.post('/api/register', (req, res) => {
+app.post('/api/register', async (req, res) => {
   const { lat, lon, content } = req.body || {}
 
   if (typeof lat !== 'number' || typeof lon !== 'number') {
@@ -52,18 +54,31 @@ app.post('/api/register', (req, res) => {
     createdAt: new Date().toISOString(),
   }
 
-  saveRecord(record)
+  await saveRecord(record)
   return res.status(201).json({ ok: true, record })
 })
 
 // History API — return all records
-app.get('/api/history', (req, res) => {
-  res.json({ records: getAllRecords() })
+app.get('/api/history', async (req, res) => {
+  res.json({ records: await getAllRecords() })
 })
 
-app.listen(PORT, () => {
+await initStorage()
+
+const server = app.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`)
 })
+
+async function shutdown(signal) {
+  console.log(`\n${signal} received. Shutting down...`)
+  server.close(async () => {
+    await closeStorage().catch(() => {})
+    process.exit(0)
+  })
+}
+
+process.on('SIGINT', () => shutdown('SIGINT'))
+process.on('SIGTERM', () => shutdown('SIGTERM'))
 
 // Export utility for completeness (optional usage elsewhere)
 export { getDistanceFromLatLonInMeters }

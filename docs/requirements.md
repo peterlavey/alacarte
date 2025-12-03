@@ -49,3 +49,13 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 - **WHEN** a new location is registered, **THEN** it SHALL be persisted in the backend storage.
 - **WHEN** multiple requests occur, **THEN** the system SHALL maintain data integrity (no lost writes).
 - **WHEN** querying for results, **THEN** the system SHALL support efficient retrieval based on coordinate proximity.
+
+### 6. CI/CD & Deployment
+**Stakeholder Need:**
+> As a developer and maintainer, I want automated builds, tests, and deployments via GitLab so that the application can be reliably delivered without manual steps.
+
+**Acceptance Criteria:**
+- **WHEN** code is pushed to any branch or a merge request is created, **THEN** the CI SHALL run server tests and build the client. (CI stages: test, build)
+- **WHEN** code is pushed to the default branch, **THEN** the client build SHALL be deployed via GitLab Pages. (Deploy stage)
+- **WHEN** code is pushed to the default branch, **THEN** a Docker image for the server SHALL be built and pushed to the GitLab Container Registry under `:latest`.
+- **WHEN** the pipeline runs, **THEN** secrets (e.g., database credentials) SHALL be provided through GitLab CI/CD variables; repository-stored `.env` secrets SHALL NOT be required for successful builds.

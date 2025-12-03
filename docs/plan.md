@@ -52,3 +52,30 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
 - **4.2 UI/UX Refinement**
     - Ensure responsive layout for mobile use.
     - *Relates to Requirements: 4*
+
+## Phase 5: Persistence (Priority: Medium)
+**Goal:** Provide reliable data storage for location records.
+- **5.1 Database Integration**
+    - Integrate a database (e.g., MongoDB) for persistent storage.
+    - *Relates to Requirements: 5*
+- **5.2 Repository Abstraction**
+    - Abstract storage behind a repository layer to decouple from DB vendor specifics.
+    - *Relates to Requirements: 5*
+- **5.3 Persistence Tests**
+    - Add tests to validate storage operations and proximity queries.
+    - *Relates to Requirements: 5*
+
+## Phase 6: CI/CD & Deployment (Priority: Medium)
+**Goal:** Automate build, test, and deployment using GitLab CI/CD.
+- **6.1 CI Pipeline Definition**
+    - Add `.gitlab-ci.yml` with stages: test, build, deploy.
+    - *Relates to Requirements: 6*
+- **6.2 Frontend Deployment (Pages)**
+    - Build the Vite client and publish via GitLab Pages on default branch.
+    - *Relates to Requirements: 6*
+- **6.3 Backend Container Image**
+    - Add Dockerfile for server and publish image to GitLab Container Registry on default branch.
+    - *Relates to Requirements: 6*
+- **6.4 Secrets Management**
+    - Use GitLab CI/CD variables instead of committing secrets; document required variables.
+    - *Relates to Requirements: 6*
