@@ -1,0 +1,134 @@
+{
+  "info": {
+    "name": "Alacarte Server API",
+    "_postman_id": "c6f6d7c8-6b10-4e86-9f2a-6f7f5e2c5a2c",
+    "description": "Postman collection to test the Alacarte BFF endpoints exposed by server/index.js",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3001"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "health"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"lat\": 40.7128,\n  \"lon\": -74.0060,\n  \"content\": \"Hello from NYC\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/register",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Resolve (default 50m)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"lat\": 40.7128,\n  \"lon\": -74.0060\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/resolve",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "resolve"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Resolve (custom threshold 10m)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"lat\": 40.71281,\n  \"lon\": -74.00601,\n  \"thresholdMeters\": 10\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/resolve",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "resolve"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "History",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/history",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "history"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

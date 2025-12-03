@@ -1,0 +1,113 @@
+# Task List
+
+## Phase 1: Project Foundation
+- [x] **Initialize Project Root**
+    - Create root directory, `server/`, and `client/`.
+    - Initialize git repository.
+    - *(Plan: 1.1)*
+- [x] **Backend Configuration**
+    - Initialize `server/package.json`.
+    - Install `express`, `cors`, `body-parser`, `nodemon`.
+    - *(Plan: 1.1)*
+- [x] **Frontend Configuration**
+    - Initialize React app in `client/` (e.g., Create React App or Vite).
+    - Install `axios` and `react-qr-reader`.
+    - *(Plan: 1.1)*
+
+## Phase 2: BFF Layer - Core Logic
+- [x] **Server Entry Point**
+    - Create `server/index.js`.
+    - Configure Express app with CORS and JSON middleware.
+    - Start server on port 3001.
+    - *(Plan: 2.1)*
+- [x] **Spatial Utility**
+    - Create `server/utils/geo.js`.
+    - Implement `getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2)`.
+    - *(Plan: 2.2, Req: 1)*
+- [x] **Storage Module**
+    - Create `server/storage.js`.
+    - Implement `saveRecord(record)` (in-memory array or file).
+    - Implement `findNearestRecord(lat, lon, thresholdMeters)`.
+    - *(Plan: 2.3, Req: 5)*
+- [x] **Resolve API**
+    - Create route `POST /api/resolve`.
+    - Accept `{ lat, lon }`.
+    - Use `findNearestRecord`; return file content if found, else 404.
+    - *(Plan: 2.4, Req: 1)*
+- [x] **Register API**
+    - Create route `POST /api/register`.
+    - Accept `{ lat, lon, content }`.
+    - Call `saveRecord`.
+    - *(Plan: 2.4, Req: 2)*
+- [x] **History API**
+    - Create route `GET /api/history`.
+    - Return all stored records.
+    - *(Plan: 2.4, Req: 4)*
+
+## Phase 3: Web UI - Components & Integration
+- [x] **API Service**
+    - Create `client/src/api.js`.
+    - specific methods: `resolve(coords)`, `register(data)`, `fetchHistory()`.
+    - *(Plan: 3.1)*
+- [x] **Geolocation Hook/Component**
+    - Create `components/GeoHandler.jsx`.
+    - Get current position on mount; handle errors.
+    - *(Plan: 3.2, Req: 1)*
+- [x] **Manual Input Component**
+    - Create `components/JsonInput.jsx`.
+    - Textarea for JSON input and Submit button.
+    - *(Plan: 3.2, Req: 3)*
+- [x] **QR Scanner Component**
+    - Create `components/Scanner.jsx`.
+    - Render QR reader when active; emit result on scan.
+    - *(Plan: 3.3, Req: 2)*
+- [x] **Visualization Canvas**
+    - Create `components/Canvas.jsx`.
+    - Display current content (file/text).
+    - *(Plan: 3.4, Req: 4)*
+- [x] **History Sidebar**
+    - Create `components/History.jsx`.
+    - List items; handle click to view details.
+    - *(Plan: 3.4, Req: 4)*
+- [x] **Main App Integration**
+    - Stitch components in `App.jsx`.
+    - State: `status` (checking -> found/scanning), `content`, `history`.
+    - *(Plan: 3.1)*
+
+## Phase 4: Polish & Verification
+- [x] **Permission UI**
+    - Add friendly UI prompts for allowing camera/location access.
+    - *(Plan: 4.1)*
+- [x] **Mobile Layout**
+    - Apply CSS media queries for mobile-first view.
+    - *(Plan: 4.2)*
+## Phase 5: Persistence
+- [x] **Database**
+    - Implement persistent storage (e.g., MongoDB).
+    - Use a free tier for development.
+    - *(Plan: 5.1)*
+    - Use repository pattern to isolate storage logic.
+    - *(Plan: 5.2)*
+    - Add tests for storage module.
+    - *(Plan: 5.3)*
+
+## Phase 6: CI/CD & Deployment
+- [x] **CI Pipeline Definition**
+    - Add GitLab CI pipeline with stages `test`, `build`, `deploy`.
+    - Runs server tests on pushes and MRs.
+    - *(Plan: 6.1, Req: 6)*
+- [x] **Frontend Deploy via GitLab Pages**
+    - Build Vite client with correct base path for Pages.
+    - Publish `public/` artifact using `pages` job on default branch.
+    - *(Plan: 6.2, Req: 6)*
+- [x] **Backend Docker Image**
+    - Add `server/Dockerfile` and build/push `server:latest` image to GitLab Container Registry on default branch.
+    - *(Plan: 6.3, Req: 6)*
+- [ ] **Secrets Management Setup**
+    - Define required CI/CD variables in GitLab project settings (e.g., `MONGO_URL`, `MONGO_DB`, optional `PORT`).
+    - Remove reliance on committed `.env` for pipeline execution.
+    - *(Plan: 6.4, Req: 6)*
+- [ ] **Backend Runtime Deployment**
+    - Provision a runtime (e.g., GitLab Deploy to a VM/Heroku/Fly.io) consuming the pushed container image.
+    - Add deployment job or documentation with commands to run the container.
+    - *(Plan: 6.3, Req: 6)*
