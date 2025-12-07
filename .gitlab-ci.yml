@@ -59,7 +59,7 @@ pages:
     - rm -rf public
     - mv client/dist public
     - echo "" > public/.nojekyll
-    - [ -f public/index.html ] && cp public/index.html public/404.html
+    - if (Test-Path public/index.html) { Copy-Item public/index.html public/404.html -Force }
   artifacts:
     paths:
       - public
