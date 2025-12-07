@@ -59,7 +59,7 @@ pages:
     - rm -rf public
     - mv client/dist public
     - echo "" > public/.nojekyll
-    - if (Test-Path public/index.html) { Copy-Item public/index.html public/404.html -Force }
+    - [ -f public/index.html ] && cp public/index.html public/404.html
   artifacts:
     paths:
       - public
@@ -80,6 +80,7 @@ server:image:build:
     DOCKER_TLS_CERTDIR: ""
   before_script:
     - echo "Logging in to GitLab Container Registry $CI_REGISTRY"
+    - echo "CI_PROJECT_NAME = $CI_PROJECT_NAME"
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
   script:
     - docker build -t "$CI_REGISTRY_IMAGE/server:latest" server
