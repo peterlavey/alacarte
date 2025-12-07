@@ -6,10 +6,8 @@ const useDb = (process.env.USE_DB || 'memory').toLowerCase()
 
 let backend
 if (useDb === 'mongo') {
-  console.log('Using MongoDB storage backend')
   backend = await import('./storage.mongo.js')
 } else {
-  console.log('Using Memory storage backend')
   backend = await import('./storage.memory.js')
 }
 
