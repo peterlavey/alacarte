@@ -103,6 +103,10 @@
 - [x] **Backend Docker Image**
     - Add `server/Dockerfile` and build/push `server:latest` image to GitLab Container Registry on default branch.
     - *(Plan: 6.3, Req: 6)*
+- [x] **Fix GitLab Pages base-path and asset routing**
+    - Ensure Vite `base` is derived from `CI_PAGES_URL`/`CI_PROJECT_NAME` to generate absolute asset URLs for Pages.
+    - Keep `.nojekyll` and `404.html` for SPA routing on GitLab Pages.
+    - *(Plan: 6.2, Req: 6)*
 - [ ] **Secrets Management Setup**
     - Define required CI/CD variables in GitLab project settings (e.g., `MONGO_URL`, `MONGO_DB`, optional `PORT`).
     - Remove reliance on committed `.env` for pipeline execution.
