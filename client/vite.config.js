@@ -10,9 +10,6 @@ export default defineConfig(() => {
   const base = isCI && project ? `/${project}/` : '/'
   return {
     plugins: [react()],
-    build: {
-      outDir: 'dist',
-    },
-    base: '/alacarte/',
+    base,
   }
 })
