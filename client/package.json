@@ -2,7 +2,7 @@
   "name": "alacarte-client",
   "version": "0.1.0",
   "private": true,
-  "baseUrl": "/alacarte/",
+  "baseUrl": ".",
   "type": "module",
   "scripts": {
     "dev": "vite",
