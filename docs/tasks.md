@@ -110,6 +110,10 @@
 - [x] **Unify base path configuration**
     - Use the same base path for local and GitLab builds (`base: '/'`), avoiding per-environment basepath overrides.
     - *(Plan: 6.2, Req: 6)*
+- [x] **Configure environment-specific API base for client**
+    - Add `.env.development` with `VITE_API_BASE=http://localhost:3001` for local dev.
+    - Add `.env.production` with placeholder and instructions; use GitLab CI/CD variable `VITE_API_BASE` to set the production API base URL at build time.
+    - *(Plan: 6.2, Req: 6)*
 - [ ] **Secrets Management Setup**
     - Define required CI/CD variables in GitLab project settings (e.g., `MONGO_URL`, `MONGO_DB`, optional `PORT`).
     - Remove reliance on committed `.env` for pipeline execution.
