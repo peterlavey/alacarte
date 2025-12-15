@@ -150,6 +150,27 @@
 - [x] **Organize Storage Files into Folder**
     - Move `server/storage.js`, `server/storage.memory.js`, and `server/storage.mongo.js` into `server/storage/` as `index.js`, `memory.js`, and `mongo.js` respectively; update all imports; remove old locations.
     - *(Plan: 5.2, Req: 5)*
+- [x] **Phase 8: Testing & Quality — Setup Vitest (Server & Client)**
+    - Configure Vitest for server (node environment) and client (jsdom), add coverage, scripts.
+    - *(Plan: 8.1, Req: 6)*
+- [x] **Phase 8: Server Unit Tests**
+    - Add tests for `utils/geo.js` edge cases and `server/storage` (memory backend) behaviors.
+    - Mock Mongo backend selection when `USE_DB=mongo` is set; no real DB.
+    - *(Plan: 8.2, Req: 6)*
+- [x] **Phase 8: Server Route Tests**
+    - Add tests for `/api/register`, `/api/resolve`, `/api/history` using supertest against exported app; cover validation and thresholds.
+    - *(Plan: 8.3, Req: 6)*
+- [x] **Phase 8: Migrate legacy Node tests to Vitest**
+    - Migrate `server/tests/storage.memory.test.js` from Node's test runner to Vitest, align with existing setup, and ensure tests pass.
+    - *(Plan: 8.2, Req: 6)*
+- [ ] **Phase 8: Client Unit Tests**
+    - Add tests for `client/src/api.js` (mock fetch/axios) and UI components with Testing Library.
+    - *(Plan: 8.4, Req: 6)*
+    - [x] Stabilize axios mocking to prevent OOM in Vitest (api.test.js) — use stable ESM mock, avoid module resets; enforce single-threaded pool on Windows/Node 22.
+      - *(Plan: 8.4, Req: 6)*
+- [ ] **Phase 8: Coverage & Docs**
+    - Enable coverage reports locally with `@vitest/coverage-v8` and document how to run tests; no CI integration.
+    - *(Plan: 8.5, Req: 6)*
 - [ ] **Secrets & Environment Setup on Netlify**
     - Configure `VITE_API_BASE=/.netlify/functions/api`, `MONGO_URL`, `MONGO_DB` in Netlify env vars.
     - *(Plan: 7.4, Req: 7)*
