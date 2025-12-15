@@ -114,6 +114,10 @@
     - Add `.env.development` with `VITE_API_BASE=http://localhost:3001` for local dev.
     - Add `.env.production` with placeholder and instructions; use GitLab CI/CD variable `VITE_API_BASE` to set the production API base URL at build time.
     - *(Plan: 6.2, Req: 6)*
+- [x] **Fix YAML parsing in Pages script (line 62)**
+    - Replace YAML-ambiguous flow sequence with a POSIX-safe `if` form in `.gitlab-ci.yml` under `pages` job.
+    - Ensures GitLab CI parses the file and the script copies `index.html` to `404.html` for SPA routing.
+    - *(Plan: 6.2, Req: 6)*
 - [ ] **Secrets Management Setup**
     - Define required CI/CD variables in GitLab project settings (e.g., `MONGO_URL`, `MONGO_DB`, optional `PORT`).
     - Remove reliance on committed `.env` for pipeline execution.
@@ -122,3 +126,8 @@
     - Provision a runtime (e.g., GitLab Deploy to a VM/Heroku/Fly.io) consuming the pushed container image.
     - Add deployment job or documentation with commands to run the container.
     - *(Plan: 6.3, Req: 6)*
+ - [x] **Acceptance Tests for Server Image (Postman/Newman)**
+    - Add CI stage `acceptance` that runs the Postman collection `docs/postman/Alacarte.postman_collection.json` against the server Docker image.
+    - Start the image as a CI service with alias `server` so the collection can reach it at `http://server:3001`.
+    - Publish JUnit results as job artifacts.
+    - *(Plan: 6.5, Req: 6)*

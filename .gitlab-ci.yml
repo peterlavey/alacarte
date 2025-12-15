@@ -2,6 +2,7 @@ stages:
   - test
   - build
   - deploy
+  - acceptance
 
 default:
   image: node:20
@@ -59,7 +60,7 @@ pages:
     - rm -rf public
     - mv client/dist public
     - echo "" > public/.nojekyll
-    - if (Test-Path public/index.html) { Copy-Item public/index.html public/404.html -Force }
+    - if [ -f public/index.html ]; then cp -f public/index.html public/404.html; fi
   artifacts:
     paths:
       - public
@@ -84,3 +85,37 @@ server:image:build:
   script:
     - docker build -t "$CI_REGISTRY_IMAGE/server:latest" server
     - docker push "$CI_REGISTRY_IMAGE/server:latest"
+
+# --- Acceptance: Run Postman collection against server image ---
+server:image:acceptance:
+  image: postman/newman:6-alpine
+  stage: acceptance
+  needs:
+    - job: server:image:build
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  services:
+    - name: $CI_REGISTRY_IMAGE/server:latest
+      alias: server
+  variables:
+    NEWMAN_REPORTS_DIR: reports
+  before_script:
+    - mkdir -p "$NEWMAN_REPORTS_DIR"
+    # wait for the server container to become healthy/responding
+    - |
+      echo "Waiting for server service to be ready at http://server:3001/api/health"
+      for i in $(seq 1 60); do
+        if wget -q -T 2 -O- http://server:3001/api/health > /dev/null 2>&1; then
+          echo "Server is up"; break; fi; echo "...retry $i"; sleep 2;
+      done
+  script:
+    - |
+      newman run "docs/postman/Alacarte.postman_collection.json" \
+        --env-var baseUrl=http://server:3001 \
+        --reporters cli,junit \
+        --reporter-junit-export "$NEWMAN_REPORTS_DIR/junit.xml"
+  artifacts:
+    when: always
+    paths:
+      - reports
+    expire_in: 1 week

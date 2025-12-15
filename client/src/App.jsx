@@ -99,7 +99,7 @@ export default function App() {
         {import.meta?.env?.VITE_API_BASE || 'import.meta?.env?.VITE_API_BASE not found'}
       </h2>
       <h2>
-        {process.env?.VITE_API_BASE || 'process.env.VITE_API_BASE not found.'}
+        {process.env?.VITE_API_BASE || 'process.env.VITE_API_BASE not found'}
       </h2>
 
       <GeoHandler

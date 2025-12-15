@@ -59,3 +59,4 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 - **WHEN** code is pushed to the default branch, **THEN** the client build SHALL be deployed via GitLab Pages. (Deploy stage)
 - **WHEN** code is pushed to the default branch, **THEN** a Docker image for the server SHALL be built and pushed to the GitLab Container Registry under `:latest`.
 - **WHEN** the pipeline runs, **THEN** secrets (e.g., database credentials) SHALL be provided through GitLab CI/CD variables; repository-stored `.env` secrets SHALL NOT be required for successful builds.
+- **WHEN** the server image is built on the default branch, **THEN** an Acceptance stage SHALL run a Postman/Newman collection against the running container (accessible via a service alias such as `server`) to verify core API endpoints (health, register, resolve, history) succeed.
