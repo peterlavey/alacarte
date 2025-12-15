@@ -79,3 +79,7 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
 - **6.4 Secrets Management**
     - Use GitLab CI/CD variables instead of committing secrets; document required variables.
     - *Relates to Requirements: 6*
+ - **6.5 Acceptance Tests (Server Image)**
+    - Add an Acceptance stage that runs a Postman/Newman collection against the server container image started as a CI service (with alias `server`).
+    - Export JUnit reports as CI artifacts and fail the pipeline on API regressions.
+    - *Relates to Requirements: 6*

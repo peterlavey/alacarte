@@ -126,3 +126,8 @@
     - Provision a runtime (e.g., GitLab Deploy to a VM/Heroku/Fly.io) consuming the pushed container image.
     - Add deployment job or documentation with commands to run the container.
     - *(Plan: 6.3, Req: 6)*
+ - [x] **Acceptance Tests for Server Image (Postman/Newman)**
+    - Add CI stage `acceptance` that runs the Postman collection `docs/postman/Alacarte.postman_collection.json` against the server Docker image.
+    - Start the image as a CI service with alias `server` so the collection can reach it at `http://server:3001`.
+    - Publish JUnit results as job artifacts.
+    - *(Plan: 6.5, Req: 6)*
