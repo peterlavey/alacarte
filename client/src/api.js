@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // Simple API service for the client
 // Base URL can be overridden via Vite env: VITE_API_BASE
-const API_BASE = import.meta?.env?.VITE_API_BASE || 'https://registry.gitlab.com/peterlavey/alacarte/server:latest'
+const API_BASE = import.meta?.env?.VITE_API_BASE || 'http://localhost:3001/'
 
 const api = axios.create({
   baseURL: API_BASE,
