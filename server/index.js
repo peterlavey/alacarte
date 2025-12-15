@@ -3,7 +3,8 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
 import { getDistanceFromLatLonInMeters } from './utils/geo.js'
-import { initStorage, closeStorage, saveRecord, findNearestRecord, getAllRecords } from './storage.js'
+import { initStorage, closeStorage } from './storage.js'
+import apiRoutes from './routes/index.js'
 
 dotenv.config()
 const app = express()
@@ -22,55 +23,8 @@ export async function ensureStorage() {
 app.use(cors())
 app.use(bodyParser.json())
 
-// Health check
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok' })
-})
-
-// Resolve API — finds nearest record within threshold and returns its content
-app.post('/api/resolve', async (req, res) => {
-  const { lat, lon, thresholdMeters } = req.body || {}
-
-  if (typeof lat !== 'number' || typeof lon !== 'number') {
-    return res.status(400).json({ error: 'lat and lon must be numbers' })
-  }
-
-  const threshold = typeof thresholdMeters === 'number' ? thresholdMeters : 50 // default 50m
-  const result = await findNearestRecord(lat, lon, threshold)
-
-  if (!result) {
-    return res.status(404).json({ error: 'No record found within threshold' })
-  }
-
-  return res.json({ content: result.content, record: result })
-})
-
-// Register API — store a new record
-app.post('/api/register', async (req, res) => {
-  const { lat, lon, content } = req.body || {}
-
-  if (typeof lat !== 'number' || typeof lon !== 'number') {
-    return res.status(400).json({ error: 'lat and lon must be numbers' })
-  }
-  if (typeof content === 'undefined') {
-    return res.status(400).json({ error: 'content is required' })
-  }
-
-  const record = {
-    lat,
-    lon,
-    content,
-    createdAt: new Date().toISOString(),
-  }
-
-  await saveRecord(record)
-  return res.status(201).json({ ok: true, record })
-})
-
-// History API — return all records
-app.get('/api/history', async (req, res) => {
-  res.json({ records: await getAllRecords() })
-})
+// API routes
+app.use('/api', apiRoutes)
 
 if (process.env.NETLIFY !== 'true') {
   // Avoid top-level await for CJS bundlers; initialize before starting server

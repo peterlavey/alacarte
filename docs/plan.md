@@ -26,6 +26,10 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
     - `POST /api/register`: For saving new QR-scanned locations.
     - `GET /api/history`: For retrieving past activity.
     - *Relates to Requirements: 1, 2, 3, 4*
+ - **2.5 Route Layer Modularization**
+    - Extract endpoint handlers into modular routers under `server/routes/` (`health`, `register`, `resolve`, `history`) and mount them at `/api` from `server/index.js`.
+    - No behavior changes; maintain existing payloads and status codes.
+    - *Relates to Requirements: 1, 2, 4*
 
 ## Phase 3: Web UI - Components & Integration (Priority: Medium)
 **Goal:** Build the React frontend to interact with the physical world (Geo/Cam) and the API.

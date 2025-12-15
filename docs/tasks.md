@@ -43,6 +43,10 @@
     - Create route `GET /api/history`.
     - Return all stored records.
     - *(Plan: 2.4, Req: 4)*
+ - [x] **Route Layer Modularization**
+    - Extract endpoints into `server/routes/*` modules and mount at `/api` via `routes/index.js`.
+    - No behavior change; maintain response formats and codes.
+    - *(Plan: 2.5, Req: 1, 2, 4)*
 
 ## Phase 3: Web UI - Components & Integration
 - [x] **API Service**
