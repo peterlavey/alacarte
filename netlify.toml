@@ -5,9 +5,29 @@
 
 [functions]
   directory = "netlify/functions"
+  # Ensure ESM support and proper bundling in Functions
+  node_bundler = "esbuild"
+
+# Pretty API routes → Netlify Function
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true
 
 # SPA fallback for client-side routing
 [[redirects]]
   from = "/**"
   to = "/index.html"
   status = 200
+
+# Local development with `netlify dev`
+# - Runs Vite dev server from client in a special "netlify" mode so the
+#   client uses Functions as its API base.
+# - Proxies Functions and applies redirects in front of the Vite server.
+[dev]
+  framework = "#custom"
+  command = "npm run dev --prefix client -- --mode netlify"
+  targetPort = 5173
+  port = 8888
+  autoLaunch = true

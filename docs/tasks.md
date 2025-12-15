@@ -147,6 +147,15 @@
     - Add `netlify/functions/api.js` using `serverless-http` to wrap `server/index.js`.
     - Refactor `server/index.js` to export app and avoid `listen` under Netlify; ensure storage init.
     - *(Plan: 7.3, Req: 7)*
+- [x] **Pretty API Routes Proxy**
+    - Configure Netlify redirects to map `/api/*` → `/.netlify/functions/api/:splat` with status 200 in `netlify.toml`.
+    - Verify raw function and pretty routes under `netlify dev`.
+    - *(Plan: 7.3, Req: 7)*
+- [x] **Netlify Dev Local Runner Configuration**
+    - Add `[dev]` block in `netlify.toml` to start Vite with `--mode netlify` and set proxy ports; ensure redirects take precedence.
+    - Add `client/.env.netlify` with `VITE_API_BASE=/.netlify/functions/api` so the client calls Functions in dev.
+    - Set Functions bundler to `esbuild` for ESM support; add `force=true` to `/api/*` redirect.
+    - *(Plan: 7.3, Req: 7)*
 - [x] **Organize Storage Files into Folder**
     - Move `server/storage.js`, `server/storage.memory.js`, and `server/storage.mongo.js` into `server/storage/` as `index.js`, `memory.js`, and `mongo.js` respectively; update all imports; remove old locations.
     - *(Plan: 5.2, Req: 5)*
@@ -171,8 +180,9 @@
 - [ ] **Phase 8: Coverage & Docs**
     - Enable coverage reports locally with `@vitest/coverage-v8` and document how to run tests; no CI integration.
     - *(Plan: 8.5, Req: 6)*
-- [ ] **Secrets & Environment Setup on Netlify**
-    - Configure `VITE_API_BASE=/.netlify/functions/api`, `MONGO_URL`, `MONGO_DB` in Netlify env vars.
+- [x] **Secrets & Environment Setup on Netlify**
+    - Configure `VITE_API_BASE=/.netlify/functions/api` for client builds; optionally `USE_DB=memory|mongo`, and if mongo then `MONGO_URL`, `MONGO_DB`.
+    - Document local `netlify dev` usage with `VITE_API_BASE` for testing.
     - *(Plan: 7.4, Req: 7)*
 - [ ] **GitHub Actions: Acceptance Tests**
     - Add workflow to run Newman against Netlify Deploy Preview (PR) and Production (main) URLs.
