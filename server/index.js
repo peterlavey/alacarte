@@ -3,7 +3,7 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
 import { getDistanceFromLatLonInMeters } from './utils/geo.js'
-import { initStorage, closeStorage } from './storage.js'
+import { initStorage, closeStorage } from './storage/index.js'
 import apiRoutes from './routes/index.js'
 
 dotenv.config()

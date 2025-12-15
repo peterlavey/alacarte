@@ -147,6 +147,9 @@
     - Add `netlify/functions/api.js` using `serverless-http` to wrap `server/index.js`.
     - Refactor `server/index.js` to export app and avoid `listen` under Netlify; ensure storage init.
     - *(Plan: 7.3, Req: 7)*
+- [x] **Organize Storage Files into Folder**
+    - Move `server/storage.js`, `server/storage.memory.js`, and `server/storage.mongo.js` into `server/storage/` as `index.js`, `memory.js`, and `mongo.js` respectively; update all imports; remove old locations.
+    - *(Plan: 5.2, Req: 5)*
 - [ ] **Secrets & Environment Setup on Netlify**
     - Configure `VITE_API_BASE=/.netlify/functions/api`, `MONGO_URL`, `MONGO_DB` in Netlify env vars.
     - *(Plan: 7.4, Req: 7)*

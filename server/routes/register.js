@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { saveRecord } from '../storage.js'
+import { saveRecord } from '../storage/index.js'
 
 const router = Router()
 

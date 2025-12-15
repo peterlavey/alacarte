@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { getAllRecords } from '../storage.js'
+import { getAllRecords } from '../storage/index.js'
 
 const router = Router()
 

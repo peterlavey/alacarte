@@ -5,8 +5,8 @@ import assert from 'node:assert/strict'
 process.env.USE_DB = 'memory'
 
 // Dynamic imports after setting env
-const storage = await import('../storage.js')
-const mem = await import('../storage.memory.js')
+const storage = await import('../storage/index.js')
+const mem = await import('../storage/memory.js')
 
 test('initStorage/closeStorage do not throw for memory backend', async () => {
   await assert.doesNotReject(storage.initStorage())
