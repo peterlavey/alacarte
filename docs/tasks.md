@@ -131,3 +131,25 @@
     - Start the image as a CI service with alias `server` so the collection can reach it at `http://server:3001`.
     - Publish JUnit results as job artifacts.
     - *(Plan: 6.5, Req: 6)*
+
+## Phase 7: Migration to GitHub + Netlify
+- [ ] **Repository Migration to GitHub**
+    - Mirror repository to GitHub, keep default branch naming, enable branch protections.
+    - *(Plan: 7.1, Req: 7)*
+- [x] **Netlify Config & SPA Routing**
+    - Add `netlify.toml` with client build (base: client, publish: dist) and SPA redirects.
+    - *(Plan: 7.2, Req: 7)*
+- [x] **API as Single Netlify Function (Express Wrapped)**
+    - Add `netlify/functions/api.js` using `serverless-http` to wrap `server/index.js`.
+    - Refactor `server/index.js` to export app and avoid `listen` under Netlify; ensure storage init.
+    - *(Plan: 7.3, Req: 7)*
+- [ ] **Secrets & Environment Setup on Netlify**
+    - Configure `VITE_API_BASE=/.netlify/functions/api`, `MONGO_URL`, `MONGO_DB` in Netlify env vars.
+    - *(Plan: 7.4, Req: 7)*
+- [ ] **GitHub Actions: Acceptance Tests**
+    - Add workflow to run Newman against Netlify Deploy Preview (PR) and Production (main) URLs.
+    - Publish JUnit as artifacts.
+    - *(Plan: 7.5, Req: 7)*
+- [ ] **Cutover & Decommission GitLab**
+    - Switch production to Netlify; validate endpoints; remove `.gitlab-ci.yml` and Pages deploy.
+    - *(Plan: 7.6, Req: 7)*

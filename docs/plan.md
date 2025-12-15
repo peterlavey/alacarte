@@ -83,3 +83,29 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
     - Add an Acceptance stage that runs a Postman/Newman collection against the server container image started as a CI service (with alias `server`).
     - Export JUnit reports as CI artifacts and fail the pipeline on API regressions.
     - *Relates to Requirements: 6*
+
+## Phase 7: Migration to GitHub + Netlify (Priority: Medium)
+**Goal:** Host the repository on GitHub, deploy the frontend to Netlify, and (if feasible) run the API as a single Netlify Function wrapping the existing Express app.
+- **7.1 Repository Relocation & Governance**
+    - Mirror the Git history to GitHub, align default branch, and set branch protections.
+    - Keep GitLab CI temporarily until GitHub Actions + Netlify are verified; then decommission GitLab automation.
+    - *Relates to Requirements: 7*
+- **7.2 Frontend Deployment on Netlify**
+    - Connect Netlify to GitHub. Build base: `client`, command: `npm ci && npm run build`, publish: `dist`.
+    - Add SPA redirects and configure `VITE_API_BASE` via Netlify env vars.
+    - *Relates to Requirements: 7*
+- **7.3 API via Netlify Functions (Single Wrapped Express)**
+    - Add `netlify/functions/api.js` with `serverless-http` to wrap `server/index.js`.
+    - Refactor server to export the Express app and avoid `listen` under Netlify; ensure storage initialization works in serverless.
+    - *Relates to Requirements: 7*
+- **7.4 Secrets & CORS**
+    - Move secrets to Netlify environment variables (e.g., `MONGO_URL`, `MONGO_DB`).
+    - If using separate origins, configure CORS to allow Netlify domain(s); prefer same-origin via `/.netlify/functions/api`.
+    - *Relates to Requirements: 7*
+- **7.5 GitHub Actions Acceptance Tests**
+    - Add workflow to run Newman against Netlify Deploy Previews (PRs) and Production (main), publishing JUnit artifacts.
+    - *Relates to Requirements: 7*
+- **7.6 Cutover & Decommission**
+    - Switch production traffic to Netlify; validate endpoints.
+    - Remove `.gitlab-ci.yml` and Pages deployment once stable.
+    - *Relates to Requirements: 7*

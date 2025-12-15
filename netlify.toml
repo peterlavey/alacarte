@@ -1,0 +1,13 @@
+[build]
+  publish = "client/dist"
+  command = "npm ci --prefix client && npm run build --prefix client"
+  node_version = "20"
+
+[functions]
+  directory = "netlify/functions"
+
+# SPA fallback for client-side routing
+[[redirects]]
+  from = "/**"
+  to = "/index.html"
+  status = 200

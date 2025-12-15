@@ -9,6 +9,15 @@ dotenv.config()
 const app = express()
 const PORT = process.env.PORT || 3001
 
+// Ensure storage is initialized exactly once (works for server and serverless)
+let storageReadyPromise
+export async function ensureStorage() {
+  if (!storageReadyPromise) {
+    storageReadyPromise = initStorage()
+  }
+  return storageReadyPromise
+}
+
 // Middleware
 app.use(cors())
 app.use(bodyParser.json())
@@ -63,22 +72,24 @@ app.get('/api/history', async (req, res) => {
   res.json({ records: await getAllRecords() })
 })
 
-await initStorage()
-
-const server = app.listen(PORT, () => {
-  console.log(`Server listening on http://localhost:${PORT}`)
-})
-
-async function shutdown(signal) {
-  console.log(`\n${signal} received. Shutting down...`)
-  server.close(async () => {
-    await closeStorage().catch(() => {})
-    process.exit(0)
+if (process.env.NETLIFY !== 'true') {
+  await ensureStorage()
+  const server = app.listen(PORT, () => {
+    console.log(`Server listening on http://localhost:${PORT}`)
   })
-}
 
-process.on('SIGINT', () => shutdown('SIGINT'))
-process.on('SIGTERM', () => shutdown('SIGTERM'))
+  async function shutdown(signal) {
+    console.log(`\n${signal} received. Shutting down...`)
+    server.close(async () => {
+      await closeStorage().catch(() => {})
+      process.exit(0)
+    })
+  }
+
+  process.on('SIGINT', () => shutdown('SIGINT'))
+  process.on('SIGTERM', () => shutdown('SIGTERM'))
+}
 
 // Export utility for completeness (optional usage elsewhere)
 export { getDistanceFromLatLonInMeters }
+export default app
