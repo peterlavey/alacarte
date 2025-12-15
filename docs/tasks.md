@@ -160,6 +160,11 @@
     - Add `express`, `cors`, `body-parser`, and `dotenv` to the root `package.json` so Netlify’s esbuild bundler can resolve and bundle them for `netlify/functions/api.js` (which imports `server/index.js`).
     - Keep server code ESM; retain `node_bundler = "esbuild"` in `netlify.toml`.
     - *(Plan: 7.3, Req: 7)*
+- [x] **Netlify Functions: Mongo backend support**
+    - Add `mongodb` to root `package.json` and configure Functions bundler to externalize it (`external_node_modules = ["mongodb"]`).
+    - Update Netlify build command to install root deps before client build so the driver is present.
+    - Use Netlify env vars `USE_DB=mongo`, `MONGO_URL`, and `MONGO_DB` for runtime selection.
+    - *(Plan: 7.3, Req: 7)*
 - [x] **Organize Storage Files into Folder**
     - Move `server/storage.js`, `server/storage.memory.js`, and `server/storage.mongo.js` into `server/storage/` as `index.js`, `memory.js`, and `mongo.js` respectively; update all imports; remove old locations.
     - *(Plan: 5.2, Req: 5)*

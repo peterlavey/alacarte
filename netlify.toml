@@ -1,12 +1,15 @@
 [build]
   publish = "client/dist"
-  command = "npm ci --prefix client && npm run build --prefix client"
+  # Ensure root deps (e.g., mongodb for Functions) are installed, then build client
+  command = "npm install --no-audit --no-fund && npm ci --prefix client && npm run build --prefix client"
   node_version = "20"
 
 [functions]
   directory = "netlify/functions"
   # Ensure ESM support and proper bundling in Functions
   node_bundler = "esbuild"
+  # Avoid bundling optional DB driver; it won't be required when USE_DB != "mongo"
+  external_node_modules = ["mongodb"]
 
 # Pretty API routes → Netlify Function
 [[redirects]]
