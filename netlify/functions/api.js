@@ -1,7 +1,10 @@
 import serverless from 'serverless-http';
 import app, { ensureStorage } from '../../server/index.js';
 
-// Ensure storage is ready in serverless runtime
-await ensureStorage();
+const baseHandler = serverless(app);
 
-export const handler = serverless(app);
+export async function handler(event, context) {
+  // Ensure storage is ready in serverless runtime without top-level await
+  await ensureStorage();
+  return baseHandler(event, context);
+}

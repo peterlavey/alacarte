@@ -73,21 +73,23 @@ app.get('/api/history', async (req, res) => {
 })
 
 if (process.env.NETLIFY !== 'true') {
-  await ensureStorage()
-  const server = app.listen(PORT, () => {
-    console.log(`Server listening on http://localhost:${PORT}`)
-  })
-
-  async function shutdown(signal) {
-    console.log(`\n${signal} received. Shutting down...`)
-    server.close(async () => {
-      await closeStorage().catch(() => {})
-      process.exit(0)
+  // Avoid top-level await for CJS bundlers; initialize before starting server
+  ensureStorage().then(() => {
+    const server = app.listen(PORT, () => {
+      console.log(`Server listening on http://localhost:${PORT}`)
     })
-  }
 
-  process.on('SIGINT', () => shutdown('SIGINT'))
-  process.on('SIGTERM', () => shutdown('SIGTERM'))
+    async function shutdown(signal) {
+      console.log(`\n${signal} received. Shutting down...`)
+      server.close(async () => {
+        await closeStorage().catch(() => {})
+        process.exit(0)
+      })
+    }
+
+    process.on('SIGINT', () => shutdown('SIGINT'))
+    process.on('SIGTERM', () => shutdown('SIGTERM'))
+  })
 }
 
 // Export utility for completeness (optional usage elsewhere)

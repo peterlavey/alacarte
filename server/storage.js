@@ -4,15 +4,44 @@ import 'dotenv/config'
 
 const useDb = (process.env.USE_DB || 'memory').toLowerCase()
 
-let backend
-if (useDb === 'mongo') {
-  backend = await import('./storage.mongo.js')
-} else {
-  backend = await import('./storage.memory.js')
+let backendPromise
+async function getBackend() {
+  if (!backendPromise) {
+    backendPromise = (async () => {
+      if (useDb === 'mongo') {
+        return await import('./storage.mongo.js')
+      }
+      return await import('./storage.memory.js')
+    })()
+  }
+  return backendPromise
 }
 
-export const initStorage = backend.initStorage
-export const closeStorage = backend.closeStorage
-export const saveRecord = backend.saveRecord
-export const getAllRecords = backend.getAllRecords
-export const findNearestRecord = backend.findNearestRecord
+export async function initStorage() {
+  const backend = await getBackend()
+  if (typeof backend.initStorage === 'function') {
+    return backend.initStorage()
+  }
+}
+
+export async function closeStorage() {
+  const backend = await getBackend()
+  if (typeof backend.closeStorage === 'function') {
+    return backend.closeStorage()
+  }
+}
+
+export async function saveRecord(record) {
+  const backend = await getBackend()
+  return backend.saveRecord(record)
+}
+
+export async function getAllRecords() {
+  const backend = await getBackend()
+  return backend.getAllRecords()
+}
+
+export async function findNearestRecord(lat, lon, thresholdMeters) {
+  const backend = await getBackend()
+  return backend.findNearestRecord(lat, lon, thresholdMeters)
+}
