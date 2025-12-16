@@ -113,3 +113,22 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
     - Switch production traffic to Netlify; validate endpoints.
     - Remove `.gitlab-ci.yml` and Pages deployment once stable.
     - *Relates to Requirements: 7*
+
+## Phase 8: Guideline Alignment (Priority: Medium)
+**Goal:** Align the codebase with the JavaScript & React Project Guidelines (.junie/guidelines.md).
+- **8.1 React Folder Structure**
+    - Ensure components under `src/components`, utilities under `src/utils`, and pages under `src/pages`.
+    - *Relates to Requirements: 8*
+- **8.2 TypeScript Adoption for New/Updated UI**
+    - Prefer TypeScript for new React components and define explicit props interfaces.
+    - Incrementally migrate key components.
+    - *Relates to Requirements: 8*
+- **8.3 Styling Without Inline Styles**
+    - Replace inline `style` with CSS Modules or Tailwind; choose CSS Modules initially.
+    - *Relates to Requirements: 8*
+- **8.4 Code Quality Tooling**
+    - Add ESLint and Prettier configurations and scripts; ensure CI can run lint.
+    - *Relates to Requirements: 8*
+- **8.5 Testing Conventions**
+    - Add unit tests with Vitest in `__tests__` folders adjacent to files.
+    - *Relates to Requirements: 8*

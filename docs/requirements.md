@@ -71,3 +71,13 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 - **WHEN** the Netlify site is built, **THEN** the client SHALL use `VITE_API_BASE=/.netlify/functions/api` (configurable in Netlify env vars).
 - **WHEN** PRs are opened on GitHub, **THEN** Netlify Deploy Previews SHALL be generated and can be used to run acceptance tests against `/.netlify/functions/api`.
 - **WHEN** the GitHub pipeline runs, **THEN** acceptance tests (Newman) MAY run against the Deploy Preview or Production URLs, publishing JUnit artifacts.
+
+### 8. UI Code Guidelines Compliance
+**Stakeholder Need:**
+> As a maintainer, I want the UI code to follow project guidelines so that the codebase remains consistent, testable, and easy to evolve.
+
+**Acceptance Criteria:**
+- **WHEN** UI components are added or updated, **THEN** they SHOULD be authored in TypeScript and define explicit props interfaces.
+- **WHEN** styles are applied, **THEN** inline `style` objects SHOULD be avoided in favor of CSS Modules or Tailwind.
+- **WHEN** new logic is introduced, **THEN** unit tests SHALL be added using Vitest under a `__tests__` directory adjacent to the file.
+- **WHEN** code is committed, **THEN** it SHOULD pass ESLint and Prettier formatting checks.

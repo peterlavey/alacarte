@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import styles from './JsonInput.module.css'
 
 export default function JsonInput({ onSubmit, disabled }) {
   const [text, setText] = useState('')
@@ -17,7 +18,7 @@ export default function JsonInput({ onSubmit, disabled }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+    <form onSubmit={handleSubmit} className={styles.form}>
       <label>
         JSON content
         <textarea
@@ -26,10 +27,10 @@ export default function JsonInput({ onSubmit, disabled }) {
           rows={6}
           placeholder='{"hello":"world"}'
           disabled={disabled}
-          style={{ width: '100%' }}
+          className={styles.textarea}
         />
       </label>
-      {error && <div style={{ color: 'red' }}>{error}</div>}
+      {error && <div className={styles.error}>{error}</div>}
       <button type='submit' disabled={disabled}>Submit</button>
     </form>
   )
