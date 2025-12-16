@@ -1,5 +1,5 @@
 import serverless from 'serverless-http';
-import app, { ensureStorage } from '../../server/index.js';
+import app, { ensureStorage } from '../../index.js';
 
 const baseHandler = serverless(app);
 
