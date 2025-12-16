@@ -43,6 +43,7 @@ This project follows a spec-driven development approach. The source of truth for
 
 ## React Specifics
 *   **File Structure**: Place components in `src/components`, utility functions in `src/utils`, and pages/views in `src/pages`.
+*   **Component Structure**: Place component and related styles in the same directory even if doesn't have a style file, (e.g. `src/components/UserProfile/UserProfile.tsx` and `src/components/UserProfile/UserProfile.module.css`).
 *   **Naming Conventions**: Use PascalCase for component names (e.g., `UserProfile.tsx`) and camelCase for all other JavaScript files and variables.
 *   **Prop Types/Interfaces**: Define explicit `interface` for component props in TypeScript files.
 *   **Avoid Inline Styles**: Use CSS modules or Tailwind CSS for styling instead of inline `style` objects.
