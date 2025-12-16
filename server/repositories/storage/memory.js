@@ -1,4 +1,4 @@
-import { getDistanceFromLatLonInMeters } from '../utils/geo.js'
+import { getDistanceFromLatLonInMeters } from '../../utils/geo.js'
 
 // In-memory storage backend
 const records = []

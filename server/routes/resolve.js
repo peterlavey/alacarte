@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { findNearestRecord } from '../storage/index.js'
+import { findNearestRecord } from '../repositories/storage/index.js'
 
 const router = Router()
 
