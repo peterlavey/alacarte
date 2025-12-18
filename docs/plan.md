@@ -47,6 +47,9 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
     - Create the "Canvas" to display file content.
     - Create the History sidebar to list past interactions.
     - *Relates to Requirements: 4*
+- **3.5 Intelligent Home Page**
+    - Implement a Home page that automatically resolves content based on location or prompts for QR scan.
+    - *Relates to Requirements: 1, 2*
 
 ## Phase 4: Polish & Verification (Priority: Low)
 **Goal:** Ensure usability, error handling, and responsiveness.

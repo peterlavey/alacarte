@@ -1,10 +1,7 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import GeoHandler from '@/components/GeoHandler/GeoHandler'
-import JsonInput from '@/components/JsonInput/JsonInput'
-import Scanner from '@/components/Scanner/Scanner'
+import React, { useState, useEffect, useCallback } from 'react'
+import { resolve, register } from '@/api'
 import Canvas from '@/components/Canvas/Canvas'
-import History, { HistoryRecord } from '@/components/History/History'
-import { resolve as apiResolve, register as apiRegister, fetchHistory as apiFetchHistory } from '@/api.js'
+import Scanner from '@/components/Scanner/Scanner'
 import styles from './Home.module.css'
 
 interface Coords {
@@ -13,168 +10,125 @@ interface Coords {
 }
 
 export default function Home() {
-  const [status, setStatus] = useState('checking') // checking | found | scanning | idle | error
   const [coords, setCoords] = useState<Coords | null>(null)
   const [content, setContent] = useState<unknown>(null)
-  const [history, setHistory] = useState<HistoryRecord[]>([])
-  const [error, setError] = useState('')
-  const [scannerActive, setScannerActive] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [showScanner, setShowScanner] = useState(false)
 
-  // Load history initially
-  useEffect(() => {
-    apiFetchHistory()
-      .then((d) => setHistory(d.records || []))
-      .catch(() => {})
-  }, [])
-
-  // When coords available, try resolve nearby
-  useEffect(() => {
-    async function doResolve() {
-      if (!coords) return
-      setStatus('checking')
-      setError('')
-      try {
-        const res = await apiResolve(coords)
-        setContent(safeParse(res?.content))
-        setStatus('found')
-      } catch (e: unknown) {
-        const error = e as { response?: { status?: number }; message?: string }
-        // 404 -> not found; go idle
-        if (error?.response?.status === 404) {
-          setStatus('idle')
-        } else {
-          setStatus('error')
-          setError(error?.message || 'Failed to resolve')
-        }
-      }
-    }
-    doResolve()
-  }, [coords])
-
-  const canRegister = useMemo(() => !!coords, [coords])
-
-  async function handleRegisterContent(data: unknown) {
-    if (!coords) return
-    try {
-      const payload = { lat: coords.lat, lon: coords.lon, content: data }
-      await apiRegister(payload)
-      // refresh history
-      const h = await apiFetchHistory()
-      setHistory(h.records || [])
-      setContent(data)
-      setStatus('found')
-    } catch (e: unknown) {
-      const error = e as { message?: string }
-      setError(error?.message || 'Failed to register')
-    }
-  }
-
-  function handleScanDecode(result: string) {
-    // result may be string; try parse JSON
-    const decoded = safeParse(result)
-    handleRegisterContent(decoded)
-    setScannerActive(false)
-  }
-
-  function requestLocation() {
+  const getLocation = useCallback(() => {
+    setLoading(true)
+    setError(null)
     if (!('geolocation' in navigator)) {
-      setError('Geolocation not supported by this browser')
-      setStatus('error')
+      setError('Geolocation not supported')
+      setLoading(false)
       return
     }
-    setStatus('checking')
+
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        const { latitude, longitude } = pos.coords || {}
-        setCoords({ lat: latitude, lon: longitude })
+        setCoords({
+          lat: pos.coords.latitude,
+          lon: pos.coords.longitude,
+        })
       },
       (err) => {
-        setError(err?.message || 'Failed to get location')
-        setStatus('error')
+        setError(err.message)
+        setLoading(false)
       },
       { enableHighAccuracy: true, timeout: 10000 }
     )
-  }
+  }, [])
 
-  const cameraHelp = (
-    <div className="hint">
-      Allow camera permission when prompted. If blocked, enable camera access in your browser settings and reload.
-    </div>
-  )
+  useEffect(() => {
+    getLocation()
+  }, [getLocation])
 
-  return (
-    <div className="app-grid">
-      <GeoHandler
-        onCoords={(c: Coords | null) => setCoords(c)}
-        onError={(err: { message?: string }) => {
-          setError(err?.message || 'Geolocation error')
-          setStatus('error')
-        }}
-      />
+  useEffect(() => {
+    if (coords) {
+      resolve(coords)
+        .then((data) => {
+          if (data && data.content) {
+            setContent(data.content)
+            setShowScanner(false)
+          } else {
+            setShowScanner(true)
+          }
+        })
+        .catch((err) => {
+          console.error('Resolve error:', err)
+          setShowScanner(true)
+        })
+        .finally(() => {
+          setLoading(false)
+        })
+    }
+  }, [coords])
 
-      <aside className="sidebar">
-        <h3 className={styles.historyTitle}>History</h3>
-        <History records={history} onSelect={(r: HistoryRecord) => setContent(r.content)} />
-      </aside>
+  const handleScan = async (result: unknown) => {
+    if (!coords || !result) return
+    
+    // Extract text from result. The @yudiel/react-qr-scanner result might be an object or string
+    let scannedText: string | undefined
 
-      <main className="main">
-        <header className="topbar">
-          <strong>Status:</strong> <span>{status}</span>
-          {coords && (
-            <span className="coords">
-              @ {coords.lat.toFixed(5)}, {coords.lon.toFixed(5)}
-            </span>
-          )}
-          <span className="spacer" />
-          <button type="button" onClick={requestLocation} className="btn">
-            Request Location
-          </button>
-          <button type="button" onClick={() => setScannerActive((v) => !v)} className="btn">
-            {scannerActive ? 'Hide Scanner' : 'Scan QR'}
-          </button>
-        </header>
+    if (typeof result === 'string') {
+      scannedText = result
+    } else if (Array.isArray(result) && result[0] && typeof result[0].rawValue === 'string') {
+      scannedText = result[0].rawValue
+    }
 
-        <div className="permissions">
-          <div className="hint">
-            Tip: To load nearby content, allow location permission when prompted. You can also tap "Request Location" anytime.
-          </div>
-          {cameraHelp}
-        </div>
+    if (!scannedText) return
 
-        {error && <div className="error">{error}</div>}
-
-        {scannerActive && (
-          <Scanner
-            active={scannerActive}
-            onDecode={handleScanDecode}
-            onError={(e: { message?: string }) => setError(e?.message || 'Scanner error')}
-            onClose={() => setScannerActive(false)}
-          />
-        )}
-
-        <section className="two-col">
-          <div>
-            <h3>Current Content</h3>
-            <Canvas content={content} />
-          </div>
-          <div>
-            <h3>Manual JSON Input</h3>
-            <JsonInput onSubmit={handleRegisterContent} disabled={!canRegister} />
-            {!canRegister && <div className={`hint ${styles.waitingHint}`}>Waiting for location to register content…</div>}
-          </div>
-        </section>
-      </main>
-    </div>
-  )
-}
-
-function safeParse(value: unknown): unknown {
-  if (typeof value === 'string') {
     try {
-      return JSON.parse(value)
-    } catch {
-      return value
+      setLoading(true)
+      const data = await register({
+        ...coords,
+        content: scannedText,
+      })
+      setContent(data.content || scannedText)
+      setShowScanner(false)
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Failed to register'
+      setError(message)
+    } finally {
+      setLoading(false)
     }
   }
-  return value
+
+  if (loading && !showScanner) {
+    return <div className={styles.container}>Loading...</div>
+  }
+
+  if (error && !showScanner && !content) {
+    return (
+      <div className={styles.container}>
+        <p className={styles.error}>{error}</p>
+        <button onClick={getLocation} className={styles.button}>Retry</button>
+      </div>
+    )
+  }
+
+  return (
+    <div className={styles.container}>
+      {content ? (
+        <div className={styles.contentSection}>
+          <h1 className={styles.title}>Found Content</h1>
+          <Canvas content={content} />
+          <button onClick={() => { setContent(null); setShowScanner(true); }} className={styles.button}>
+            Scan Another
+          </button>
+        </div>
+      ) : showScanner ? (
+        <div className={styles.scannerSection}>
+          <h1 className={styles.title}>No content found here</h1>
+          <p>Scan a QR code to register this location</p>
+          <Scanner 
+            active={true} 
+            onDecode={handleScan} 
+            onError={(err: Error) => setError(err.message)} 
+          />
+        </div>
+      ) : null}
+    </div>
+  )
 }

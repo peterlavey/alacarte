@@ -31,6 +31,7 @@
     - *(Plan: 7.1, Req: 7)*
 - [x] **Netlify Config & SPA Routing**
     - Add `netlify.toml` with client build (base: client, publish: dist) and SPA redirects.
+    - Fix 404 on `/debug` by ensuring React Router has the route defined.
     - *(Plan: 7.2, Req: 7)*
 - [x] **API as Single Netlify Function (Express Wrapped)**
     - Add `netlify/functions/api.js` using `serverless-http` to wrap `server/index.js`.
@@ -98,11 +99,13 @@
     - *(Plan: 7.6, Req: 7)*
 ## Phase 8: Guideline Alignment
 - [x] React folder structure conforms to guidelines (components/utils/pages) (Plan: 8.1, Req: 8)
-- [x] Implement routing with `react-router-dom` and move App logic to Home view (Plan: 8.2, Req: 8)
-- [x] Introduce TypeScript to client and define props interfaces for updated components (History, Home) (Plan: 8.3, Req: 8)
+- [x] Implement routing with `react-router-dom` and move App logic to Debug view (Plan: 8.2, Req: 8)
+- [x] Introduce TypeScript to client and define props interfaces for updated components (History, Debug) (Plan: 8.3, Req: 8)
 - [x] Replace inline styles with CSS Modules for key components (History, JsonInput, Scanner, Canvas, App adjustments) (Plan: 8.3, Req: 8)
 - [x] Add ESLint + Prettier configs and root scripts (Plan: 8.4, Req: 8)
 - [x] Add unit tests under `__tests__` (History empty state) (Plan: 8.5, Req: 8)
 - [x] Enforce conventional commits with husky and commitlint (Plan: 8.6, Req: 8)
+- [x] Rename Home page to Debug (Plan: 8.2, Req: 8)
+- [x] Create Home page with location-based logic (Plan: 3.5, Req: 1, 2)
 - [ ] Migrate remaining components to TypeScript with explicit props interfaces (Plan: 8.2, Req: 8)
 - [ ] Add more component tests (JsonInput submit flow, Scanner visibility, Canvas render) (Plan: 8.5, Req: 8)
