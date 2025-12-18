@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import GeoHandler from './components/GeoHandler.jsx'
-import JsonInput from './components/JsonInput.jsx'
-import Scanner from './components/Scanner.jsx'
-import Canvas from './components/Canvas.jsx'
-import History from './components/History.jsx'
+import GeoHandler from './components/GeoHandler/GeoHandler'
+import JsonInput from './components/JsonInput/JsonInput'
+import Scanner from './components/Scanner/Scanner'
+import Canvas from './components/Canvas/Canvas'
+import History from './components/History/History'
 import { resolve as apiResolve, register as apiRegister, fetchHistory as apiFetchHistory } from './api.js'
+import styles from './App.module.css'
 
 export default function App() {
   const [status, setStatus] = useState('checking') // checking | found | scanning | idle | error
@@ -95,13 +96,6 @@ export default function App() {
 
   return (
     <div className="app-grid">
-      <h2>
-        {import.meta?.env?.VITE_API_BASE || 'import.meta?.env?.VITE_API_BASE not found'}
-      </h2>
-      <h2>
-        {process.env?.VITE_API_BASE || 'process.env.VITE_API_BASE not found'}
-      </h2>
-
       <GeoHandler
         onCoords={(c) => setCoords(c)}
         onError={(err) => {
@@ -111,7 +105,7 @@ export default function App() {
       />
 
       <aside className="sidebar">
-        <h3 style={{ marginTop: 0 }}>History</h3>
+        <h3 className={styles.historyTitle}>History</h3>
         <History records={history} onSelect={(r) => setContent(r.content)} />
       </aside>
 
@@ -158,7 +152,7 @@ export default function App() {
           <div>
             <h3>Manual JSON Input</h3>
             <JsonInput onSubmit={handleRegisterContent} disabled={!canRegister} />
-            {!canRegister && <div className="hint" style={{ marginTop: 6 }}>Waiting for location to register content…</div>}
+            {!canRegister && <div className={`hint ${styles.waitingHint}`}>Waiting for location to register content…</div>}
           </div>
         </section>
       </main>

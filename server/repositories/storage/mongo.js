@@ -1,5 +1,5 @@
 import { MongoClient } from 'mongodb'
-import { getDistanceFromLatLonInMeters } from './utils/geo.js'
+import { getDistanceFromLatLonInMeters } from '../../utils/geo.js'
 
 let client
 let db

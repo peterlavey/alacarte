@@ -1,11 +1,12 @@
 import React from 'react'
 import { Scanner as QrScanner } from '@yudiel/react-qr-scanner'
+import styles from './Scanner.module.css'
 
 export default function Scanner({ active, onDecode, onError, onClose }) {
   if (!active) return null
   return (
-    <div style={{ position: 'relative', border: '1px solid #ccc', borderRadius: 8, overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', top: 8, right: 8, zIndex: 2 }}>
+    <div className={styles.container}>
+      <div className={styles.closeWrap}>
         {onClose && (
           <button type="button" onClick={onClose}>Close</button>
         )}

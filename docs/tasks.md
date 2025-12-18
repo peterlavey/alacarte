@@ -1,110 +1,3 @@
-# Task List
-
-## Phase 1: Project Foundation
-- [x] **Initialize Project Root**
-    - Create root directory, `server/`, and `client/`.
-    - Initialize git repository.
-    - *(Plan: 1.1)*
-- [x] **Backend Configuration**
-    - Initialize `server/package.json`.
-    - Install `express`, `cors`, `body-parser`, `nodemon`.
-    - *(Plan: 1.1)*
-- [x] **Frontend Configuration**
-    - Initialize React app in `client/` (e.g., Create React App or Vite).
-    - Install `axios` and `react-qr-reader`.
-    - *(Plan: 1.1)*
-
-## Phase 2: BFF Layer - Core Logic
-- [x] **Server Entry Point**
-    - Create `server/index.js`.
-    - Configure Express app with CORS and JSON middleware.
-    - Start server on port 3001.
-    - *(Plan: 2.1)*
-- [x] **Spatial Utility**
-    - Create `server/utils/geo.js`.
-    - Implement `getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2)`.
-    - *(Plan: 2.2, Req: 1)*
-- [x] **Storage Module**
-    - Create `server/storage.js`.
-    - Implement `saveRecord(record)` (in-memory array or file).
-    - Implement `findNearestRecord(lat, lon, thresholdMeters)`.
-    - *(Plan: 2.3, Req: 5)*
-- [x] **Resolve API**
-    - Create route `POST /api/resolve`.
-    - Accept `{ lat, lon }`.
-    - Use `findNearestRecord`; return file content if found, else 404.
-    - *(Plan: 2.4, Req: 1)*
-- [x] **Register API**
-    - Create route `POST /api/register`.
-    - Accept `{ lat, lon, content }`.
-    - Call `saveRecord`.
-    - *(Plan: 2.4, Req: 2)*
-- [x] **History API**
-    - Create route `GET /api/history`.
-    - Return all stored records.
-    - *(Plan: 2.4, Req: 4)*
-
-## Phase 3: Web UI - Components & Integration
-- [x] **API Service**
-    - Create `client/src/api.js`.
-    - specific methods: `resolve(coords)`, `register(data)`, `fetchHistory()`.
-    - *(Plan: 3.1)*
-- [x] **Geolocation Hook/Component**
-    - Create `components/GeoHandler.jsx`.
-    - Get current position on mount; handle errors.
-    - *(Plan: 3.2, Req: 1)*
-- [x] **Manual Input Component**
-    - Create `components/JsonInput.jsx`.
-    - Textarea for JSON input and Submit button.
-    - *(Plan: 3.2, Req: 3)*
-- [x] **QR Scanner Component**
-    - Create `components/Scanner.jsx`.
-    - Render QR reader when active; emit result on scan.
-    - *(Plan: 3.3, Req: 2)*
-- [x] **Visualization Canvas**
-    - Create `components/Canvas.jsx`.
-    - Display current content (file/text).
-    - *(Plan: 3.4, Req: 4)*
-- [x] **History Sidebar**
-    - Create `components/History.jsx`.
-    - List items; handle click to view details.
-    - *(Plan: 3.4, Req: 4)*
-- [x] **Main App Integration**
-    - Stitch components in `App.jsx`.
-    - State: `status` (checking -> found/scanning), `content`, `history`.
-    - *(Plan: 3.1)*
-
-## Phase 4: Polish & Verification
-- [x] **Permission UI**
-    - Add friendly UI prompts for allowing camera/location access.
-    - *(Plan: 4.1)*
-- [x] **Mobile Layout**
-    - Apply CSS media queries for mobile-first view.
-    - *(Plan: 4.2)*
-## Phase 5: Persistence
-- [x] **Database**
-    - Implement persistent storage (e.g., MongoDB).
-    - Use a free tier for development.
-    - *(Plan: 5.1)*
-    - Use repository pattern to isolate storage logic.
-    - *(Plan: 5.2)*
-    - Add tests for storage module.
-    - *(Plan: 5.3)*
-
-## Phase 6: CI/CD & Deployment
-- [x] **CI Pipeline Definition**
-    - Add GitLab CI pipeline with stages `test`, `build`, `deploy`.
-    - Runs server tests on pushes and MRs.
-    - *(Plan: 6.1, Req: 6)*
-- [x] **Frontend Deploy via GitLab Pages**
-    - Build Vite client with correct base path for Pages.
-    - Publish `public/` artifact using `pages` job on default branch.
-    - *(Plan: 6.2, Req: 6)*
-- [x] **Backend Docker Image**
-    - Add `server/Dockerfile` and build/push `server:latest` image to GitLab Container Registry on default branch.
-    - *(Plan: 6.3, Req: 6)*
-- [x] **Fix GitLab Pages base-path and asset routing**
-    - Ensure Vite `base` is derived from `CI_PAGES_URL`/`CI_PROJECT_NAME` to generate absolute asset URLs for Pages.
     - Keep `.nojekyll` and `404.html` for SPA routing on GitLab Pages.
     - *(Plan: 6.2, Req: 6)*
 - [x] **Unify base path configuration**
@@ -131,3 +24,76 @@
     - Start the image as a CI service with alias `server` so the collection can reach it at `http://server:3001`.
     - Publish JUnit results as job artifacts.
     - *(Plan: 6.5, Req: 6)*
+
+## Phase 7: Migration to GitHub + Netlify
+- [ ] **Repository Migration to GitHub**
+    - Mirror repository to GitHub, keep default branch naming, enable branch protections.
+    - *(Plan: 7.1, Req: 7)*
+- [x] **Netlify Config & SPA Routing**
+    - Add `netlify.toml` with client build (base: client, publish: dist) and SPA redirects.
+    - *(Plan: 7.2, Req: 7)*
+- [x] **API as Single Netlify Function (Express Wrapped)**
+    - Add `netlify/functions/api.js` using `serverless-http` to wrap `server/index.js`.
+    - Refactor `server/index.js` to export app and avoid `listen` under Netlify; ensure storage init.
+    - *(Plan: 7.3, Req: 7)*
+- [x] **Pretty API Routes Proxy**
+    - Configure Netlify redirects to map `/api/*` → `/.netlify/functions/api/:splat` with status 200 in `netlify.toml`.
+    - Verify raw function and pretty routes under `netlify dev`.
+    - *(Plan: 7.3, Req: 7)*
+- [x] **Netlify Dev Local Runner Configuration**
+    - Add `[dev]` block in `netlify.toml` to start Vite with `--mode netlify` and set proxy ports; ensure redirects take precedence.
+    - Add `client/.env.netlify` with `VITE_API_BASE=/.netlify/functions/api` so the client calls Functions in dev.
+    - Set Functions bundler to `esbuild` for ESM support; add `force=true` to `/api/*` redirect.
+    - *(Plan: 7.3, Req: 7)*
+- [x] **Netlify Functions: Root-level server dependencies for bundling**
+    - Add `express`, `cors`, `body-parser`, and `dotenv` to the root `package.json` so Netlify’s esbuild bundler can resolve and bundle them for `netlify/functions/api.js` (which imports `server/index.js`).
+    - Keep server code ESM; retain `node_bundler = "esbuild"` in `netlify.toml`.
+    - *(Plan: 7.3, Req: 7)*
+- [x] **Netlify Functions: Mongo backend support**
+    - Add `mongodb` to root `package.json` and configure Functions bundler to externalize it (`external_node_modules = ["mongodb"]`).
+    - Update Netlify build command to install root deps before client build so the driver is present.
+    - Use Netlify env vars `USE_DB=mongo`, `MONGO_URL`, and `MONGO_DB` for runtime selection.
+    - *(Plan: 7.3, Req: 7)*
+- [x] **Organize Storage Files into Folder**
+    - Move `server/storage.js`, `server/storage.memory.js`, and `server/storage.mongo.js` into `server/storage/` as `index.js`, `memory.js`, and `mongo.js` respectively; update all imports; remove old locations.
+    - *(Plan: 5.2, Req: 5)*
+- [x] **Phase 8: Testing & Quality — Setup Vitest (Server & Client)**
+    - Configure Vitest for server (node environment) and client (jsdom), add coverage, scripts.
+    - *(Plan: 8.1, Req: 6)*
+- [x] **Phase 8: Server Unit Tests**
+    - Add tests for `utils/geo.js` edge cases and `server/storage` (memory backend) behaviors.
+    - Mock Mongo backend selection when `USE_DB=mongo` is set; no real DB.
+    - *(Plan: 8.2, Req: 6)*
+- [x] **Phase 8: Server Route Tests**
+    - Add tests for `/api/register`, `/api/resolve`, `/api/history` using supertest against exported app; cover validation and thresholds.
+    - *(Plan: 8.3, Req: 6)*
+- [x] **Phase 8: Migrate legacy Node tests to Vitest**
+    - Migrate `server/tests/storage.memory.test.js` from Node's test runner to Vitest, align with existing setup, and ensure tests pass.
+    - *(Plan: 8.2, Req: 6)*
+- [ ] **Phase 8: Client Unit Tests**
+    - Add tests for `client/src/api.js` (mock fetch/axios) and UI components with Testing Library.
+    - *(Plan: 8.4, Req: 6)*
+    - [x] Stabilize axios mocking to prevent OOM in Vitest (api.test.js) — use stable ESM mock, avoid module resets; enforce single-threaded pool on Windows/Node 22.
+      - *(Plan: 8.4, Req: 6)*
+- [ ] **Phase 8: Coverage & Docs**
+    - Enable coverage reports locally with `@vitest/coverage-v8` and document how to run tests; no CI integration.
+    - *(Plan: 8.5, Req: 6)*
+- [x] **Secrets & Environment Setup on Netlify**
+    - Configure `VITE_API_BASE=/.netlify/functions/api` for client builds; optionally `USE_DB=memory|mongo`, and if mongo then `MONGO_URL`, `MONGO_DB`.
+    - Document local `netlify dev` usage with `VITE_API_BASE` for testing.
+    - *(Plan: 7.4, Req: 7)*
+- [ ] **GitHub Actions: Acceptance Tests**
+    - Add workflow to run Newman against Netlify Deploy Preview (PR) and Production (main) URLs.
+    - Publish JUnit as artifacts.
+    - *(Plan: 7.5, Req: 7)*
+- [ ] **Cutover & Decommission GitLab**
+    - Switch production to Netlify; validate endpoints; remove `.gitlab-ci.yml` and Pages deploy.
+    - *(Plan: 7.6, Req: 7)*
+## Phase 8: Guideline Alignment
+- [x] React folder structure conforms to guidelines (components/utils/pages) (Plan: 8.1, Req: 8)
+- [x] Introduce TypeScript to client and define props interfaces for updated components (History) (Plan: 8.2, Req: 8)
+- [x] Replace inline styles with CSS Modules for key components (History, JsonInput, Scanner, Canvas, App adjustments) (Plan: 8.3, Req: 8)
+- [x] Add ESLint + Prettier configs and root scripts (Plan: 8.4, Req: 8)
+- [x] Add unit tests under `__tests__` (History empty state) (Plan: 8.5, Req: 8)
+- [ ] Migrate remaining components to TypeScript with explicit props interfaces (Plan: 8.2, Req: 8)
+- [ ] Add more component tests (JsonInput submit flow, Scanner visibility, Canvas render) (Plan: 8.5, Req: 8)

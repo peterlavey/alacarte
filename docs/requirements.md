@@ -60,3 +60,24 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 - **WHEN** code is pushed to the default branch, **THEN** a Docker image for the server SHALL be built and pushed to the GitLab Container Registry under `:latest`.
 - **WHEN** the pipeline runs, **THEN** secrets (e.g., database credentials) SHALL be provided through GitLab CI/CD variables; repository-stored `.env` secrets SHALL NOT be required for successful builds.
 - **WHEN** the server image is built on the default branch, **THEN** an Acceptance stage SHALL run a Postman/Newman collection against the running container (accessible via a service alias such as `server`) to verify core API endpoints (health, register, resolve, history) succeed.
+
+### 7. GitHub + Netlify Migration
+**Stakeholder Need:**
+> As a maintainer, I want the project hosted on GitHub with the frontend deployed via Netlify and the API provided by Netlify Functions (if feasible) so delivery is simpler (no Docker required for API) and deploy previews are available.
+
+**Acceptance Criteria:**
+- **WHEN** code is pushed to GitHub, **THEN** Netlify SHALL build the client from `client/` and publish `client/dist` with SPA routing enabled.
+- **WHEN** the API is migrated, **THEN** a single Netlify Function SHALL wrap the existing Express app and expose endpoints under `/.netlify/functions/api`.
+- **WHEN** the Netlify site is built, **THEN** the client SHALL use `VITE_API_BASE=/.netlify/functions/api` (configurable in Netlify env vars).
+- **WHEN** PRs are opened on GitHub, **THEN** Netlify Deploy Previews SHALL be generated and can be used to run acceptance tests against `/.netlify/functions/api`.
+- **WHEN** the GitHub pipeline runs, **THEN** acceptance tests (Newman) MAY run against the Deploy Preview or Production URLs, publishing JUnit artifacts.
+
+### 8. UI Code Guidelines Compliance
+**Stakeholder Need:**
+> As a maintainer, I want the UI code to follow project guidelines so that the codebase remains consistent, testable, and easy to evolve.
+
+**Acceptance Criteria:**
+- **WHEN** UI components are added or updated, **THEN** they SHOULD be authored in TypeScript and define explicit props interfaces.
+- **WHEN** styles are applied, **THEN** inline `style` objects SHOULD be avoided in favor of CSS Modules or Tailwind.
+- **WHEN** new logic is introduced, **THEN** unit tests SHALL be added using Vitest under a `__tests__` directory adjacent to the file.
+- **WHEN** code is committed, **THEN** it SHOULD pass ESLint and Prettier formatting checks.

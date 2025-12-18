@@ -1,0 +1,17 @@
+[build]
+  # Functions-only project; no static publish content required
+  publish = "."
+  command = "npm ci"
+  node_version = "20"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+  external_node_modules = ["mongodb"]
+
+# Pretty API routes → Netlify Function
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true

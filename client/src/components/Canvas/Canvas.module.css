@@ -1,0 +1,14 @@
+.empty {
+  padding: 12px;
+  color: #666;
+}
+
+.pre {
+  padding: 12px;
+  background: #0b1020;
+  color: #cce6ff;
+  border-radius: 8px;
+  min-height: 160px;
+  overflow: auto;
+  margin: 0;
+}

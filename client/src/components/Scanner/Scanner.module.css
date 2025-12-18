@@ -1,0 +1,13 @@
+.container {
+  position: relative;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.closeWrap {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+}

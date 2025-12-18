@@ -26,6 +26,10 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
     - `POST /api/register`: For saving new QR-scanned locations.
     - `GET /api/history`: For retrieving past activity.
     - *Relates to Requirements: 1, 2, 3, 4*
+ - **2.5 Route Layer Modularization**
+    - Extract endpoint handlers into modular routers under `server/routes/` (`health`, `register`, `resolve`, `history`) and mount them at `/api` from `server/index.js`.
+    - No behavior changes; maintain existing payloads and status codes.
+    - *Relates to Requirements: 1, 2, 4*
 
 ## Phase 3: Web UI - Components & Integration (Priority: Medium)
 **Goal:** Build the React frontend to interact with the physical world (Geo/Cam) and the API.
@@ -83,3 +87,48 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
     - Add an Acceptance stage that runs a Postman/Newman collection against the server container image started as a CI service (with alias `server`).
     - Export JUnit reports as CI artifacts and fail the pipeline on API regressions.
     - *Relates to Requirements: 6*
+
+## Phase 7: Migration to GitHub + Netlify (Priority: Medium)
+**Goal:** Host the repository on GitHub, deploy the frontend to Netlify, and (if feasible) run the API as a single Netlify Function wrapping the existing Express app.
+- **7.1 Repository Relocation & Governance**
+    - Mirror the Git history to GitHub, align default branch, and set branch protections.
+    - Keep GitLab CI temporarily until GitHub Actions + Netlify are verified; then decommission GitLab automation.
+    - *Relates to Requirements: 7*
+- **7.2 Frontend Deployment on Netlify**
+    - Connect Netlify to GitHub. Build base: `client`, command: `npm ci && npm run build`, publish: `dist`.
+    - Add SPA redirects and configure `VITE_API_BASE` via Netlify env vars.
+    - *Relates to Requirements: 7*
+- **7.3 API via Netlify Functions (Single Wrapped Express)**
+    - Add `netlify/functions/api.js` with `serverless-http` to wrap `server/index.js`.
+    - Refactor server to export the Express app and avoid `listen` under Netlify; ensure storage initialization works in serverless.
+    - *Relates to Requirements: 7*
+- **7.4 Secrets & CORS**
+    - Move secrets to Netlify environment variables (e.g., `MONGO_URL`, `MONGO_DB`).
+    - If using separate origins, configure CORS to allow Netlify domain(s); prefer same-origin via `/.netlify/functions/api`.
+    - *Relates to Requirements: 7*
+- **7.5 GitHub Actions Acceptance Tests**
+    - Add workflow to run Newman against Netlify Deploy Previews (PRs) and Production (main), publishing JUnit artifacts.
+    - *Relates to Requirements: 7*
+- **7.6 Cutover & Decommission**
+    - Switch production traffic to Netlify; validate endpoints.
+    - Remove `.gitlab-ci.yml` and Pages deployment once stable.
+    - *Relates to Requirements: 7*
+
+## Phase 8: Guideline Alignment (Priority: Medium)
+**Goal:** Align the codebase with the JavaScript & React Project Guidelines (.junie/guidelines.md).
+- **8.1 React Folder Structure**
+    - Ensure components under `src/components`, utilities under `src/utils`, and pages under `src/pages`.
+    - *Relates to Requirements: 8*
+- **8.2 TypeScript Adoption for New/Updated UI**
+    - Prefer TypeScript for new React components and define explicit props interfaces.
+    - Incrementally migrate key components.
+    - *Relates to Requirements: 8*
+- **8.3 Styling Without Inline Styles**
+    - Replace inline `style` with CSS Modules or Tailwind; choose CSS Modules initially.
+    - *Relates to Requirements: 8*
+- **8.4 Code Quality Tooling**
+    - Add ESLint and Prettier configurations and scripts; ensure CI can run lint.
+    - *Relates to Requirements: 8*
+- **8.5 Testing Conventions**
+    - Add unit tests with Vitest in `__tests__` folders adjacent to files.
+    - *Relates to Requirements: 8*
