@@ -91,7 +91,8 @@
     - *(Plan: 7.6, Req: 7)*
 ## Phase 8: Guideline Alignment
 - [x] React folder structure conforms to guidelines (components/utils/pages) (Plan: 8.1, Req: 8)
-- [x] Introduce TypeScript to client and define props interfaces for updated components (History) (Plan: 8.2, Req: 8)
+- [x] Implement routing with `react-router-dom` and move App logic to Home view (Plan: 8.2, Req: 8)
+- [x] Introduce TypeScript to client and define props interfaces for updated components (History, Home) (Plan: 8.3, Req: 8)
 - [x] Replace inline styles with CSS Modules for key components (History, JsonInput, Scanner, Canvas, App adjustments) (Plan: 8.3, Req: 8)
 - [x] Add ESLint + Prettier configs and root scripts (Plan: 8.4, Req: 8)
 - [x] Add unit tests under `__tests__` (History empty state) (Plan: 8.5, Req: 8)

@@ -5,7 +5,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.js'],
-    include: ['src/**/*.test.{js,jsx}'],
+    include: ['src/**/*.test.{js,jsx,ts,tsx}'],
     coverage: { provider: 'v8' },
     // Mitigate Windows/Node 22 worker OOM by forcing single-threaded execution
     pool: 'threads',

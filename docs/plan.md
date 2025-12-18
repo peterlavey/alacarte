@@ -118,8 +118,12 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
 **Goal:** Align the codebase with the JavaScript & React Project Guidelines (.junie/guidelines.md).
 - **8.1 React Folder Structure**
     - Ensure components under `src/components`, utilities under `src/utils`, and pages under `src/pages`.
+    - Create `src/pages` for view components and move `App.jsx` content to a new view.
     - *Relates to Requirements: 8*
-- **8.2 TypeScript Adoption for New/Updated UI**
+- **8.2 Routing & Navigation**
+    - Introduce `react-router-dom` to manage application views.
+    - *Relates to Requirements: 8*
+- **8.3 TypeScript Adoption for New/Updated UI**
     - Prefer TypeScript for new React components and define explicit props interfaces.
     - Incrementally migrate key components.
     - *Relates to Requirements: 8*
