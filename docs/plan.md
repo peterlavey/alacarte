@@ -139,3 +139,6 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
 - **8.6 Conventional Commits Enforcement**
     - Install and configure `husky` and `commitlint` to enforce the conventional commits specification.
     - *Relates to Requirements: 8*
+- **8.7 Path Alias Implementation**
+    - Configure path aliases (e.g., `@` for `src`) to simplify imports and improve maintainability.
+    - *Relates to Requirements: 8*

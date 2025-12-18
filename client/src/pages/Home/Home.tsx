@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import GeoHandler from '../../components/GeoHandler/GeoHandler'
-import JsonInput from '../../components/JsonInput/JsonInput'
-import Scanner from '../../components/Scanner/Scanner'
-import Canvas from '../../components/Canvas/Canvas'
-import History from '../../components/History/History'
-import { resolve as apiResolve, register as apiRegister, fetchHistory as apiFetchHistory } from '../../api.js'
+import GeoHandler from '@/components/GeoHandler/GeoHandler'
+import JsonInput from '@/components/JsonInput/JsonInput'
+import Scanner from '@/components/Scanner/Scanner'
+import Canvas from '@/components/Canvas/Canvas'
+import History from '@/components/History/History'
+import { resolve as apiResolve, register as apiRegister, fetchHistory as apiFetchHistory } from '@/api.js'
 import styles from './Home.module.css'
 
 interface Coords {

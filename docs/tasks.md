@@ -75,6 +75,10 @@
     - *(Plan: 8.4, Req: 6)*
     - [x] Stabilize axios mocking to prevent OOM in Vitest (api.test.js) — use stable ESM mock, avoid module resets; enforce single-threaded pool on Windows/Node 22.
       - *(Plan: 8.4, Req: 6)*
+- [x] **Phase 8: Path Alias Setup**
+    - Configure `@` alias for `src` directory in Vite, Vitest, and TypeScript.
+    - Replace relative imports with alias-based imports.
+    - *(Plan: 8.7, Req: 8)*
 - [ ] **Phase 8: Coverage & Docs**
     - Enable coverage reports locally with `@vitest/coverage-v8` and document how to run tests; no CI integration.
     - *(Plan: 8.5, Req: 6)*
