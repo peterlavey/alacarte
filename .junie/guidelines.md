@@ -49,5 +49,11 @@ This project follows a spec-driven development approach. The source of truth for
 *   **Avoid Inline Styles**: Use CSS modules or Tailwind CSS for styling instead of inline `style` objects.
 
 ## Git & PR Process
-*   **Commit Messages**: Use conventional commit messages (e.g., `feat: add user profile page`, `fix: resolve login bug`).
+*   **Commit Messages**: Use conventional commit messages based on `@commitlint/config-conventional`.
+    *   **Format**: `<type>(<scope>): <description>` (scope is optional).
+    *   **Common Types**: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`.
+    *   **Rules**:
+        *   Type and subject are required.
+        *   Subject must not end with a period.
+        *   Type must be lowercase.
 *   **Plan First**: For large tasks, ask Junie to propose an execution plan first and wait for approval before starting implementation.

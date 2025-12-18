@@ -102,7 +102,7 @@ export default function Home() {
   return (
     <div className="app-grid">
       <GeoHandler
-        onCoords={(c) => setCoords(c)}
+        onCoords={(c: React.SetStateAction<Coords | null>) => setCoords(c)}
         onError={(err: any) => {
           setError(err?.message || 'Geolocation error')
           setStatus('error')

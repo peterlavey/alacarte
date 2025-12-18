@@ -96,5 +96,6 @@
 - [x] Replace inline styles with CSS Modules for key components (History, JsonInput, Scanner, Canvas, App adjustments) (Plan: 8.3, Req: 8)
 - [x] Add ESLint + Prettier configs and root scripts (Plan: 8.4, Req: 8)
 - [x] Add unit tests under `__tests__` (History empty state) (Plan: 8.5, Req: 8)
+- [x] Enforce conventional commits with husky and commitlint (Plan: 8.6, Req: 8)
 - [ ] Migrate remaining components to TypeScript with explicit props interfaces (Plan: 8.2, Req: 8)
 - [ ] Add more component tests (JsonInput submit flow, Scanner visibility, Canvas render) (Plan: 8.5, Req: 8)
