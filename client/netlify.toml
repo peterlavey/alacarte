@@ -15,3 +15,6 @@
   targetPort = 5173
   port = 8888
   autoLaunch = true
+
+[build.environment]
+  VITE_API_BASE="https://alacarte-api.netlify.app"
