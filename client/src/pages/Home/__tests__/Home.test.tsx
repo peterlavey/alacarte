@@ -19,6 +19,17 @@ vi.mock('@/components/Scanner/Scanner', () => ({
   ),
 }))
 
+vi.mock('@/components/SplashScreen/SplashScreen', () => ({
+  default: ({ fadeOut, onAnimationEnd }: { fadeOut: boolean, onAnimationEnd: () => void }) => {
+    React.useEffect(() => {
+      if (fadeOut && onAnimationEnd) {
+        onAnimationEnd()
+      }
+    }, [fadeOut, onAnimationEnd])
+    return <div data-testid="splash-screen">{fadeOut ? 'Fading Out' : 'Alacarte'}</div>
+  },
+}))
+
 describe('Home Page', () => {
   const mockCoords = {
     latitude: 40.7128,
@@ -46,7 +57,7 @@ describe('Home Page', () => {
     
     render(<Home />)
     
-    expect(screen.getByText(/Loading.../i)).toBeInTheDocument()
+    expect(screen.getByText(/Alacarte/i)).toBeInTheDocument()
     
     await waitFor(() => {
       expect(api.resolve).toHaveBeenCalledWith({

@@ -17,6 +17,7 @@ export default function Home() {
   const [splashVisible, setSplashVisible] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [showScanner, setShowScanner] = useState(false)
+  const isRegistering = React.useRef(false)
 
   const getLocation = useCallback(() => {
     setLoading(true)
@@ -47,16 +48,16 @@ export default function Home() {
   }, [getLocation])
 
   useEffect(() => {
-    if (coords) {
+    if (coords && !content) {
       resolve(coords)
         .then((data: { content: string }) => {
-          if (data && content) {
-            const contentValue = content
+          if (data && data.content) {
+            const contentValue = data.content
             setContent(contentValue)
             setShowScanner(false)
 
             // If content is a URL, open it in a new tab
-            if (typeof contentValue === 'string' && contentValue.startsWith('http')) {
+            if (contentValue.startsWith('http')) {
               window.open(contentValue, '_blank')
             }
           } else {
@@ -71,10 +72,10 @@ export default function Home() {
           setLoading(false)
         })
     }
-  }, [content, coords])
+  }, [coords, content])
 
   const handleScan = async (result: unknown) => {
-    if (!coords || !result) return
+    if (!coords || !result || isRegistering.current) return
     
     // Extract text from result. The @yudiel/react-qr-scanner result might be an object or string
     let scannedText: string | undefined
@@ -88,6 +89,7 @@ export default function Home() {
     if (!scannedText) return
 
     try {
+      isRegistering.current = true
       setLoading(true)
       const data = await register({
         ...coords,
@@ -106,6 +108,7 @@ export default function Home() {
       setError(message)
     } finally {
       setLoading(false)
+      isRegistering.current = false
     }
   }
 

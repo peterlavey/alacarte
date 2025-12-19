@@ -60,3 +60,4 @@
 - [x] Server Unit Tests (Plan: 7.5, Req: 6)
 - [x] Server Route Tests (Plan: 7.5, Req: 6)
 - [x] Path Alias Setup (Plan: 7.7, Req: 7)
+- [x] Fix multiple register calls in Home page (Plan: 3.5, Req: 2)
