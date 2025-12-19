@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { resolve, register } from '@/api'
 import Canvas from '@/components/Canvas/Canvas'
 import Scanner from '@/components/Scanner/Scanner'
+import SplashScreen from '@/components/SplashScreen/SplashScreen'
 import styles from './Home.module.css'
 
 interface Coords {
@@ -13,8 +14,10 @@ export default function Home() {
   const [coords, setCoords] = useState<Coords | null>(null)
   const [content, setContent] = useState<unknown>(null)
   const [loading, setLoading] = useState(true)
+  const [splashVisible, setSplashVisible] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [showScanner, setShowScanner] = useState(false)
+  const isRegistering = React.useRef(false)
 
   const getLocation = useCallback(() => {
     setLoading(true)
@@ -45,23 +48,23 @@ export default function Home() {
   }, [getLocation])
 
   useEffect(() => {
-    if (coords) {
+    if (coords && !content) {
       resolve(coords)
-        .then((data) => {
+        .then((data: { content: string }) => {
           if (data && data.content) {
             const contentValue = data.content
             setContent(contentValue)
             setShowScanner(false)
 
             // If content is a URL, open it in a new tab
-            if (typeof contentValue === 'string' && contentValue.startsWith('http')) {
+            if (contentValue.startsWith('http')) {
               window.open(contentValue, '_blank')
             }
           } else {
             setShowScanner(true)
           }
         })
-        .catch((err) => {
+        .catch((err: never) => {
           console.error('Resolve error:', err)
           setShowScanner(true)
         })
@@ -69,11 +72,13 @@ export default function Home() {
           setLoading(false)
         })
     }
-  }, [coords])
+  }, [coords, content])
 
   const handleScan = async (result: unknown) => {
-    if (!coords || !result) return
+    if (!coords || !result || isRegistering.current) return
     
+    isRegistering.current = true
+
     // Extract text from result. The @yudiel/react-qr-scanner result might be an object or string
     let scannedText: string | undefined
 
@@ -83,7 +88,10 @@ export default function Home() {
       scannedText = result[0].rawValue
     }
 
-    if (!scannedText) return
+    if (!scannedText) {
+      isRegistering.current = false
+      return
+    }
 
     try {
       setLoading(true)
@@ -104,11 +112,17 @@ export default function Home() {
       setError(message)
     } finally {
       setLoading(false)
+      isRegistering.current = false
     }
   }
 
-  if (loading && !showScanner) {
-    return <div className={styles.container}>Loading...</div>
+  if (splashVisible) {
+    return (
+      <SplashScreen 
+        fadeOut={!loading} 
+        onAnimationEnd={() => setSplashVisible(false)} 
+      />
+    )
   }
 
   if (error && !showScanner && !content) {

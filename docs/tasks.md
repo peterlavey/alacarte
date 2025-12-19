@@ -52,6 +52,7 @@
 - [x] Generate PWA icons with detailed cat waiter design (ears from favicon, hand from mask-icon) (Plan: 7.8, Req: 7)
 - [x] Update README and use icon (Plan: 7.9, Req: 7)
 - [ ] Migrate remaining components to TypeScript with explicit props interfaces (Plan: 7.2, Req: 7)
+- [x] Implement elegant Splash Screen instead of "Loading" text (Plan: 4.2, Req: 4)
 - [ ] Add more component tests (JsonInput submit flow, Scanner visibility, Canvas render) (Plan: 7.5, Req: 7)
 - [x] Update documentation: Migrate from GitLab to Netlify (Plan: 6.5, Req: 6)
 - [x] Organize Storage Files into Folder (Plan: 5.2, Req: 5)
@@ -59,3 +60,4 @@
 - [x] Server Unit Tests (Plan: 7.5, Req: 6)
 - [x] Server Route Tests (Plan: 7.5, Req: 6)
 - [x] Path Alias Setup (Plan: 7.7, Req: 7)
+- [x] Fix multiple register calls in Home page (Plan: 3.5, Req: 2)
