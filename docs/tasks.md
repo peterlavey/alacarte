@@ -50,6 +50,7 @@
 - [x] Add logic to redirect to content URL in Home page (Plan: 3.5, Req: 1, 2)
 - [x] Convert client to PWA (Plan: 7.8, Req: 7)
 - [x] Generate PWA icons with detailed cat waiter design (ears from favicon, hand from mask-icon) (Plan: 7.8, Req: 7)
+- [x] Replace the icons with a symmetrical mustache design using example.svg as base (Plan: 7.10, Req: 7)
 - [x] Update README and use icon (Plan: 7.9, Req: 7)
 - [ ] Migrate remaining components to TypeScript with explicit props interfaces (Plan: 7.2, Req: 7)
 - [x] Implement elegant Splash Screen instead of "Loading" text (Plan: 4.2, Req: 4)
