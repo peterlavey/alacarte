@@ -31,6 +31,7 @@
     - *(Plan: 7.1, Req: 7)*
 - [x] **Netlify Config & SPA Routing**
     - Add `netlify.toml` with client build (base: client, publish: dist) and SPA redirects.
+    - Fix 404 on `/debug` by ensuring React Router has the route defined.
     - *(Plan: 7.2, Req: 7)*
 - [x] **API as Single Netlify Function (Express Wrapped)**
     - Add `netlify/functions/api.js` using `serverless-http` to wrap `server/index.js`.
@@ -75,6 +76,13 @@
     - *(Plan: 8.4, Req: 6)*
     - [x] Stabilize axios mocking to prevent OOM in Vitest (api.test.js) — use stable ESM mock, avoid module resets; enforce single-threaded pool on Windows/Node 22.
       - *(Plan: 8.4, Req: 6)*
+ - [x] **Phase 8: Path Alias Setup**
+    - Configure `@` alias for `src` directory in Vite, Vitest, and TypeScript.
+    - Replace relative imports with alias-based imports.
+    - *(Plan: 8.7, Req: 8)*
+- [x] **Phase 8: Fix Home.tsx Warnings**
+    - Resolve ESLint warnings and errors in `Home.tsx` by improving types and removing unused variables.
+    - *(Plan: 8.3, Req: 8)*
 - [ ] **Phase 8: Coverage & Docs**
     - Enable coverage reports locally with `@vitest/coverage-v8` and document how to run tests; no CI integration.
     - *(Plan: 8.5, Req: 6)*
@@ -91,9 +99,16 @@
     - *(Plan: 7.6, Req: 7)*
 ## Phase 8: Guideline Alignment
 - [x] React folder structure conforms to guidelines (components/utils/pages) (Plan: 8.1, Req: 8)
-- [x] Introduce TypeScript to client and define props interfaces for updated components (History) (Plan: 8.2, Req: 8)
+- [x] Implement routing with `react-router-dom` and move App logic to Debug view (Plan: 8.2, Req: 8)
+- [x] Introduce TypeScript to client and define props interfaces for updated components (History, Debug) (Plan: 8.3, Req: 8)
 - [x] Replace inline styles with CSS Modules for key components (History, JsonInput, Scanner, Canvas, App adjustments) (Plan: 8.3, Req: 8)
 - [x] Add ESLint + Prettier configs and root scripts (Plan: 8.4, Req: 8)
 - [x] Add unit tests under `__tests__` (History empty state) (Plan: 8.5, Req: 8)
+- [x] Enforce conventional commits with husky and commitlint (Plan: 8.6, Req: 8)
+- [x] Rename Home page to Debug (Plan: 8.2, Req: 8)
+- [x] Create Home page with location-based logic (Plan: 3.5, Req: 1, 2)
+- [x] Add logic to redirect to content URL in Home page (Plan: 3.5, Req: 1, 2)
+- [x] Convert client to PWA (Plan: 8.8, Req: 8)
+- [x] Generate PWA icons with detailed cat waiter design (ears from favicon, hand from mask-icon) (Plan: 8.8, Req: 8)
 - [ ] Migrate remaining components to TypeScript with explicit props interfaces (Plan: 8.2, Req: 8)
 - [ ] Add more component tests (JsonInput submit flow, Scanner visibility, Canvas render) (Plan: 8.5, Req: 8)

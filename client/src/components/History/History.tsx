@@ -27,7 +27,7 @@ export default function History({ records = [], onSelect }: HistoryProps) {
               @ {r.lat.toFixed(5)}, {r.lon.toFixed(5)}
             </div>
             <div className={styles.contentPreview}>
-              {typeof r.content === 'object' ? JSON.stringify(r.content as any) : String(r.content)}
+              {typeof r.content === 'object' ? JSON.stringify(r.content as Record<string, unknown>) : String(r.content)}
             </div>
           </button>
         </li>

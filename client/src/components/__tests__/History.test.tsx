@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import React from 'react'
-import History from '../History/History';
+import History from '@/components/History/History'
 
 describe('History', () => {
   it('renders empty state when no records', () => {

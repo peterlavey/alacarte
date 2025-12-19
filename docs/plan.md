@@ -47,6 +47,9 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
     - Create the "Canvas" to display file content.
     - Create the History sidebar to list past interactions.
     - *Relates to Requirements: 4*
+- **3.5 Intelligent Home Page**
+    - Implement a Home page that automatically resolves content based on location or prompts for QR scan.
+    - *Relates to Requirements: 1, 2*
 
 ## Phase 4: Polish & Verification (Priority: Low)
 **Goal:** Ensure usability, error handling, and responsiveness.
@@ -118,8 +121,12 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
 **Goal:** Align the codebase with the JavaScript & React Project Guidelines (.junie/guidelines.md).
 - **8.1 React Folder Structure**
     - Ensure components under `src/components`, utilities under `src/utils`, and pages under `src/pages`.
+    - Create `src/pages` for view components and move `App.jsx` content to a new view.
     - *Relates to Requirements: 8*
-- **8.2 TypeScript Adoption for New/Updated UI**
+- **8.2 Routing & Navigation**
+    - Introduce `react-router-dom` to manage application views.
+    - *Relates to Requirements: 8*
+- **8.3 TypeScript Adoption for New/Updated UI**
     - Prefer TypeScript for new React components and define explicit props interfaces.
     - Incrementally migrate key components.
     - *Relates to Requirements: 8*
@@ -131,4 +138,14 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
     - *Relates to Requirements: 8*
 - **8.5 Testing Conventions**
     - Add unit tests with Vitest in `__tests__` folders adjacent to files.
+    - *Relates to Requirements: 8*
+- **8.6 Conventional Commits Enforcement**
+    - Install and configure `husky` and `commitlint` to enforce the conventional commits specification.
+    - *Relates to Requirements: 8*
+- **8.7 Path Alias Implementation**
+    - Configure path aliases (e.g., `@` for `src`) to simplify imports and improve maintainability.
+    - *Relates to Requirements: 8*
+- **8.8 PWA Conversion**
+    - Convert the client to a Progressive Web App (PWA) using `vite-plugin-pwa`.
+    - Configure manifest, service worker, and app icons.
     - *Relates to Requirements: 8*
