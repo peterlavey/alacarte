@@ -4,7 +4,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 import path from 'path'
 
 // https://vitejs.dev/config/
-// Use the same base path locally and in GitLab CI: '/'
+// Use the same base path locally and in production: '/'
 // Per request, do NOT adjust base for Pages subpaths.
 export default defineConfig(() => {
   return {

@@ -72,80 +72,56 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
     - Add tests to validate storage operations and proximity queries.
     - *Relates to Requirements: 5*
 
-## Phase 6: CI/CD & Deployment (Priority: Medium)
-**Goal:** Automate build, test, and deployment using GitLab CI/CD.
-- **6.1 CI Pipeline Definition**
-    - Add `.gitlab-ci.yml` with stages: test, build, deploy.
-    - *Relates to Requirements: 6*
-- **6.2 Frontend Deployment (Pages)**
-    - Build the Vite client and publish via GitLab Pages on default branch.
-    - *Relates to Requirements: 6*
-- **6.3 Backend Container Image**
-    - Add Dockerfile for server and publish image to GitLab Container Registry on default branch.
-    - *Relates to Requirements: 6*
-- **6.4 Secrets Management**
-    - Use GitLab CI/CD variables instead of committing secrets; document required variables.
-    - *Relates to Requirements: 6*
- - **6.5 Acceptance Tests (Server Image)**
-    - Add an Acceptance stage that runs a Postman/Newman collection against the server container image started as a CI service (with alias `server`).
-    - Export JUnit reports as CI artifacts and fail the pipeline on API regressions.
-    - *Relates to Requirements: 6*
-
-## Phase 7: Migration to GitHub + Netlify (Priority: Medium)
-**Goal:** Host the repository on GitHub, deploy the frontend to Netlify, and (if feasible) run the API as a single Netlify Function wrapping the existing Express app.
-- **7.1 Repository Relocation & Governance**
-    - Mirror the Git history to GitHub, align default branch, and set branch protections.
-    - Keep GitLab CI temporarily until GitHub Actions + Netlify are verified; then decommission GitLab automation.
-    - *Relates to Requirements: 7*
-- **7.2 Frontend Deployment on Netlify**
+## Phase 6: CI/CD & Deployment (Netlify & GitHub Actions) (Priority: Medium)
+**Goal:** Automate build, test, and deployment using GitHub Actions and Netlify.
+- **6.1 Netlify Integration**
     - Connect Netlify to GitHub. Build base: `client`, command: `npm ci && npm run build`, publish: `dist`.
     - Add SPA redirects and configure `VITE_API_BASE` via Netlify env vars.
-    - *Relates to Requirements: 7*
-- **7.3 API via Netlify Functions (Single Wrapped Express)**
+    - *Relates to Requirements: 6*
+- **6.2 API via Netlify Functions (Single Wrapped Express)**
     - Add `netlify/functions/api.js` with `serverless-http` to wrap `server/index.js`.
     - Refactor server to export the Express app and avoid `listen` under Netlify; ensure storage initialization works in serverless.
-    - *Relates to Requirements: 7*
-- **7.4 Secrets & CORS**
+    - *Relates to Requirements: 6*
+- **6.3 Secrets & CORS**
     - Move secrets to Netlify environment variables (e.g., `MONGO_URL`, `MONGO_DB`).
     - If using separate origins, configure CORS to allow Netlify domain(s); prefer same-origin via `/.netlify/functions/api`.
-    - *Relates to Requirements: 7*
-- **7.5 GitHub Actions Acceptance Tests**
+    - *Relates to Requirements: 6*
+- **6.4 GitHub Actions Acceptance Tests**
     - Add workflow to run Newman against Netlify Deploy Previews (PRs) and Production (main), publishing JUnit artifacts.
-    - *Relates to Requirements: 7*
-- **7.6 Cutover & Decommission**
-    - Switch production traffic to Netlify; validate endpoints.
-    - Remove `.gitlab-ci.yml` and Pages deployment once stable.
-    - *Relates to Requirements: 7*
+    - *Relates to Requirements: 6*
+- **6.5 Documentation Update**
+    - Update all documentation to reflect the move from GitLab to Netlify.
+    - *Relates to Requirements: 6*
 
-## Phase 8: Guideline Alignment (Priority: Medium)
+## Phase 7: Guideline Alignment (Priority: Medium)
 **Goal:** Align the codebase with the JavaScript & React Project Guidelines (.junie/guidelines.md).
-- **8.1 React Folder Structure**
+- **7.1 React Folder Structure**
     - Ensure components under `src/components`, utilities under `src/utils`, and pages under `src/pages`.
     - Create `src/pages` for view components and move `App.jsx` content to a new view.
-    - *Relates to Requirements: 8*
-- **8.2 Routing & Navigation**
+    - *Relates to Requirements: 7*
+- **7.2 Routing & Navigation**
     - Introduce `react-router-dom` to manage application views.
-    - *Relates to Requirements: 8*
-- **8.3 TypeScript Adoption for New/Updated UI**
+    - *Relates to Requirements: 7*
+- **7.3 TypeScript Adoption for New/Updated UI**
     - Prefer TypeScript for new React components and define explicit props interfaces.
     - Incrementally migrate key components.
-    - *Relates to Requirements: 8*
-- **8.3 Styling Without Inline Styles**
+    - *Relates to Requirements: 7*
+- **7.3 Styling Without Inline Styles**
     - Replace inline `style` with CSS Modules or Tailwind; choose CSS Modules initially.
-    - *Relates to Requirements: 8*
-- **8.4 Code Quality Tooling**
+    - *Relates to Requirements: 7*
+- **7.4 Code Quality Tooling**
     - Add ESLint and Prettier configurations and scripts; ensure CI can run lint.
-    - *Relates to Requirements: 8*
-- **8.5 Testing Conventions**
+    - *Relates to Requirements: 7*
+- **7.5 Testing Conventions**
     - Add unit tests with Vitest in `__tests__` folders adjacent to files.
-    - *Relates to Requirements: 8*
-- **8.6 Conventional Commits Enforcement**
+    - *Relates to Requirements: 7*
+- **7.6 Conventional Commits Enforcement**
     - Install and configure `husky` and `commitlint` to enforce the conventional commits specification.
-    - *Relates to Requirements: 8*
-- **8.7 Path Alias Implementation**
+    - *Relates to Requirements: 7*
+- **7.7 Path Alias Implementation**
     - Configure path aliases (e.g., `@` for `src`) to simplify imports and improve maintainability.
-    - *Relates to Requirements: 8*
-- **8.8 PWA Conversion**
+    - *Relates to Requirements: 7*
+- **7.8 PWA Conversion**
     - Convert the client to a Progressive Web App (PWA) using `vite-plugin-pwa`.
     - Configure manifest, service worker, and app icons.
-    - *Relates to Requirements: 8*
+    - *Relates to Requirements: 7*
