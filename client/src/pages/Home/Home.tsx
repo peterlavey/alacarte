@@ -77,6 +77,8 @@ export default function Home() {
   const handleScan = async (result: unknown) => {
     if (!coords || !result || isRegistering.current) return
     
+    isRegistering.current = true
+
     // Extract text from result. The @yudiel/react-qr-scanner result might be an object or string
     let scannedText: string | undefined
 
@@ -86,10 +88,12 @@ export default function Home() {
       scannedText = result[0].rawValue
     }
 
-    if (!scannedText) return
+    if (!scannedText) {
+      isRegistering.current = false
+      return
+    }
 
     try {
-      isRegistering.current = true
       setLoading(true)
       const data = await register({
         ...coords,
