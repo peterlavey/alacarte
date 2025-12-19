@@ -49,9 +49,9 @@ export default function Home() {
   useEffect(() => {
     if (coords) {
       resolve(coords)
-        .then((data) => {
-          if (data && data.content) {
-            const contentValue = data.content
+        .then((data: { content: string }) => {
+          if (data && content) {
+            const contentValue = content
             setContent(contentValue)
             setShowScanner(false)
 
@@ -63,7 +63,7 @@ export default function Home() {
             setShowScanner(true)
           }
         })
-        .catch((err) => {
+        .catch((err: never) => {
           console.error('Resolve error:', err)
           setShowScanner(true)
         })
@@ -71,7 +71,7 @@ export default function Home() {
           setLoading(false)
         })
     }
-  }, [coords])
+  }, [content, coords])
 
   const handleScan = async (result: unknown) => {
     if (!coords || !result) return
