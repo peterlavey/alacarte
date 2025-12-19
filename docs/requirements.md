@@ -50,29 +50,20 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 - **WHEN** multiple requests occur, **THEN** the system SHALL maintain data integrity (no lost writes).
 - **WHEN** querying for results, **THEN** the system SHALL support efficient retrieval based on coordinate proximity.
 
-### 6. CI/CD & Deployment
+### 6. CI/CD & Deployment (Netlify & GitHub Actions)
 **Stakeholder Need:**
-> As a developer and maintainer, I want automated builds, tests, and deployments via GitLab so that the application can be reliably delivered without manual steps.
-
-**Acceptance Criteria:**
-- **WHEN** code is pushed to any branch or a merge request is created, **THEN** the CI SHALL run server tests and build the client. (CI stages: test, build)
-- **WHEN** code is pushed to the default branch, **THEN** the client build SHALL be deployed via GitLab Pages. (Deploy stage)
-- **WHEN** code is pushed to the default branch, **THEN** a Docker image for the server SHALL be built and pushed to the GitLab Container Registry under `:latest`.
-- **WHEN** the pipeline runs, **THEN** secrets (e.g., database credentials) SHALL be provided through GitLab CI/CD variables; repository-stored `.env` secrets SHALL NOT be required for successful builds.
-- **WHEN** the server image is built on the default branch, **THEN** an Acceptance stage SHALL run a Postman/Newman collection against the running container (accessible via a service alias such as `server`) to verify core API endpoints (health, register, resolve, history) succeed.
-
-### 7. GitHub + Netlify Migration
-**Stakeholder Need:**
-> As a maintainer, I want the project hosted on GitHub with the frontend deployed via Netlify and the API provided by Netlify Functions (if feasible) so delivery is simpler (no Docker required for API) and deploy previews are available.
+> As a developer and maintainer, I want automated builds, tests, and deployments via GitHub Actions and Netlify so that the application can be reliably delivered without manual steps.
 
 **Acceptance Criteria:**
 - **WHEN** code is pushed to GitHub, **THEN** Netlify SHALL build the client from `client/` and publish `client/dist` with SPA routing enabled.
-- **WHEN** the API is migrated, **THEN** a single Netlify Function SHALL wrap the existing Express app and expose endpoints under `/.netlify/functions/api`.
+- **WHEN** the API is deployed, **THEN** a single Netlify Function SHALL wrap the existing Express app and expose endpoints under `/.netlify/functions/api`.
 - **WHEN** the Netlify site is built, **THEN** the client SHALL use `VITE_API_BASE=/.netlify/functions/api` (configurable in Netlify env vars).
-- **WHEN** PRs are opened on GitHub, **THEN** Netlify Deploy Previews SHALL be generated and can be used to run acceptance tests against `/.netlify/functions/api`.
+- **WHEN** PRs are opened on GitHub, **THEN** Netlify Deploy Previews SHALL be generated.
+- **WHEN** code is pushed to any branch or a PR is created, **THEN** GitHub Actions SHOULD run server and client tests.
 - **WHEN** the GitHub pipeline runs, **THEN** acceptance tests (Newman) MAY run against the Deploy Preview or Production URLs, publishing JUnit artifacts.
+- **WHEN** the pipeline runs, **THEN** secrets (e.g., database credentials) SHALL be provided through environment variables (GitHub Secrets or Netlify Env); repository-stored `.env` secrets SHALL NOT be required for successful builds.
 
-### 8. UI Code Guidelines Compliance
+### 7. UI Code Guidelines Compliance
 **Stakeholder Need:**
 > As a maintainer, I want the UI code to follow project guidelines so that the codebase remains consistent, testable, and easy to evolve.
 

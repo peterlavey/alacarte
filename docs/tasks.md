@@ -1,115 +1,61 @@
-    - Keep `.nojekyll` and `404.html` for SPA routing on GitLab Pages.
-    - *(Plan: 6.2, Req: 6)*
-- [x] **Unify base path configuration**
-    - Use the same base path for local and GitLab builds (`base: '/'`), avoiding per-environment basepath overrides.
-    - *(Plan: 6.2, Req: 6)*
-- [x] **Configure environment-specific API base for client**
-    - Add `.env.development` with `VITE_API_BASE=http://localhost:3001` for local dev.
-    - Add `.env.production` with placeholder and instructions; use GitLab CI/CD variable `VITE_API_BASE` to set the production API base URL at build time.
-    - *(Plan: 6.2, Req: 6)*
-- [x] **Fix YAML parsing in Pages script (line 62)**
-    - Replace YAML-ambiguous flow sequence with a POSIX-safe `if` form in `.gitlab-ci.yml` under `pages` job.
-    - Ensures GitLab CI parses the file and the script copies `index.html` to `404.html` for SPA routing.
-    - *(Plan: 6.2, Req: 6)*
-- [ ] **Secrets Management Setup**
-    - Define required CI/CD variables in GitLab project settings (e.g., `MONGO_URL`, `MONGO_DB`, optional `PORT`).
-    - Remove reliance on committed `.env` for pipeline execution.
-    - *(Plan: 6.4, Req: 6)*
-- [ ] **Backend Runtime Deployment**
-    - Provision a runtime (e.g., GitLab Deploy to a VM/Heroku/Fly.io) consuming the pushed container image.
-    - Add deployment job or documentation with commands to run the container.
-    - *(Plan: 6.3, Req: 6)*
- - [x] **Acceptance Tests for Server Image (Postman/Newman)**
-    - Add CI stage `acceptance` that runs the Postman collection `docs/postman/Alacarte.postman_collection.json` against the server Docker image.
-    - Start the image as a CI service with alias `server` so the collection can reach it at `http://server:3001`.
-    - Publish JUnit results as job artifacts.
-    - *(Plan: 6.5, Req: 6)*
+- [x] **Configure SPA routing (Replaced by Netlify)**
+- [x] **Unify base path configuration (Replaced by Netlify)**
+- [x] **Configure environment-specific API base for client (Replaced by Netlify)**
+- [x] **Fix YAML parsing in Pages script (Obsolete)**
+- [ ] **Secrets Management Setup (Obsolete)**
+- [ ] **Backend Runtime Deployment (Obsolete)**
+- [x] **Acceptance Tests for Server Image (Obsolete)**
 
-## Phase 7: Migration to GitHub + Netlify
-- [ ] **Repository Migration to GitHub**
-    - Mirror repository to GitHub, keep default branch naming, enable branch protections.
-    - *(Plan: 7.1, Req: 7)*
-- [x] **Netlify Config & SPA Routing**
+## Phase 6: CI/CD & Deployment (Netlify & GitHub Actions)
+- [x] **Netlify Integration & SPA Routing**
     - Add `netlify.toml` with client build (base: client, publish: dist) and SPA redirects.
     - Fix 404 on `/debug` by ensuring React Router has the route defined.
-    - *(Plan: 7.2, Req: 7)*
+    - *(Plan: 6.1, Req: 6)*
 - [x] **API as Single Netlify Function (Express Wrapped)**
     - Add `netlify/functions/api.js` using `serverless-http` to wrap `server/index.js`.
     - Refactor `server/index.js` to export app and avoid `listen` under Netlify; ensure storage init.
-    - *(Plan: 7.3, Req: 7)*
+    - *(Plan: 6.2, Req: 6)*
 - [x] **Pretty API Routes Proxy**
     - Configure Netlify redirects to map `/api/*` → `/.netlify/functions/api/:splat` with status 200 in `netlify.toml`.
-    - Verify raw function and pretty routes under `netlify dev`.
-    - *(Plan: 7.3, Req: 7)*
+    - *(Plan: 6.2, Req: 6)*
 - [x] **Netlify Dev Local Runner Configuration**
-    - Add `[dev]` block in `netlify.toml` to start Vite with `--mode netlify` and set proxy ports; ensure redirects take precedence.
-    - Add `client/.env.netlify` with `VITE_API_BASE=/.netlify/functions/api` so the client calls Functions in dev.
-    - Set Functions bundler to `esbuild` for ESM support; add `force=true` to `/api/*` redirect.
-    - *(Plan: 7.3, Req: 7)*
+    - Add `[dev]` block in `netlify.toml` to start Vite with `--mode netlify` and set proxy ports.
+    - *(Plan: 6.2, Req: 6)*
 - [x] **Netlify Functions: Root-level server dependencies for bundling**
-    - Add `express`, `cors`, `body-parser`, and `dotenv` to the root `package.json` so Netlify’s esbuild bundler can resolve and bundle them for `netlify/functions/api.js` (which imports `server/index.js`).
-    - Keep server code ESM; retain `node_bundler = "esbuild"` in `netlify.toml`.
-    - *(Plan: 7.3, Req: 7)*
+    - Add dependencies to root `package.json` for Netlify’s esbuild.
+    - *(Plan: 6.2, Req: 6)*
 - [x] **Netlify Functions: Mongo backend support**
-    - Add `mongodb` to root `package.json` and configure Functions bundler to externalize it (`external_node_modules = ["mongodb"]`).
-    - Update Netlify build command to install root deps before client build so the driver is present.
-    - Use Netlify env vars `USE_DB=mongo`, `MONGO_URL`, and `MONGO_DB` for runtime selection.
-    - *(Plan: 7.3, Req: 7)*
-- [x] **Organize Storage Files into Folder**
-    - Move `server/storage.js`, `server/storage.memory.js`, and `server/storage.mongo.js` into `server/storage/` as `index.js`, `memory.js`, and `mongo.js` respectively; update all imports; remove old locations.
-    - *(Plan: 5.2, Req: 5)*
-- [x] **Phase 8: Testing & Quality — Setup Vitest (Server & Client)**
-    - Configure Vitest for server (node environment) and client (jsdom), add coverage, scripts.
-    - *(Plan: 8.1, Req: 6)*
-- [x] **Phase 8: Server Unit Tests**
-    - Add tests for `utils/geo.js` edge cases and `server/storage` (memory backend) behaviors.
-    - Mock Mongo backend selection when `USE_DB=mongo` is set; no real DB.
-    - *(Plan: 8.2, Req: 6)*
-- [x] **Phase 8: Server Route Tests**
-    - Add tests for `/api/register`, `/api/resolve`, `/api/history` using supertest against exported app; cover validation and thresholds.
-    - *(Plan: 8.3, Req: 6)*
-- [x] **Phase 8: Migrate legacy Node tests to Vitest**
-    - Migrate `server/tests/storage.memory.test.js` from Node's test runner to Vitest, align with existing setup, and ensure tests pass.
-    - *(Plan: 8.2, Req: 6)*
-- [ ] **Phase 8: Client Unit Tests**
-    - Add tests for `client/src/api.js` (mock fetch/axios) and UI components with Testing Library.
-    - *(Plan: 8.4, Req: 6)*
-    - [x] Stabilize axios mocking to prevent OOM in Vitest (api.test.js) — use stable ESM mock, avoid module resets; enforce single-threaded pool on Windows/Node 22.
-      - *(Plan: 8.4, Req: 6)*
- - [x] **Phase 8: Path Alias Setup**
-    - Configure `@` alias for `src` directory in Vite, Vitest, and TypeScript.
-    - Replace relative imports with alias-based imports.
-    - *(Plan: 8.7, Req: 8)*
-- [x] **Phase 8: Fix Home.tsx Warnings**
-    - Resolve ESLint warnings and errors in `Home.tsx` by improving types and removing unused variables.
-    - *(Plan: 8.3, Req: 8)*
-- [ ] **Phase 8: Coverage & Docs**
-    - Enable coverage reports locally with `@vitest/coverage-v8` and document how to run tests; no CI integration.
-    - *(Plan: 8.5, Req: 6)*
+    - Add `mongodb` to root `package.json` and configure Functions bundler to externalize it.
+    - *(Plan: 6.2, Req: 6)*
 - [x] **Secrets & Environment Setup on Netlify**
-    - Configure `VITE_API_BASE=/.netlify/functions/api` for client builds; optionally `USE_DB=memory|mongo`, and if mongo then `MONGO_URL`, `MONGO_DB`.
-    - Document local `netlify dev` usage with `VITE_API_BASE` for testing.
-    - *(Plan: 7.4, Req: 7)*
+    - Configure `VITE_API_BASE=/.netlify/functions/api` for client builds and DB env vars.
+    - *(Plan: 6.3, Req: 6)*
 - [ ] **GitHub Actions: Acceptance Tests**
     - Add workflow to run Newman against Netlify Deploy Preview (PR) and Production (main) URLs.
-    - Publish JUnit as artifacts.
-    - *(Plan: 7.5, Req: 7)*
-- [ ] **Cutover & Decommission GitLab**
-    - Switch production to Netlify; validate endpoints; remove `.gitlab-ci.yml` and Pages deploy.
-    - *(Plan: 7.6, Req: 7)*
-## Phase 8: Guideline Alignment
-- [x] React folder structure conforms to guidelines (components/utils/pages) (Plan: 8.1, Req: 8)
-- [x] Implement routing with `react-router-dom` and move App logic to Debug view (Plan: 8.2, Req: 8)
-- [x] Introduce TypeScript to client and define props interfaces for updated components (History, Debug) (Plan: 8.3, Req: 8)
-- [x] Replace inline styles with CSS Modules for key components (History, JsonInput, Scanner, Canvas, App adjustments) (Plan: 8.3, Req: 8)
-- [x] Add ESLint + Prettier configs and root scripts (Plan: 8.4, Req: 8)
-- [x] Add unit tests under `__tests__` (History empty state) (Plan: 8.5, Req: 8)
-- [x] Enforce conventional commits with husky and commitlint (Plan: 8.6, Req: 8)
-- [x] Rename Home page to Debug (Plan: 8.2, Req: 8)
+    - *(Plan: 6.4, Req: 6)*
+- [x] **Decommission GitLab (Cleanup)**
+    - Remove `.gitlab-ci.yml` and Pages deploy.
+    - *(Plan: 6.1, Req: 6)*
+
+## Phase 7: Guideline Alignment
+- [x] React folder structure conforms to guidelines (components/utils/pages) (Plan: 7.1, Req: 7)
+- [x] Implement routing with `react-router-dom` and move App logic to Debug view (Plan: 7.2, Req: 7)
+- [x] Introduce TypeScript to client and define props interfaces for updated components (History, Debug) (Plan: 7.3, Req: 7)
+- [x] Replace inline styles with CSS Modules for key components (History, JsonInput, Scanner, Canvas, App adjustments) (Plan: 7.3, Req: 7)
+- [x] Add ESLint + Prettier configs and root scripts (Plan: 7.4, Req: 7)
+- [x] Add unit tests under `__tests__` (History empty state) (Plan: 7.5, Req: 7)
+- [x] Enforce conventional commits with husky and commitlint (Plan: 7.6, Req: 7)
+- [x] Rename Home page to Debug (Plan: 7.2, Req: 7)
 - [x] Create Home page with location-based logic (Plan: 3.5, Req: 1, 2)
 - [x] Add logic to redirect to content URL in Home page (Plan: 3.5, Req: 1, 2)
-- [x] Convert client to PWA (Plan: 8.8, Req: 8)
-- [x] Generate PWA icons with detailed cat waiter design (ears from favicon, hand from mask-icon) (Plan: 8.8, Req: 8)
-- [x] Update README and use icon (Plan: 8.9, Req: 8)
-- [ ] Migrate remaining components to TypeScript with explicit props interfaces (Plan: 8.2, Req: 8)
-- [ ] Add more component tests (JsonInput submit flow, Scanner visibility, Canvas render) (Plan: 8.5, Req: 8)
+- [x] Convert client to PWA (Plan: 7.8, Req: 7)
+- [x] Generate PWA icons with detailed cat waiter design (ears from favicon, hand from mask-icon) (Plan: 7.8, Req: 7)
+- [x] Update README and use icon (Plan: 7.9, Req: 7)
+- [ ] Migrate remaining components to TypeScript with explicit props interfaces (Plan: 7.2, Req: 7)
+- [ ] Add more component tests (JsonInput submit flow, Scanner visibility, Canvas render) (Plan: 7.5, Req: 7)
+- [x] Update documentation: Migrate from GitLab to Netlify (Plan: 6.5, Req: 6)
+- [x] Organize Storage Files into Folder (Plan: 5.2, Req: 5)
+- [x] Setup Vitest (Server & Client) (Plan: 7.5, Req: 6)
+- [x] Server Unit Tests (Plan: 7.5, Req: 6)
+- [x] Server Route Tests (Plan: 7.5, Req: 6)
+- [x] Path Alias Setup (Plan: 7.7, Req: 7)
