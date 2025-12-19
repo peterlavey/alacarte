@@ -109,6 +109,6 @@
 - [x] Create Home page with location-based logic (Plan: 3.5, Req: 1, 2)
 - [x] Add logic to redirect to content URL in Home page (Plan: 3.5, Req: 1, 2)
 - [x] Convert client to PWA (Plan: 8.8, Req: 8)
-- [x] Generate PWA icons with detailed cat waiter design (Plan: 8.8, Req: 8)
+- [x] Generate PWA icons with detailed cat waiter design (ears from favicon, hand from mask-icon) (Plan: 8.8, Req: 8)
 - [ ] Migrate remaining components to TypeScript with explicit props interfaces (Plan: 8.2, Req: 8)
 - [ ] Add more component tests (JsonInput submit flow, Scanner visibility, Canvas render) (Plan: 8.5, Req: 8)

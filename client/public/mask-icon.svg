@@ -12,11 +12,12 @@
   <!-- Cat Head -->
   <circle cx="256" cy="220" r="100" fill="#F3F4F6"/>
   
-  <!-- Ears -->
-  <path d="M180 140L120 220L210 220L180 140Z" fill="#F3F4F6"/>
-  <path d="M185 165L150 210L200 210L185 165Z" fill="#FEF2F2"/> <!-- Inner ear -->
-  <path d="M332 140L392 220L302 220L332 140Z" fill="#F3F4F6"/>
-  <path d="M327 165L362 210L312 210L327 165Z" fill="#FEF2F2"/> <!-- Inner ear -->
+  <!-- Cat Ears (Pointy ears from favicon) -->
+  <path d="M170 160L150 80L230 145Z" fill="#F3F4F6"/> <!-- Left ear -->
+  <path d="M180 150L170 100L215 140Z" fill="#FEF2F2"/> <!-- Left inner ear -->
+
+  <path d="M342 160L362 80L282 145Z" fill="#F3F4F6"/> <!-- Right ear -->
+  <path d="M332 150L342 100L297 140Z" fill="#FEF2F2"/> <!-- Right inner ear -->
   
   <!-- Eyes -->
   <circle cx="216" cy="220" r="15" fill="#1E40AF"/>

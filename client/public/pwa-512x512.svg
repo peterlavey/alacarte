@@ -9,10 +9,9 @@
   <path d="M236 340L256 350L276 340L276 360L256 350L236 360V340Z" fill="#EF4444"/>
   <circle cx="256" cy="350" r="4" fill="#B91C1C"/>
   
-  <!-- Waiter's Towel (Draped over arm) -->
-  <path d="M380 340C380 340 430 340 430 380V450C430 460 410 460 410 450V390C410 390 380 390 380 390V340Z" fill="#FFFFFF"/>
-  <path d="M380 345H430" stroke="#E5E7EB" stroke-width="1"/>
-  <path d="M380 355H430" stroke="#E5E7EB" stroke-width="1"/>
+  <!-- Tray (Waitstaff element from mask-icon) -->
+  <rect x="360" y="280" width="120" height="10" rx="5" fill="#94A3B8"/>
+  <path d="M420 290L400 360H440L420 290Z" fill="#1F2937"/> <!-- Arm holding tray -->
   
   <!-- Cat Head -->
   <circle cx="256" cy="220" r="100" fill="#F3F4F6"/>
