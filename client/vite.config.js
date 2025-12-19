@@ -12,7 +12,7 @@ export default defineConfig(() => {
       react(),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
+        includeAssets: ['favicon.svg', 'apple-touch-icon.svg', 'mask-icon.svg'],
         manifest: {
           name: 'Alacarte',
           short_name: 'Alacarte',
@@ -20,19 +20,19 @@ export default defineConfig(() => {
           theme_color: '#3b82f6',
           icons: [
             {
-              src: 'pwa-192x192.png',
+              src: 'pwa-192x192.svg',
               sizes: '192x192',
-              type: 'image/png'
+              type: 'image/svg+xml'
             },
             {
-              src: 'pwa-512x512.png',
+              src: 'pwa-512x512.svg',
               sizes: '512x512',
-              type: 'image/png'
+              type: 'image/svg+xml'
             },
             {
-              src: 'pwa-512x512.png',
+              src: 'pwa-512x512.svg',
               sizes: '512x512',
-              type: 'image/png',
+              type: 'image/svg+xml',
               purpose: 'any maskable'
             }
           ]
