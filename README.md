@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="client/public/pwa-192x192.svg" width="128" height="128" alt="alacarte icon">
+</p>
+
 ### alacarte
 
 #### Overview
@@ -151,14 +155,13 @@ npm run test:cov --prefix server
 ```
 
 #### Deployment
-- Netlify: This repository includes `netlify.toml` that:
+- Netlify (Primary): This repository is optimized for Netlify deployment:
   - Installs root and client dependencies
   - Builds the client into `client/dist`
   - Serves the Express app via a Netlify Function at `/.netlify/functions/api`
   - Redirects `/api/*` to the function and other paths to `index.html` for SPA routing
 
-TODOs
-- Confirm production hosting target. The client `.env.production` mentions "GitLab Pages + deployed API" while the repo includes Netlify configuration. Decide on the primary hosting platform and update `.env.production` and this README accordingly.
+#### TODOs
 - Add a proper license file (see below).
 - Document authentication, authorization, and security considerations if/when added.
 - Provide deployment steps for non‑Netlify environments (Docker, standalone Node server, etc.), if required.
