@@ -1,0 +1,52 @@
+.splashScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f5f2; /* Relaxing cream/beige background */
+  z-index: 9999;
+  transition: opacity 0.5s ease-out, visibility 0.5s;
+}
+
+.fadeOut {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.content {
+  text-align: center;
+  animation: fadeInDown 1.2s ease-out;
+}
+
+.logo {
+  font-family: 'Playfair Display', serif; /* Assuming this is available or we use a fallback */
+  font-size: 4rem;
+  font-weight: 300;
+  color: #2c3e50;
+  margin: 0;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  font-style: italic;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fallback font if Playfair Display is not loaded */
+@supports not (font-family: 'Playfair Display',serif) {
+  .logo {
+    font-family: 'Georgia', serif;
+  }
+}

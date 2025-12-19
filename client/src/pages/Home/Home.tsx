@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { resolve, register } from '@/api'
 import Canvas from '@/components/Canvas/Canvas'
 import Scanner from '@/components/Scanner/Scanner'
+import SplashScreen from '@/components/SplashScreen/SplashScreen'
 import styles from './Home.module.css'
 
 interface Coords {
@@ -13,6 +14,7 @@ export default function Home() {
   const [coords, setCoords] = useState<Coords | null>(null)
   const [content, setContent] = useState<unknown>(null)
   const [loading, setLoading] = useState(true)
+  const [splashVisible, setSplashVisible] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [showScanner, setShowScanner] = useState(false)
 
@@ -107,8 +109,13 @@ export default function Home() {
     }
   }
 
-  if (loading && !showScanner) {
-    return <div className={styles.container}>Loading...</div>
+  if (splashVisible) {
+    return (
+      <SplashScreen 
+        fadeOut={!loading} 
+        onAnimationEnd={() => setSplashVisible(false)} 
+      />
+    )
   }
 
   if (error && !showScanner && !content) {
