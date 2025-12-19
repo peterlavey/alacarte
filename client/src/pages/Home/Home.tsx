@@ -49,8 +49,14 @@ export default function Home() {
       resolve(coords)
         .then((data) => {
           if (data && data.content) {
-            setContent(data.content)
+            const contentValue = data.content
+            setContent(contentValue)
             setShowScanner(false)
+
+            // If content is a URL, open it in a new tab
+            if (typeof contentValue === 'string' && contentValue.startsWith('http')) {
+              window.open(contentValue, '_blank')
+            }
           } else {
             setShowScanner(true)
           }
@@ -85,8 +91,14 @@ export default function Home() {
         ...coords,
         content: scannedText,
       })
-      setContent(data.content || scannedText)
+      const finalContent = data.content || scannedText
+      setContent(finalContent)
       setShowScanner(false)
+
+      // If content is a URL, open it in a new tab
+      if (finalContent.startsWith('http')) {
+        window.open(finalContent, '_blank')
+      }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Failed to register'
       setError(message)

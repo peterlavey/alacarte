@@ -94,4 +94,48 @@ describe('Home Page', () => {
     expect(screen.getByText(/Found Content/i)).toBeInTheDocument()
     expect(screen.getByText(/newly registered content/i)).toBeInTheDocument()
   })
+
+  it('redirects to URL in a new tab if content is a link (resolve)', async () => {
+    const url = 'https://example.com'
+    vi.mocked(api.resolve).mockResolvedValue({ content: url })
+    const openSpy = vi.fn()
+    const originalOpen = window.open
+    window.open = openSpy
+
+    try {
+      render(<Home />)
+
+      await waitFor(() => {
+        expect(openSpy).toHaveBeenCalledWith(url, '_blank')
+      })
+    } finally {
+      window.open = originalOpen
+    }
+  })
+
+  it('redirects to URL in a new tab if content is a link (register)', async () => {
+    const url = 'https://example.com/registered'
+    vi.mocked(api.resolve).mockResolvedValue({ content: null })
+    vi.mocked(api.register).mockResolvedValue({ content: url })
+    
+    const openSpy = vi.fn()
+    const originalOpen = window.open
+    window.open = openSpy
+
+    try {
+      render(<Home />)
+
+      await waitFor(() => {
+        expect(screen.getByTestId('mock-scanner')).toBeInTheDocument()
+      })
+
+      fireEvent.click(screen.getByText(/Simulate Scan/i))
+
+      await waitFor(() => {
+        expect(openSpy).toHaveBeenCalledWith(url, '_blank')
+      })
+    } finally {
+      window.open = originalOpen
+    }
+  })
 })
