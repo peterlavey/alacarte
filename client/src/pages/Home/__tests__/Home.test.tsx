@@ -19,18 +19,19 @@ vi.mock('@/components/Scanner/Scanner', () => ({
   ),
 }))
 
-const MockSplashScreen = ({ fadeOut, onAnimationEnd }: { fadeOut: boolean, onAnimationEnd: () => void }) => {
-  React.useEffect(() => {
-    if (fadeOut && onAnimationEnd) {
-      onAnimationEnd()
-    }
-  }, [fadeOut, onAnimationEnd])
-  return <div data-testid="splash-screen">{fadeOut ? 'Fading Out' : 'Alacarte'}</div>
-}
-
-vi.mock('@/components/SplashScreen/SplashScreen', () => ({
-  default: MockSplashScreen,
-}))
+vi.mock('@/components/SplashScreen/SplashScreen', () => {
+  const MockSplash = ({ fadeOut, onAnimationEnd }: { fadeOut: boolean, onAnimationEnd: () => void }) => {
+    React.useEffect(() => {
+      if (fadeOut && onAnimationEnd) {
+        onAnimationEnd()
+      }
+    }, [fadeOut, onAnimationEnd])
+    return <div data-testid="splash-screen">{fadeOut ? 'Fading Out' : 'Alacarte'}</div>
+  }
+  return {
+    default: MockSplash,
+  }
+})
 
 describe('Home Page', () => {
   const mockCoords = {

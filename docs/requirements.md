@@ -72,3 +72,12 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 - **WHEN** styles are applied, **THEN** inline `style` objects SHOULD be avoided in favor of CSS Modules or Tailwind.
 - **WHEN** new logic is introduced, **THEN** unit tests SHALL be added using Vitest under a `__tests__` directory adjacent to the file.
 - **WHEN** code is committed, **THEN** it SHOULD pass ESLint and Prettier formatting checks.
+
+### 8. Internet Connection Verification
+**User Story:**
+> As a user, I want the application to inform me when I don't have an internet connection so that I understand why the application might not be working correctly.
+
+**Acceptance Criteria:**
+- **WHEN** the application starts, **THEN** it SHALL verify if the device has an active internet connection.
+- **WHEN** no internet connection is detected, **THEN** the system SHALL display a dedicated "Offline" page.
+- **WHEN** the connection is restored, **THEN** the system SHALL allow the user to continue or automatically refresh.

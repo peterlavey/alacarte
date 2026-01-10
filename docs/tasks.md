@@ -62,3 +62,8 @@
 - [x] Server Route Tests (Plan: 7.5, Req: 6)
 - [x] Path Alias Setup (Plan: 7.7, Req: 7)
 - [x] Fix multiple register calls in Home page (Plan: 3.5, Req: 2)
+- [x] **Implement Internet Connection Verification (Plan: 8.1, Req: 8)**
+    - [x] Create Offline page component and styles
+    - [x] Implement useNetworkStatus hook
+    - [x] Integrate connection check in the app flow
+    - [x] Add unit tests for Offline page and hook

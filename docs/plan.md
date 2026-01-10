@@ -125,3 +125,10 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
     - Convert the client to a Progressive Web App (PWA) using `vite-plugin-pwa`.
     - Configure manifest, service worker, and app icons.
     - *Relates to Requirements: 7*
+
+## Phase 8: Connectivity Awareness (Priority: Medium)
+**Goal:** Improve user experience by handling offline scenarios.
+- **8.1 Internet Connection Check**
+    - Implement a mechanism to detect internet connection status on startup and during usage.
+    - Create a dedicated "Offline" page to inform the user.
+    - *Relates to Requirements: 8*
