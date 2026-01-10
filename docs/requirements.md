@@ -81,3 +81,12 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 - **WHEN** the application starts, **THEN** it SHALL verify if the device has an active internet connection.
 - **WHEN** no internet connection is detected, **THEN** the system SHALL display a dedicated "Offline" page.
 - **WHEN** the connection is restored, **THEN** the system SHALL allow the user to continue or automatically refresh.
+
+### 10. Google Drive Content Validation
+**User Story:**
+> As a user, I want the application to verify that a Google Drive link is valid before trying to open it so that I don't get redirected to a broken link and instead get the option to scan a new QR code.
+
+**Acceptance Criteria:**
+- **WHEN** the content URL is a Google Drive link, **THEN** the system SHALL validate the response from that URL before redirecting.
+- **WHEN** the Google Drive link is valid, **THEN** the system SHALL redirect the user to the content.
+- **WHEN** the Google Drive link is invalid or the response is an error, **THEN** the system SHALL display the "Menu not available" message and provide an option to scan a new QR code.

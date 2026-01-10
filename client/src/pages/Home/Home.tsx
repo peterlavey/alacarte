@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { resolve, register } from '@/api'
+import axios from 'axios'
 import Canvas from '@/components/Canvas/Canvas'
 import Scanner from '@/components/Scanner/Scanner'
 import SplashScreen from '@/components/SplashScreen/SplashScreen'
@@ -17,6 +18,7 @@ export default function Home() {
   const [splashVisible, setSplashVisible] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [showScanner, setShowScanner] = useState(false)
+  const [menuUnavailable, setMenuUnavailable] = useState(false)
   const isRegistering = React.useRef(false)
 
   const getLocation = useCallback(() => {
@@ -50,23 +52,45 @@ export default function Home() {
   useEffect(() => {
     if (coords && !content) {
       resolve(coords)
-        .then((data: { content: string }) => {
+        .then(async (data: { content: string }) => {
           if (data && data.content) {
             const contentValue = data.content
             setContent(contentValue)
             setShowScanner(false)
+            setMenuUnavailable(false)
 
             // If content is a URL, open it in a new tab
             if (contentValue.startsWith('http')) {
-              window.open(contentValue, '_blank')
+              // If it's a Google Drive URL, validate it first
+              if (contentValue.includes('drive.google.com')) {
+                try {
+                  setLoading(true)
+                  await axios.get(contentValue, { 
+                    timeout: 5000,
+                    // We don't need the whole content, just checking if it's accessible
+                    headers: { 'Range': 'bytes=0-0' } 
+                  })
+                } catch (err) {
+                  console.error('Google Drive validation failed:', err)
+                  setMenuUnavailable(true)
+                  return
+                } finally {
+                  setLoading(false)
+                }
+              }
+
+              const win = window.open(contentValue, '_blank')
+              if (!win) {
+                setMenuUnavailable(true)
+              }
             }
           } else {
-            setShowScanner(true)
+            setMenuUnavailable(true)
           }
         })
         .catch((err: never) => {
           console.error('Resolve error:', err)
-          setShowScanner(true)
+          setMenuUnavailable(true)
         })
         .finally(() => {
           setLoading(false)
@@ -102,10 +126,28 @@ export default function Home() {
       const finalContent = data.content || scannedText
       setContent(finalContent)
       setShowScanner(false)
+      setMenuUnavailable(false)
 
       // If content is a URL, open it in a new tab
       if (finalContent.startsWith('http')) {
-        window.open(finalContent, '_blank')
+        // If it's a Google Drive URL, validate it first
+        if (finalContent.includes('drive.google.com')) {
+          try {
+            await axios.get(finalContent, { 
+              timeout: 5000,
+              headers: { 'Range': 'bytes=0-0' }
+            })
+          } catch (err) {
+            console.error('Google Drive validation failed:', err)
+            setMenuUnavailable(true)
+            return
+          }
+        }
+
+        const win = window.open(finalContent, '_blank')
+        if (!win) {
+          setMenuUnavailable(true)
+        }
       }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Failed to register'
@@ -136,23 +178,34 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      {content ? (
+      {content && !menuUnavailable ? (
         <div className={styles.contentSection}>
           <h1 className={styles.title}>Found Content</h1>
           <Canvas content={content} />
-          <button onClick={() => { setContent(null); setShowScanner(true); }} className={styles.button}>
+          <button onClick={() => { setContent(null); setMenuUnavailable(true); }} className={styles.button}>
             Scan Another
+          </button>
+        </div>
+      ) : menuUnavailable && !showScanner ? (
+        <div className={styles.unavailableSection}>
+          <h1 className={styles.title}>Menu not available</h1>
+          <p>We couldn't find a menu for this location or the redirect failed.</p>
+          <button onClick={() => setShowScanner(true)} className={styles.button}>
+            Scan QR code
           </button>
         </div>
       ) : showScanner ? (
         <div className={styles.scannerSection}>
-          <h1 className={styles.title}>No content found here</h1>
+          <h1 className={styles.title}>Scan QR code</h1>
           <p>Scan a QR code to register this location</p>
           <Scanner 
             active={true} 
             onDecode={handleScan} 
             onError={(err: Error) => setError(err.message)} 
           />
+          <button onClick={() => setShowScanner(false)} className={styles.secondaryButton}>
+            Cancel
+          </button>
         </div>
       ) : null}
     </div>

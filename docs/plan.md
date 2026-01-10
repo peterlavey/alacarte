@@ -126,9 +126,17 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
     - Configure manifest, service worker, and app icons.
     - *Relates to Requirements: 7*
 
-## Phase 8: Connectivity Awareness (Priority: Medium)
-**Goal:** Improve user experience by handling offline scenarios.
+## Phase 8: Connectivity & Feedback (Priority: Medium)
+**Goal:** Improve user experience by handling offline scenarios and providing redirection feedback.
 - **8.1 Internet Connection Check**
     - Implement a mechanism to detect internet connection status on startup and during usage.
     - Create a dedicated "Offline" page to inform the user.
     - *Relates to Requirements: 8*
+- **8.2 Redirection & Availability Feedback**
+    - Implement feedback for failed redirects or missing content.
+    - Provide a clear path to scan a new QR code when redirection isn't possible.
+    - *Relates to Requirements: 9*
+- **8.3 Google Drive Validation**
+    - Implement validation for Google Drive URLs before redirection.
+    - Integrate validation into the Home page redirection flow.
+    - *Relates to Requirements: 10*

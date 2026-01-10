@@ -32,7 +32,22 @@
   background-color: #2563eb;
 }
 
-.contentSection, .scannerSection {
+.contentSection, .scannerSection, .unavailableSection {
   width: 100%;
   max-width: 600px;
+}
+
+.secondaryButton {
+  background-color: transparent;
+  color: #6b7280;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  border: 1px solid #d1d5db;
+  cursor: pointer;
+  margin-top: 1rem;
+  margin-left: 0.5rem;
+}
+
+.secondaryButton:hover {
+  background-color: #f3f4f6;
 }
