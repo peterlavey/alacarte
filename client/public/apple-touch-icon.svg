@@ -1,47 +1,7 @@
-<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="512" height="512" rx="100" fill="#3B82F6"/>
-
-  <!-- Waiter Jacket/Body -->
-  <path d="M120 420C120 360 160 320 256 320C352 320 392 360 392 420V460H120V420Z" fill="#1F2937"/>
-  <path d="M256 320L216 460H296L256 320Z" fill="#F3F4F6"/> <!-- White shirt/tuxedo front -->
-
-  <!-- Bowtie -->
-  <path d="M236 340L256 350L276 340L276 360L256 350L236 360V340Z" fill="#EF4444"/>
-  <circle cx="256" cy="350" r="4" fill="#B91C1C"/>
-  
-  <!-- Tray (Waitstaff element from mask-icon) -->
-  <rect x="360" y="280" width="120" height="10" rx="5" fill="#94A3B8"/>
-  <path d="M420 290L400 360H440L420 290Z" fill="#1F2937"/> <!-- Arm holding tray -->
-  
-  <!-- Cat Head -->
-  <circle cx="256" cy="220" r="100" fill="#F3F4F6"/>
-
-  <!-- Cat Ears (Triangular and pointy) -->
-  <path d="M170 160L150 80L230 145Z" fill="#F3F4F6"/> <!-- Left ear -->
-  <path d="M180 150L170 100L215 140Z" fill="#FEF2F2"/> <!-- Left inner ear -->
-  
-  <path d="M342 160L362 80L282 145Z" fill="#F3F4F6"/> <!-- Right ear -->
-  <path d="M332 150L342 100L297 140Z" fill="#FEF2F2"/> <!-- Right inner ear -->
-
-  <!-- Eyes -->
-  <circle cx="216" cy="220" r="15" fill="#1E40AF"/>
-  <circle cx="296" cy="220" r="15" fill="#1E40AF"/>
-  <circle cx="220" cy="215" r="5" fill="white"/>
-  <circle cx="300" cy="215" r="5" fill="white"/>
-
-  <!-- Nose -->
-  <path d="M256 245L246 235H266L256 245Z" fill="#F87171"/>
-
-  <!-- Mouth -->
-  <path d="M240 255C240 265 256 265 256 255C256 265 272 265 272 255" stroke="#1E40AF" stroke-width="4" stroke-linecap="round"/>
-
-  <!-- Whiskers -->
-  <path d="M180 240L130 230" stroke="#94A3B8" stroke-width="3" stroke-linecap="round"/>
-  <path d="M180 250L130 255" stroke="#94A3B8" stroke-width="3" stroke-linecap="round"/>
-  <path d="M332 240L382 230" stroke="#94A3B8" stroke-width="3" stroke-linecap="round"/>
-  <path d="M332 250L382 255" stroke="#94A3B8" stroke-width="3" stroke-linecap="round"/>
-
-  <!-- Cheeks -->
-  <circle cx="180" cy="260" r="10" fill="#FECACA" fill-opacity="0.5"/>
-  <circle cx="332" cy="260" r="10" fill="#FECACA" fill-opacity="0.5"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="512px" height="512px" viewBox="0 0 512 512" version="1.1">
+<g id="surface1">
+    <rect xmlns="http://www.w3.org/2000/svg" width="512" height="512" rx="100" fill="#3B82F6"/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,100%,100%);fill-opacity:1;" d="M 295.9375 339.40625 C 272.109375 305.882812 255.335938 267.25 255.335938 231.457031 C 255.335938 267.234375 238.558594 305.882812 214.730469 339.40625 C 192.730469 368.753906 157.496094 382.695312 120.511719 366.140625 C 75.328125 342.398438 112.300781 289.742188 135.824219 287.09375 C 116.464844 300.109375 105.578125 332.515625 140.886719 343.160156 C 168.992188 350.722656 187.933594 316.375 192.046875 283.335938 C 198.175781 251.882812 193.214844 211.507812 195.800781 177.695312 C 198.492188 141.699219 234.996094 126.472656 255.335938 146.050781 C 275.671875 126.472656 312.1875 141.710938 314.867188 177.695312 C 317.453125 211.496094 312.492188 251.882812 318.621094 283.335938 C 322.734375 316.375 341.675781 350.722656 369.78125 343.160156 C 405.089844 332.515625 394.203125 300.109375 374.84375 287.09375 C 398.367188 289.742188 435.351562 342.398438 390.15625 366.140625 C 353.171875 382.695312 317.9375 368.753906 295.9375 339.40625 Z M 295.9375 339.40625 "/>
+</g>
 </svg>
