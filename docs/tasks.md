@@ -67,3 +67,16 @@
     - [x] Implement useNetworkStatus hook
     - [x] Integrate connection check in the app flow
     - [x] Add unit tests for Offline page and hook
+- [x] **Implement Redirection & Availability Feedback (Plan: 8.2, Req: 9)**
+    - [x] Update Home page to show "Menu not available" when redirect fails or no content found
+    - [x] Add "Scan QR code" button to the unavailable state
+    - [x] Update unit tests to cover redirection failure and unavailable state
+- [x] **Google Drive Validation (Plan: 8.3, Req: 10)**
+    - [x] Implement Google Drive URL validation logic
+    - [x] Update Home page to validate Google Drive URLs before redirecting
+    - [x] Add unit tests for Google Drive validation
+- [x] **Pre-Registration Validation & Robust Persistence (Plan: 8.4, Req: 11)**
+    - [x] Validate URLs and Google Drive links before calling `register` in `handleScan`
+    - [x] Implement server-side validation in the `register` endpoint
+    - [x] Update client to handle registration failures and show "Menu not available"
+    - [x] Add unit and integration tests for server-side validation and client handling

@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { saveRecord } from '../repositories/storage/index.js'
+import { validateUrl } from '../utils/validation.js'
 
 const router = Router()
 
@@ -12,6 +13,12 @@ router.post('/register', async (req, res) => {
   }
   if (typeof content === 'undefined') {
     return res.status(400).json({ error: 'content is required' })
+  }
+
+  // Validate URL content before saving
+  const isValid = await validateUrl(content)
+  if (!isValid) {
+    return res.status(422).json({ error: 'Invalid content URL' })
   }
 
   const record = {
