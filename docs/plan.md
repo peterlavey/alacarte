@@ -140,7 +140,8 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
     - Implement validation for Google Drive URLs before redirection.
     - Integrate validation into the Home page redirection flow.
     - *Relates to Requirements: 10*
-- **8.4 Pre-Registration Validation**
+- **8.4 Pre-Registration Validation & Robust Persistence**
     - Move URL and Google Drive validation before the `register` call in `handleScan`.
-    - Ensure failed validation prevents database persistence.
+    - Implement server-side validation in the `register` endpoint as a final gatekeeper.
+    - Ensure failed validation (client or server) prevents database persistence and shows appropriate feedback.
     - *Relates to Requirements: 11*

@@ -75,6 +75,8 @@
     - [x] Implement Google Drive URL validation logic
     - [x] Update Home page to validate Google Drive URLs before redirecting
     - [x] Add unit tests for Google Drive validation
-- [x] **Pre-Registration Validation (Plan: 8.4, Req: 11)**
+- [x] **Pre-Registration Validation & Robust Persistence (Plan: 8.4, Req: 11)**
     - [x] Validate URLs and Google Drive links before calling `register` in `handleScan`
-    - [x] Update unit tests to verify `register` is not called on invalid content
+    - [x] Implement server-side validation in the `register` endpoint
+    - [x] Update client to handle registration failures and show "Menu not available"
+    - [x] Add unit and integration tests for server-side validation and client handling

@@ -19,6 +19,7 @@ vi.mock('@/components/Scanner/Scanner', () => ({
     <div data-testid="mock-scanner">
       <button onClick={() => onDecode('scanned-content')}>Simulate Scan</button>
       <button onClick={() => onDecode('https://google.com')}>Simulate URL Scan</button>
+      <button onClick={() => onDecode('https://drive.google.com/file/d/invalid')}>Simulate Invalid GDrive Scan</button>
     </div>
   ),
 }))
@@ -146,6 +147,55 @@ describe('Home Page', () => {
     })
     
     expect(api.register).not.toHaveBeenCalled()
+  })
+
+  it('does not call register if Google Drive validation returns 404 in handleScan', async () => {
+    vi.mocked(api.resolve).mockResolvedValue({ content: null })
+    // Simulate axios returning a response with 404 status (which axios normally throws for by default)
+    const error404 = {
+      isAxiosError: true,
+      response: { status: 404, data: 'Not Found' }
+    }
+    vi.mocked(axios.get).mockRejectedValue(error404)
+    
+    render(<Home />)
+    
+    await waitFor(() => {
+      expect(screen.getByText(/Menu not available/i)).toBeInTheDocument()
+    })
+
+    fireEvent.click(screen.getByText(/Scan QR code/i))
+    
+    await waitFor(() => {
+      expect(screen.getByTestId('mock-scanner')).toBeInTheDocument()
+    })
+    
+    // Simulate scanning an invalid Google Drive URL
+    fireEvent.click(screen.getByText(/Simulate Invalid GDrive Scan/i))
+    
+    await waitFor(() => {
+      expect(screen.getByText(/Menu not available/i)).toBeInTheDocument()
+    })
+    
+    expect(api.register).not.toHaveBeenCalled()
+  })
+
+  it('shows unavailable message if registration fails', async () => {
+    vi.mocked(api.resolve).mockResolvedValue({ content: null })
+    vi.mocked(api.register).mockRejectedValue(new Error('Registration failed'))
+    
+    render(<Home />)
+    
+    await waitFor(() => {
+      expect(screen.getByText(/Menu not available/i)).toBeInTheDocument()
+    })
+
+    fireEvent.click(screen.getByText(/Scan QR code/i))
+    fireEvent.click(screen.getByText(/Simulate Scan/i))
+    
+    await waitFor(() => {
+      expect(screen.getByText(/Menu not available/i)).toBeInTheDocument()
+    })
   })
 
   it('redirects to URL in a new tab if content is a link (resolve)', async () => {

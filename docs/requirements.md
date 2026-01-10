@@ -97,5 +97,6 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 
 **Acceptance Criteria:**
 - **WHEN** a QR code is scanned and contains a URL, **THEN** the system SHALL validate the URL's accessibility (and Google Drive accessibility if applicable) BEFORE calling the registration API.
-- **WHEN** the validation fails, **THEN** the system SHALL NOT save the record and SHALL show the "Menu not available" message.
+- **WHEN** the registration API is called with a URL, **THEN** the server SHALL also perform validation to ensure the URL is accessible before persisting the record.
+- **WHEN** the validation fails (either client-side or server-side), **THEN** the system SHALL NOT save the record and SHALL show the "Menu not available" message.
 - **WHEN** the validation succeeds, **THEN** the system SHALL proceed with registration and redirection.

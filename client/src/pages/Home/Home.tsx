@@ -154,8 +154,13 @@ export default function Home() {
         }
       }
     } catch (err: unknown) {
+      console.error('Registration failed:', err)
+      setMenuUnavailable(true)
+      setShowScanner(false)
       const message = err instanceof Error ? err.message : 'Failed to register'
-      setError(message)
+      // We don't set the global error here to allow showing the menuUnavailable UI
+      // but we can log it or show a temporary notification if we had one.
+      console.warn('Register error:', message)
     } finally {
       setLoading(false)
       isRegistering.current = false
