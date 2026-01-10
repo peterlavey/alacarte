@@ -90,3 +90,12 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 - **WHEN** the content URL is a Google Drive link, **THEN** the system SHALL validate the response from that URL before redirecting.
 - **WHEN** the Google Drive link is valid, **THEN** the system SHALL redirect the user to the content.
 - **WHEN** the Google Drive link is invalid or the response is an error, **THEN** the system SHALL display the "Menu not available" message and provide an option to scan a new QR code.
+
+### 11. Pre-Registration Validation
+**User Story:**
+> As a system administrator, I want the system to validate URLs and Google Drive links before saving them to the database so that we don't store broken or malicious links.
+
+**Acceptance Criteria:**
+- **WHEN** a QR code is scanned and contains a URL, **THEN** the system SHALL validate the URL's accessibility (and Google Drive accessibility if applicable) BEFORE calling the registration API.
+- **WHEN** the validation fails, **THEN** the system SHALL NOT save the record and SHALL show the "Menu not available" message.
+- **WHEN** the validation succeeds, **THEN** the system SHALL proceed with registration and redirection.

@@ -75,3 +75,6 @@
     - [x] Implement Google Drive URL validation logic
     - [x] Update Home page to validate Google Drive URLs before redirecting
     - [x] Add unit tests for Google Drive validation
+- [x] **Pre-Registration Validation (Plan: 8.4, Req: 11)**
+    - [x] Validate URLs and Google Drive links before calling `register` in `handleScan`
+    - [x] Update unit tests to verify `register` is not called on invalid content

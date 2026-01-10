@@ -119,6 +119,24 @@ export default function Home() {
 
     try {
       setLoading(true)
+
+      // Validate URL before registering if it starts with http
+      if (scannedText.startsWith('http')) {
+        try {
+          await axios.get(scannedText, { 
+            timeout: 5000,
+            headers: { 'Range': 'bytes=0-0' }
+          })
+        } catch (err) {
+          console.error('URL validation failed before registration:', err)
+          setMenuUnavailable(true)
+          setShowScanner(false)
+          setLoading(false)
+          isRegistering.current = false
+          return
+        }
+      }
+
       const data = await register({
         ...coords,
         content: scannedText,
@@ -130,20 +148,6 @@ export default function Home() {
 
       // If content is a URL, open it in a new tab
       if (finalContent.startsWith('http')) {
-        // If it's a Google Drive URL, validate it first
-        if (finalContent.includes('drive.google.com')) {
-          try {
-            await axios.get(finalContent, { 
-              timeout: 5000,
-              headers: { 'Range': 'bytes=0-0' }
-            })
-          } catch (err) {
-            console.error('Google Drive validation failed:', err)
-            setMenuUnavailable(true)
-            return
-          }
-        }
-
         const win = window.open(finalContent, '_blank')
         if (!win) {
           setMenuUnavailable(true)

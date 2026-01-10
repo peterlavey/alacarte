@@ -18,6 +18,7 @@ vi.mock('@/components/Scanner/Scanner', () => ({
   default: ({ onDecode }: { onDecode: (result: unknown) => void }) => (
     <div data-testid="mock-scanner">
       <button onClick={() => onDecode('scanned-content')}>Simulate Scan</button>
+      <button onClick={() => onDecode('https://google.com')}>Simulate URL Scan</button>
     </div>
   ),
 }))
@@ -119,6 +120,32 @@ describe('Home Page', () => {
     
     expect(screen.getByText(/Found Content/i)).toBeInTheDocument()
     expect(screen.getByText(/newly registered content/i)).toBeInTheDocument()
+  })
+
+  it('does not call register if URL validation fails in handleScan', async () => {
+    vi.mocked(api.resolve).mockResolvedValue({ content: null })
+    vi.mocked(axios.get).mockRejectedValue(new Error('Validation failed'))
+    
+    render(<Home />)
+    
+    await waitFor(() => {
+      expect(screen.getByText(/Menu not available/i)).toBeInTheDocument()
+    })
+
+    fireEvent.click(screen.getByText(/Scan QR code/i))
+    
+    await waitFor(() => {
+      expect(screen.getByTestId('mock-scanner')).toBeInTheDocument()
+    })
+    
+    // Simulate scanning a URL
+    fireEvent.click(screen.getByText(/Simulate URL Scan/i))
+    
+    await waitFor(() => {
+      expect(screen.getByText(/Menu not available/i)).toBeInTheDocument()
+    })
+    
+    expect(api.register).not.toHaveBeenCalled()
   })
 
   it('redirects to URL in a new tab if content is a link (resolve)', async () => {
