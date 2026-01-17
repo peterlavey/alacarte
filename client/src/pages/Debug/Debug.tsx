@@ -27,17 +27,29 @@ export default function Debug() {
       .catch(() => {})
   }, [])
 
+  const handleCoords = React.useCallback((c: Coords | null) => {
+    setCoords(c)
+  }, [])
+
+  const handleGeoError = React.useCallback((err: { message?: string }) => {
+    setError(err?.message || 'Geolocation error')
+    setStatus('error')
+  }, [])
+
   // When coords available, try resolve nearby
   useEffect(() => {
+    let active = true
     async function doResolve() {
       if (!coords) return
       setStatus('checking')
       setError('')
       try {
         const res = await apiResolve(coords)
+        if (!active) return
         setContent(safeParse(res?.content))
         setStatus('found')
       } catch (e: unknown) {
+        if (!active) return
         const error = e as { response?: { status?: number }; message?: string }
         // 404 -> not found; go idle
         if (error?.response?.status === 404) {
@@ -49,14 +61,19 @@ export default function Debug() {
       }
     }
     doResolve()
+    return () => { active = false }
   }, [coords])
 
   const canRegister = useMemo(() => !!coords, [coords])
 
-  async function handleRegisterContent(data: unknown) {
-    if (!coords) return
+  async function handleRegisterContent(data: unknown, lat?: number, lon?: number) {
+    const finalLat = lat !== undefined ? lat : coords?.lat
+    const finalLon = lon !== undefined ? lon : coords?.lon
+
+    if (finalLat === undefined || finalLon === undefined) return
+
     try {
-      const payload = { lat: coords.lat, lon: coords.lon, content: data }
+      const payload = { lat: finalLat, lon: finalLon, content: data }
       await apiRegister(payload)
       // refresh history
       const h = await apiFetchHistory()
@@ -105,11 +122,8 @@ export default function Debug() {
   return (
     <div className="app-grid">
       <GeoHandler
-        onCoords={(c: Coords | null) => setCoords(c)}
-        onError={(err: { message?: string }) => {
-          setError(err?.message || 'Geolocation error')
-          setStatus('error')
-        }}
+        onCoords={handleCoords}
+        onError={handleGeoError}
       />
 
       <aside className="sidebar">
@@ -159,7 +173,12 @@ export default function Debug() {
           </div>
           <div>
             <h3>Manual JSON Input</h3>
-            <JsonInput onSubmit={handleRegisterContent} disabled={!canRegister} />
+            <JsonInput 
+              onSubmit={handleRegisterContent} 
+              disabled={!canRegister} 
+              initialLat={coords?.lat} 
+              initialLon={coords?.lon}
+            />
             {!canRegister && <div className={`hint ${styles.waitingHint}`}>Waiting for location to register content…</div>}
           </div>
         </section>

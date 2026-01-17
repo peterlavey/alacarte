@@ -105,3 +105,14 @@
     - [x] Fix "Redirect failed" error by implementing robust popup-blocker bypassing redirection.
     - [x] Update Home page and tests to use `window.open` as requested for URL redirection.
     - *(Plan: 7.5, Req: 7, 9, 11)*
+- [x] **Fix excessive API calls in Debug page**
+    - Memoize location handlers and add effect cleanup.
+    - *(Plan: 7.5, Req: 7)*
+- [x] **Refactor Manual Input on Debug page**
+    - Separate JSON input into lat, lon, and content fields.
+    - Auto-fill lat and lon with current coordinates.
+    - *(Plan: 7.5, Req: 7)*
+- [x] **Fix Manual Input content format and CORS**
+    - Allow plain text in JsonInput content field.
+    - Explicitly allow all origins in server CORS configuration to avoid issues when calling production API from localhost.
+    - *(Plan: 7.5, Req: 7)*
