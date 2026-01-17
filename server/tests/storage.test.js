@@ -9,8 +9,8 @@ describe('storage facade with memory backend', () => {
   let mem
 
   beforeEach(async () => {
-    storage = await import('../storage/index.js')
-    mem = await import('../storage/memory.js')
+    storage = await import('../repositories/storage/index.js')
+    mem = await import('../repositories/storage/memory.js')
     mem.__clearAll()
     await storage.initStorage()
   })
@@ -53,7 +53,7 @@ describe('mongo backend is selectable (mocked)', () => {
 
     vi.resetModules()
     // Define mock inline to avoid referencing hoisted outer variables
-    vi.mock('../storage/mongo.js', () => {
+    vi.mock('../repositories/storage/mongo.js', () => {
       const calls = { init: 0, close: 0, save: [], getAll: 0, find: [] }
       return {
         initStorage: async () => { calls.init++ },
@@ -65,8 +65,8 @@ describe('mongo backend is selectable (mocked)', () => {
       }
     })
 
-    const storage = await import('../storage/index.js')
-    const mockedMongo = await import('../storage/mongo.js')
+    const storage = await import('../repositories/storage/index.js')
+    const mockedMongo = await import('../repositories/storage/mongo.js')
 
     await storage.initStorage()
     await storage.saveRecord({ a: 1 })

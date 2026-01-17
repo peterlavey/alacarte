@@ -37,6 +37,19 @@
   max-width: 600px;
 }
 
+.invalidUrl {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+  word-break: break-all;
+}
+
+.invalidUrl code {
+  background-color: #f3f4f6;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+}
+
 .secondaryButton {
   background-color: transparent;
   color: #6b7280;

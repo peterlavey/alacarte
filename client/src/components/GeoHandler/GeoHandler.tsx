@@ -1,7 +1,17 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
+
+interface Coords {
+  lat: number
+  lon: number
+}
+
+interface GeoHandlerProps {
+  onCoords?: (coords: Coords) => void
+  onError?: (err: Error | GeolocationPositionError) => void
+}
 
 // Gets current geolocation once on mount and emits via callbacks
-export default function GeoHandler({ onCoords, onError }) {
+export default function GeoHandler({ onCoords, onError }: GeoHandlerProps) {
   useEffect(() => {
     if (!('geolocation' in navigator)) {
       onError && onError(new Error('Geolocation not supported'))
@@ -17,7 +27,7 @@ export default function GeoHandler({ onCoords, onError }) {
       },
       { enableHighAccuracy: true, timeout: 10000 }
     )
-  }, [])
+  }, [onCoords, onError])
 
   return null
 }

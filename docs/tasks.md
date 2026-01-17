@@ -52,9 +52,9 @@
 - [x] Generate PWA icons with detailed cat waiter design (ears from favicon, hand from mask-icon) (Plan: 7.8, Req: 7)
 - [x] Replace the icons with a symmetrical mustache design using example.svg as base (Plan: 7.10, Req: 7)
 - [x] Update README and use icon (Plan: 7.9, Req: 7)
-- [ ] Migrate remaining components to TypeScript with explicit props interfaces (Plan: 7.2, Req: 7)
+- [x] Migrate remaining components to TypeScript with explicit props interfaces (Plan: 7.2, Req: 7)
 - [x] Implement elegant Splash Screen instead of "Loading" text (Plan: 4.2, Req: 4)
-- [ ] Add more component tests (JsonInput submit flow, Scanner visibility, Canvas render) (Plan: 7.5, Req: 7)
+- [x] Add more component tests (JsonInput submit flow, Scanner visibility, Canvas render) (Plan: 7.5, Req: 7)
 - [x] Update documentation: Migrate from GitLab to Netlify (Plan: 6.5, Req: 6)
 - [x] Organize Storage Files into Folder (Plan: 5.2, Req: 5)
 - [x] Setup Vitest (Server & Client) (Plan: 7.5, Req: 6)
@@ -80,3 +80,41 @@
     - [x] Implement server-side validation in the `register` endpoint
     - [x] Update client to handle registration failures and show "Menu not available"
     - [x] Add unit and integration tests for server-side validation and client handling
+- [x] **WhatsApp API Flow (Plan: 8.5, Req: 12)**
+    - [x] Implement WhatsApp URL detection utility
+    - [x] Create WhatsAppLinkRequest page for real link input
+    - [x] Integrate WhatsApp flow in Home page scan handler
+    - [x] Add "Open WhatsApp" button to execute the link and receive the real URL
+    - [x] Clarify WhatsApp link request message (final browser URL)
+    - [x] Add unit tests for the WhatsApp flow
+- [x] **WhatsApp API Redirection Fix**
+    - [x] Broaden WhatsApp URL detection to include redirection services (e.g., cheetrack)
+    - [x] Improve URL validation to handle access restrictions (User-Agent, 403 status)
+- [x] **Supabase Migration (Plan: 5.3, Req: 5)**
+    - [x] Install `@supabase/supabase-js`
+    - [x] Create Supabase storage repository (`server/repositories/storage/supabase.js`)
+    - [x] Update storage factory (`server/repositories/storage/index.js`) to support Supabase
+    - [x] Fix Netlify bundling for Supabase (dependency in server/package.json and external in netlify.toml)
+    - [x] Add instructions for Supabase table setup and RLS in README.md
+- [x] **Integration Testing (Flows)**
+    - [x] Implement integration tests for happy path, unknown location scan, invalid GDrive scan, and WhatsApp API flow.
+    - [x] Ensure integration tests cover both client and server folder using `memory` database.
+    - [x] Fix "Menu not available" bug in Home page registration flow.
+    - [x] Show different errors when content doesn't exist vs redirect failed.
+    - [x] Show invalid URL when redirection or validation fails.
+    - [x] Fix "Redirect failed" error by implementing robust popup-blocker bypassing redirection.
+    - [x] Update Home page and tests to use `window.open` as requested for URL redirection.
+    - *(Plan: 7.5, Req: 7, 9, 11)*
+- [x] **Fix excessive API calls in Debug page**
+    - Memoize location handlers and add effect cleanup.
+    - *(Plan: 7.5, Req: 7)*
+- [x] **Refactor Manual Input on Debug page**
+    - Separate JSON input into lat, lon, and content fields.
+    - Auto-fill lat and lon with current coordinates.
+    - *(Plan: 7.5, Req: 7)*
+- [x] **Fix Manual Input content format and CORS**
+    - Allow plain text in JsonInput content field.
+    - Explicitly allow all origins in server CORS configuration to avoid issues when calling production API from localhost.
+    - *(Plan: 7.5, Req: 7)*
+- [x] **Fix failing unit tests**
+    - Fix `Home.test.tsx` and `WhatsAppLinkRequest.test.tsx` by mocking `axios.isAxiosError` and increasing timeouts for asynchronous UI updates.

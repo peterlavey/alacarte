@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { resolve, register } from '@/api'
 import axios from 'axios'
 import Canvas from '@/components/Canvas/Canvas'
 import Scanner from '@/components/Scanner/Scanner'
 import SplashScreen from '@/components/SplashScreen/SplashScreen'
+import { isWhatsAppUrl } from '@/utils/whatsapp'
 import styles from './Home.module.css'
 
 interface Coords {
@@ -19,6 +21,9 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null)
   const [showScanner, setShowScanner] = useState(false)
   const [menuUnavailable, setMenuUnavailable] = useState(false)
+  const [errorType, setErrorType] = useState<'notFound' | 'redirectFailed' | null>(null)
+  const [invalidUrl, setInvalidUrl] = useState<string | null>(null)
+  const navigate = useNavigate()
   const isRegistering = React.useRef(false)
 
   const getLocation = useCallback(() => {
@@ -51,6 +56,7 @@ export default function Home() {
 
   useEffect(() => {
     if (coords && !content) {
+      setLoading(true)
       resolve(coords)
         .then(async (data: { content: string }) => {
           if (data && data.content) {
@@ -58,38 +64,32 @@ export default function Home() {
             setContent(contentValue)
             setShowScanner(false)
             setMenuUnavailable(false)
+            setErrorType(null)
+            setInvalidUrl(null)
 
             // If content is a URL, open it in a new tab
             if (contentValue.startsWith('http')) {
-              // If it's a Google Drive URL, validate it first
-              if (contentValue.includes('drive.google.com')) {
-                try {
-                  setLoading(true)
-                  await axios.get(contentValue, { 
-                    timeout: 5000,
-                    // We don't need the whole content, just checking if it's accessible
-                    headers: { 'Range': 'bytes=0-0' } 
-                  })
-                } catch (err) {
-                  console.error('Google Drive validation failed:', err)
-                  setMenuUnavailable(true)
-                  return
-                } finally {
-                  setLoading(false)
-                }
+              // Open window immediately to avoid popup blocker
+              const win = window.open('about:blank', '_blank')
+
+              if (!win) {
+                setInvalidUrl(contentValue)
+                setErrorType('redirectFailed')
+                setMenuUnavailable(true)
+                return
               }
 
-              const win = window.open(contentValue, '_blank')
-              if (!win) {
-                setMenuUnavailable(true)
-              }
+              if (win) win.close()
+              window.open(contentValue, '_blank')
             }
           } else {
+            setErrorType('notFound')
             setMenuUnavailable(true)
           }
         })
         .catch((err: never) => {
           console.error('Resolve error:', err)
+          setErrorType('notFound')
           setMenuUnavailable(true)
         })
         .finally(() => {
@@ -120,21 +120,29 @@ export default function Home() {
     try {
       setLoading(true)
 
-      // Validate URL before registering if it starts with http
-      if (scannedText.startsWith('http')) {
-        try {
-          await axios.get(scannedText, { 
-            timeout: 5000,
-            headers: { 'Range': 'bytes=0-0' }
-          })
-        } catch (err) {
-          console.error('URL validation failed before registration:', err)
+      // Open window early if it's likely a URL to avoid popup blocker
+      // We'll close it if it's not a URL or if validation fails
+      let win: Window | null = null
+      if (scannedText.startsWith('http') && !isWhatsAppUrl(scannedText)) {
+        win = window.open('about:blank', '_blank')
+        if (!win) {
+          setInvalidUrl(scannedText)
+          setErrorType('redirectFailed')
           setMenuUnavailable(true)
           setShowScanner(false)
           setLoading(false)
           isRegistering.current = false
           return
         }
+      }
+
+      // NEW: Check if it's a WhatsApp URL
+      if (isWhatsAppUrl(scannedText)) {
+        if (win) win.close()
+        setLoading(false)
+        isRegistering.current = false
+        navigate('/whatsapp-link', { state: { lat: coords.lat, lon: coords.lon, whatsappUrl: scannedText } })
+        return
       }
 
       const data = await register({
@@ -145,24 +153,33 @@ export default function Home() {
       setContent(finalContent)
       setShowScanner(false)
       setMenuUnavailable(false)
+      setErrorType(null)
+      setInvalidUrl(null)
+      setLoading(false)
 
       // If content is a URL, open it in a new tab
       if (finalContent.startsWith('http')) {
-        const win = window.open(finalContent, '_blank')
-        if (!win) {
-          setMenuUnavailable(true)
-        }
+        if (win) win.close()
+        window.open(finalContent, '_blank')
+      } else {
+        if (win) win.close()
       }
     } catch (err: unknown) {
       console.error('Registration failed:', err)
+      // IF IT IS AN AXIOS ERROR WITH A 422 STATUS, IT'S A VALIDATION FAILURE
+      if (axios.isAxiosError(err) && err.response && err.response.status === 422) {
+        console.log('Validation error detected (422)')
+        setErrorType('redirectFailed')
+        setInvalidUrl(scannedText)
+      } else {
+        setErrorType('notFound') 
+      }
       setMenuUnavailable(true)
       setShowScanner(false)
+      setLoading(false)
       const message = err instanceof Error ? err.message : 'Failed to register'
-      // We don't set the global error here to allow showing the menuUnavailable UI
-      // but we can log it or show a temporary notification if we had one.
       console.warn('Register error:', message)
     } finally {
-      setLoading(false)
       isRegistering.current = false
     }
   }
@@ -172,6 +189,15 @@ export default function Home() {
       <SplashScreen 
         fadeOut={!loading} 
         onAnimationEnd={() => setSplashVisible(false)} 
+      />
+    )
+  }
+
+  if (loading && !content) {
+    return (
+      <SplashScreen 
+        fadeOut={false}
+        onAnimationEnd={() => {}}
       />
     )
   }
@@ -197,8 +223,19 @@ export default function Home() {
         </div>
       ) : menuUnavailable && !showScanner ? (
         <div className={styles.unavailableSection}>
-          <h1 className={styles.title}>Menu not available</h1>
-          <p>We couldn't find a menu for this location or the redirect failed.</p>
+          <h1 className={styles.title}>
+            {errorType === 'redirectFailed' ? 'Redirect failed' : 'Menu not available'}
+          </h1>
+          <p>
+            {errorType === 'redirectFailed' 
+              ? 'We found a menu but could not open it. Please try scanning again.' 
+              : "We couldn't find a menu for this location."}
+          </p>
+          {invalidUrl && (
+            <p className={styles.invalidUrl}>
+              URL: <code>{invalidUrl}</code>
+            </p>
+          )}
           <button onClick={() => setShowScanner(true)} className={styles.button}>
             Scan QR code
           </button>

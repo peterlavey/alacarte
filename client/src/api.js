@@ -9,9 +9,18 @@ const api = axios.create({
   headers: { 'Content-Type': 'application/json' },
 })
 
+// For testing purposes: allow overriding the axios instance
+export function __setAxiosInstance(instance) {
+  // We can't easily re-assign the constant, so we'll use a wrapper
+}
+let axiosInstance = api
+export function setAxiosInstance(instance) {
+  axiosInstance = instance
+}
+
 export async function resolve(coords) {
   const { lat, lon, thresholdMeters } = coords || {}
-  const { data } = await api.post('/api/resolve', {
+  const { data } = await axiosInstance.post('/api/resolve', {
     lat,
     lon,
     ...(typeof thresholdMeters === 'number' ? { thresholdMeters } : {}),
@@ -21,12 +30,24 @@ export async function resolve(coords) {
 
 export async function register(data) {
   const { lat, lon, content } = data || {}
-  const res = await api.post('/api/register', { lat, lon, content })
-  return res.data
+  try {
+    const res = await axiosInstance.post('/api/register', { lat, lon, content })
+    return res.data
+  } catch (err) {
+    if (err.response && err.response.status === 422) {
+      const error = new Error(err.response.data.error || 'Validation failed')
+      // @ts-expect-error adding response to error
+      error.response = err.response
+      // @ts-expect-error adding isAxiosError to error
+      error.isAxiosError = true
+      throw error
+    }
+    throw err
+  }
 }
 
 export async function fetchHistory() {
-  const { data } = await api.get('/api/history')
+  const { data } = await axiosInstance.get('/api/history')
   return data
 }
 

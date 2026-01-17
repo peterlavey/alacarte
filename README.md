@@ -7,7 +7,7 @@
 #### Overview
 alacarte is a small full‑stack JavaScript application consisting of:
 - A React client built with Vite
-- An Express API server with pluggable storage (in‑memory by default, MongoDB optional)
+- An Express API server with pluggable storage (in‑memory by default, Supabase or MongoDB optional)
 - A Netlify Functions wrapper to run the same Express app in serverless environments
 
 The client can talk to the API directly in local development or through the Netlify dev proxy. The API exposes endpoints to register geo‑tagged content, resolve the nearest record for given coordinates, list history, and a simple health check.
@@ -16,7 +16,7 @@ The client can talk to the API directly in local development or through the Netl
 - Language: JavaScript (ES Modules)
 - Client: React 18 + Vite 5
 - Server: Node.js + Express 4
-- Storage backends: in‑memory (default) or MongoDB (optional)
+- Storage backends: in‑memory (default), Supabase (recommended free tier), or MongoDB (optional)
 - Serverless: Netlify Functions using `serverless-http`
 - Testing: Vitest (client and server)
 - Package manager: npm (repo contains `package-lock.json`)
@@ -46,6 +46,7 @@ alacarte/
 - Node.js 20.x
 - npm 10+
 - Optional: MongoDB (if you plan to use the `mongo` storage backend)
+- Optional: Supabase project (if you plan to use the `supabase` storage backend)
 - Optional (for serverless local dev): Netlify CLI (`npm i -g netlify-cli`)
 
 #### Setup
@@ -118,7 +119,9 @@ Client (Vite) — variables must be prefixed with `VITE_` to be exposed to the c
 
 Server (Express)
 - `PORT`: Port for the API server (default 3001).
-- `USE_DB`: Storage backend selector: `memory` (default) or `mongo`.
+- `USE_DB`: Storage backend selector: `memory` (default), `supabase`, or `mongo`.
+- `SUPABASE_URL`: Your Supabase project URL (required if `USE_DB=supabase`).
+- `SUPABASE_KEY`: Your Supabase API key (anon/public is sufficient) (required if `USE_DB=supabase`).
 - `MONGO_URL`: MongoDB connection string (default `mongodb://127.0.0.1:27017`).
 - `MONGO_DB`: Database name (default `alacarte`).
 - `NETLIFY`: When running in Netlify Functions, this is set to `true` to prevent the server from self‑starting (handled by the function runtime).
@@ -169,6 +172,16 @@ npm run test:cov --prefix server
 #### Troubleshooting
 - Client cannot reach API in dev: ensure the server is running on `http://localhost:3001` (or use `netlify dev`). Check `VITE_API_BASE` matches your API URL.
 - MongoDB backend: ensure `USE_DB=mongo`, `MONGO_URL`, and `MONGO_DB` are correctly set and that the database is reachable.
+- Supabase backend:
+  - Ensure `USE_DB=supabase`, `SUPABASE_URL`, and `SUPABASE_KEY` are correctly set.
+  - You must create a `records` table in your Supabase project with at least `lat` (float8), `lon` (float8), `content` (text/jsonb), and `createdAt` (timestamptz).
+  - **Important (RLS)**: If Row Level Security (RLS) is enabled on the `records` table, you must add policies to allow anonymous access. Run the following SQL in your Supabase SQL Editor:
+    ```sql
+    -- Allow anonymous inserts
+    CREATE POLICY "Allow anonymous inserts" ON records FOR INSERT WITH CHECK (true);
+    -- Allow anonymous selects
+    CREATE POLICY "Allow anonymous selects" ON records FOR SELECT USING (true);
+    ```
 - Netlify dev: install Netlify CLI and run `netlify dev`. It proxies API requests and applies redirects.
 
 #### License

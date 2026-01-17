@@ -2,7 +2,14 @@ import React from 'react'
 import { Scanner as QrScanner } from '@yudiel/react-qr-scanner'
 import styles from './Scanner.module.css'
 
-export default function Scanner({ active, onDecode, onError, onClose }) {
+interface ScannerProps {
+  active: boolean
+  onDecode?: (result: unknown) => void
+  onError?: (err: Error) => void
+  onClose?: () => void
+}
+
+export default function Scanner({ active, onDecode, onError, onClose }: ScannerProps) {
   if (!active) return null
   return (
     <div className={styles.container}>

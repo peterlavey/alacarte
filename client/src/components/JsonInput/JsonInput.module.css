@@ -4,6 +4,23 @@
   gap: 8px;
 }
 
+.row {
+  display: flex;
+  gap: 8px;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.input {
+  padding: 4px;
+  width: 100%;
+}
+
 .textarea {
   width: 100%;
 }
