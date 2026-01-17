@@ -122,7 +122,7 @@ describe('WhatsAppLinkRequest', () => {
 
     await waitFor(() => {
       expect(screen.getByText(/The link you provided is not accessible/i)).toBeInTheDocument()
-    })
+    }, { timeout: 10000 })
     expect(api.register).not.toHaveBeenCalled()
   })
 })

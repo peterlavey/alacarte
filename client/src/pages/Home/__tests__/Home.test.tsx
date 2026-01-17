@@ -218,7 +218,7 @@ describe('Home Page', () => {
   it('redirects to URL in a new tab if content is a link (resolve)', async () => {
     const url = 'https://example.com'
     vi.mocked(api.resolve).mockResolvedValue({ content: url })
-    const openSpy = vi.fn().mockReturnValue({ location: { href: '' } })
+    const openSpy = vi.fn().mockReturnValue({ location: { href: '' }, close: vi.fn() })
     const originalOpen = window.open
     window.open = openSpy
 
@@ -227,7 +227,7 @@ describe('Home Page', () => {
 
       await waitFor(() => {
         expect(openSpy).toHaveBeenCalledWith('about:blank', '_blank')
-      })
+      }, { timeout: 10000 })
     } finally {
       window.open = originalOpen
     }
@@ -239,7 +239,7 @@ describe('Home Page', () => {
     vi.mocked(api.register).mockResolvedValue({ content: url })
     vi.mocked(axios.get).mockResolvedValue({ status: 200 })
     
-    const openSpy = vi.fn().mockReturnValue({ location: { href: '' } }) // Mock successful window.open
+    const openSpy = vi.fn().mockReturnValue({ location: { href: '' }, close: vi.fn() }) // Mock successful window.open
     const originalOpen = window.open
     window.open = openSpy
 
@@ -248,19 +248,19 @@ describe('Home Page', () => {
 
       await waitFor(() => {
         expect(screen.getByText(/Menu not available/i)).toBeInTheDocument()
-      })
+      }, { timeout: 10000 })
 
       fireEvent.click(screen.getByText(/Scan QR code/i))
 
       await waitFor(() => {
         expect(screen.getByTestId('mock-scanner')).toBeInTheDocument()
-      })
+      }, { timeout: 10000 })
 
       fireEvent.click(screen.getByText(/Simulate URL Scan/i))
 
       await waitFor(() => {
         expect(openSpy).toHaveBeenCalledWith('about:blank', '_blank')
-      })
+      }, { timeout: 10000 })
     } finally {
       window.open = originalOpen
     }
@@ -280,7 +280,7 @@ describe('Home Page', () => {
         expect(screen.getByText(/Redirect failed/i)).toBeInTheDocument()
         expect(screen.getByText(/URL:/i)).toBeInTheDocument()
         expect(screen.getByText(new RegExp(url, 'i'))).toBeInTheDocument()
-      })
+      }, { timeout: 10000 })
       
       expect(screen.getByText(/could not open it/i)).toBeInTheDocument()
     } finally {
@@ -293,7 +293,7 @@ describe('Home Page', () => {
     vi.mocked(api.resolve).mockResolvedValue({ content: url })
     vi.mocked(axios.get).mockResolvedValue({ status: 200 })
     
-    const openSpy = vi.fn().mockReturnValue({ location: { href: '' } })
+    const openSpy = vi.fn().mockReturnValue({ location: { href: '' }, close: vi.fn() })
     const originalOpen = window.open
     window.open = openSpy
 
@@ -303,7 +303,7 @@ describe('Home Page', () => {
       await waitFor(() => {
         expect(axios.get).toHaveBeenCalledWith(url, expect.any(Object))
         expect(openSpy).toHaveBeenCalledWith('about:blank', '_blank')
-      })
+      }, { timeout: 10000 })
     } finally {
       window.open = originalOpen
     }

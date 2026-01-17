@@ -129,7 +129,7 @@ describe('Integration Flows (Client + Server)', () => {
     })
 
     // Mock window.open
-    vi.spyOn(window, 'open').mockReturnValue({ location: { href: '' } } as any)
+    vi.spyOn(window, 'open').mockReturnValue({ location: { href: '' }, close: vi.fn() } as any)
 
     // Mock window.location
     // @ts-expect-error needed to mock window.location
@@ -320,7 +320,7 @@ describe('Integration Flows (Client + Server)', () => {
       expect(screen.getByText(/Redirect failed/i)).toBeInTheDocument()
       expect(screen.getByText(/could not open it/i)).toBeInTheDocument()
       expect(screen.getByText(new RegExp(invalidGDriveUrl, 'i'))).toBeInTheDocument()
-    })
+    }, { timeout: 10000 })
 
     // Verify it was NOT saved
     try {

@@ -68,7 +68,7 @@ export default function WhatsAppLinkRequest() {
       })
 
       // 3. Success -> Redirect
-      if (win) {
+      if (win && win.location) {
         win.location.href = realUrl
       } else {
         window.location.href = realUrl

@@ -89,21 +89,21 @@ export default function Home() {
                 } catch (err) {
                   console.error('Google Drive validation failed:', err)
                   if (win) win.close()
+                  setInvalidUrl(contentValue)
                   setErrorType('redirectFailed')
                   setMenuUnavailable(true)
-                  setInvalidUrl(contentValue)
                   return
                 } finally {
                   setLoading(false)
                 }
               }
 
-              if (win) {
+              if (win && win.location) {
                 win.location.href = contentValue
-              } else {
-                setMenuUnavailable(true)
-                setErrorType('redirectFailed')
+              } else if (!win) {
                 setInvalidUrl(contentValue)
+                setErrorType('redirectFailed')
+                setMenuUnavailable(true)
               }
             }
           } else {
@@ -175,9 +175,9 @@ export default function Home() {
         } catch (err) {
           console.error('URL validation failed before registration:', err)
           if (win) win.close()
+          setInvalidUrl(scannedText)
           setErrorType('redirectFailed')
           setMenuUnavailable(true)
-          setInvalidUrl(scannedText)
           setShowScanner(false)
           setLoading(false)
           isRegistering.current = false
@@ -199,14 +199,14 @@ export default function Home() {
 
       // If content is a URL, open it in a new tab
       if (finalContent.startsWith('http')) {
-        if (win) {
+        if (win && win.location) {
           win.location.href = finalContent
         } else {
           const secondWin = window.open(finalContent, '_blank')
-          if (!secondWin) {
-            setMenuUnavailable(true)
-            setErrorType('redirectFailed')
+          if (!secondWin && !win) {
             setInvalidUrl(finalContent)
+            setErrorType('redirectFailed')
+            setMenuUnavailable(true)
           }
         }
       } else {
@@ -214,8 +214,8 @@ export default function Home() {
       }
     } catch (err: unknown) {
       console.error('Registration failed:', err)
-      setMenuUnavailable(true)
       setErrorType('notFound') 
+      setMenuUnavailable(true)
       setShowScanner(false)
       setLoading(false)
       const message = err instanceof Error ? err.message : 'Failed to register'
