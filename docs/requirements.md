@@ -49,6 +49,7 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 - **WHEN** a new location is registered, **THEN** it SHALL be persisted in the backend storage.
 - **WHEN** multiple requests occur, **THEN** the system SHALL maintain data integrity (no lost writes).
 - **WHEN** querying for results, **THEN** the system SHALL support efficient retrieval based on coordinate proximity.
+- **WHEN** configuring the system, **THEN** it SHALL support multiple storage backends including In-Memory (for testing), MongoDB, and Supabase.
 
 ### 6. CI/CD & Deployment (Netlify & GitHub Actions)
 **Stakeholder Need:**

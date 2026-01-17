@@ -90,6 +90,11 @@
 - [x] **WhatsApp API Redirection Fix**
     - [x] Broaden WhatsApp URL detection to include redirection services (e.g., cheetrack)
     - [x] Improve URL validation to handle access restrictions (User-Agent, 403 status)
+- [x] **Supabase Migration (Plan: 5.3, Req: 5)**
+    - [x] Install `@supabase/supabase-js`
+    - [x] Create Supabase storage repository (`server/repositories/storage/supabase.js`)
+    - [x] Update storage factory (`server/repositories/storage/index.js`) to support Supabase
+    - [ ] Add instructions for Supabase table setup in README.md
 - [x] **Integration Testing (Flows)**
     - [x] Implement integration tests for happy path, unknown location scan, invalid GDrive scan, and WhatsApp API flow.
     - [x] Ensure integration tests cover both client and server folder using `memory` database.

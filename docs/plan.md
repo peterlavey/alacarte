@@ -63,13 +63,14 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
 ## Phase 5: Persistence (Priority: Medium)
 **Goal:** Provide reliable data storage for location records.
 - **5.1 Database Integration**
-    - Integrate a database (e.g., MongoDB) for persistent storage.
+    - Integrate a database (e.g., Supabase, MongoDB) for persistent storage.
     - *Relates to Requirements: 5*
 - **5.2 Repository Abstraction**
     - Abstract storage behind a repository layer to decouple from DB vendor specifics.
+    - Support multiple backends (memory, mongo, supabase).
     - *Relates to Requirements: 5*
 - **5.3 Persistence Tests**
-    - Add tests to validate storage operations and proximity queries.
+    - Add tests to validate storage operations and proximity queries across different backends.
     - *Relates to Requirements: 5*
 
 ## Phase 6: CI/CD & Deployment (Netlify & GitHub Actions) (Priority: Medium)
