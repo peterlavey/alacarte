@@ -118,3 +118,9 @@
     - *(Plan: 7.5, Req: 7)*
 - [x] **Fix failing unit tests**
     - Fix `Home.test.tsx` and `WhatsAppLinkRequest.test.tsx` by mocking `axios.isAxiosError` and increasing timeouts for asynchronous UI updates.
+- [x] **Fix linter errors and warnings**
+    - Fix unused expressions in `GeoHandler.tsx`
+    - Fix unused vars and expressions in `JsonInput.tsx` and `Home.test.tsx`
+    - Fix React Hook rules violation in `Debug.test.tsx`
+    - Replace `any` with specific types or `unknown` in several test files
+    - Verify with `npm run lint` and all unit/integration tests
