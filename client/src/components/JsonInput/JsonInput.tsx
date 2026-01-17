@@ -1,11 +1,16 @@
 import React, { useState } from 'react'
 import styles from './JsonInput.module.css'
 
-export default function JsonInput({ onSubmit, disabled }) {
+interface JsonInputProps {
+  onSubmit: (data: any) => void
+  disabled?: boolean
+}
+
+export default function JsonInput({ onSubmit, disabled }: JsonInputProps) {
   const [text, setText] = useState('')
   const [error, setError] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     try {

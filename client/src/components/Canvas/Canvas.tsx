@@ -1,7 +1,11 @@
 import React from 'react'
 import styles from './Canvas.module.css'
 
-export default function Canvas({ content }) {
+interface CanvasProps {
+  content: unknown
+}
+
+export default function Canvas({ content }: CanvasProps) {
   if (content == null) {
     return <div className={styles.empty}>No content</div>
   }
