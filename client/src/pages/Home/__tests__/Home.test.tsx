@@ -38,6 +38,15 @@ vi.mock('@/components/SplashScreen/SplashScreen', () => {
   }
 })
 
+const mockNavigate = vi.fn()
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom')
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate,
+  }
+})
+
 describe('Home Page', () => {
   const mockCoords = {
     latitude: 40.7128,
