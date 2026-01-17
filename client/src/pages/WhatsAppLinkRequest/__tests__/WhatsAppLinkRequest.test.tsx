@@ -23,6 +23,7 @@ vi.mock('react-router-dom', async () => {
 describe('WhatsAppLinkRequest', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    document.body.innerHTML = ''
     // Mock window.location.href
     // @ts-expect-error needed to test location.href setter
     delete window.location
@@ -86,8 +87,11 @@ describe('WhatsAppLinkRequest', () => {
 
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalledWith('https://real-link.com', expect.objectContaining({
+        timeout: 10000,
         headers: expect.objectContaining({
-          'User-Agent': expect.any(String)
+          'User-Agent': expect.any(String),
+          'Accept': expect.any(String),
+          'Accept-Language': expect.any(String)
         })
       }))
       expect(api.register).toHaveBeenCalledWith({

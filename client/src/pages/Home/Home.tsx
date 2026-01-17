@@ -69,10 +69,12 @@ export default function Home() {
                 try {
                   setLoading(true)
                   await axios.get(contentValue, { 
-                    timeout: 5000,
+                    timeout: 10000,
                     // We don't need the whole content, just checking if it's accessible
                     headers: { 
-                      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+                      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+                      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+                      'Accept-Language': 'en-US,en;q=0.9',
                     },
                     validateStatus: (status) => (status >= 200 && status < 400) || status === 403
                   })
@@ -138,9 +140,11 @@ export default function Home() {
       if (scannedText.startsWith('http')) {
         try {
           await axios.get(scannedText, { 
-            timeout: 5000,
+            timeout: 10000,
             headers: { 
-              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+              'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+              'Accept-Language': 'en-US,en;q=0.9',
             },
             validateStatus: (status) => (status >= 200 && status < 400) || status === 403
           })
