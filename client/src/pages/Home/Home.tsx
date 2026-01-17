@@ -79,36 +79,6 @@ export default function Home() {
                 return
               }
 
-              // If it's a Google Drive URL, validate it first
-              if (contentValue.includes('drive.google.com')) {
-                try {
-                  setLoading(true)
-                  await axios.get(contentValue, { 
-                    timeout: 10000,
-                    // We don't need the whole content, just checking if it's accessible
-                    headers: { 
-                      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-                      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-                      'Accept-Language': 'en-US,en;q=0.9',
-                    },
-                    validateStatus: (status) => (status >= 200 && status < 400) || status === 403
-                  })
-                } catch (err) {
-                  console.error('Google Drive validation failed:', err)
-                  if (axios.isAxiosError(err) && err.response) {
-                    console.error('GDrive Validation response status:', err.response.status)
-                    console.error('GDrive Validation response headers:', err.response.headers)
-                  }
-                  if (win) win.close()
-                  setInvalidUrl(contentValue)
-                  setErrorType('redirectFailed')
-                  setMenuUnavailable(true)
-                  return
-                } finally {
-                  setLoading(false)
-                }
-              }
-
               if (win) win.close()
               window.open(contentValue, '_blank')
             }
@@ -175,36 +145,6 @@ export default function Home() {
         return
       }
 
-      // Validate URL before registering if it starts with http
-      if (scannedText.startsWith('http')) {
-        try {
-          await axios.get(scannedText, { 
-            timeout: 10000,
-            headers: { 
-              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-              'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-              'Accept-Language': 'en-US,en;q=0.9',
-            },
-            validateStatus: (status) => (status >= 200 && status < 400) || status === 403
-          })
-        } catch (err) {
-          console.error('URL validation failed before registration:', err)
-          // IF IT IS AN AXIOS ERROR WITH A RESPONSE, WE CAN LOG MORE
-          if (axios.isAxiosError(err) && err.response) {
-            console.error('Validation response status:', err.response.status)
-            console.error('Validation response headers:', err.response.headers)
-          }
-          if (win) win.close()
-          setInvalidUrl(scannedText)
-          setErrorType('redirectFailed')
-          setMenuUnavailable(true)
-          setShowScanner(false)
-          setLoading(false)
-          isRegistering.current = false
-          return
-        }
-      }
-
       const data = await register({
         ...coords,
         content: scannedText,
@@ -226,7 +166,14 @@ export default function Home() {
       }
     } catch (err: unknown) {
       console.error('Registration failed:', err)
-      setErrorType('notFound') 
+      // IF IT IS AN AXIOS ERROR WITH A 422 STATUS, IT'S A VALIDATION FAILURE
+      if (axios.isAxiosError(err) && err.response && err.response.status === 422) {
+        console.log('Validation error detected (422)')
+        setErrorType('redirectFailed')
+        setInvalidUrl(scannedText)
+      } else {
+        setErrorType('notFound') 
+      }
       setMenuUnavailable(true)
       setShowScanner(false)
       setLoading(false)

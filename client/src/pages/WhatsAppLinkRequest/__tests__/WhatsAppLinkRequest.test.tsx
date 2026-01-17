@@ -70,7 +70,6 @@ describe('WhatsAppLinkRequest', () => {
   })
 
   it('validates URL and registers successfully', async () => {
-    vi.mocked(axios.get).mockResolvedValueOnce({ status: 200 })
     vi.mocked(api.register).mockResolvedValueOnce({ id: '1' })
     const openSpy = vi.spyOn(window, 'open').mockReturnValue({ location: { href: '' } } as any)
 
@@ -87,14 +86,6 @@ describe('WhatsAppLinkRequest', () => {
     fireEvent.click(submitBtn)
 
     await waitFor(() => {
-      expect(axios.get).toHaveBeenCalledWith('https://real-link.com', expect.objectContaining({
-        timeout: 10000,
-        headers: expect.objectContaining({
-          'User-Agent': expect.any(String),
-          'Accept': expect.any(String),
-          'Accept-Language': expect.any(String)
-        })
-      }))
       expect(api.register).toHaveBeenCalledWith({
         lat: 10,
         lon: 20,
@@ -105,8 +96,13 @@ describe('WhatsAppLinkRequest', () => {
     openSpy.mockRestore()
   })
 
-  it('shows error if URL validation fails', async () => {
-    vi.mocked(axios.get).mockRejectedValueOnce(new Error('Failed'))
+  it('shows error if URL registration fails with validation error', async () => {
+    const validationError = new Error('Validation failed')
+    // @ts-expect-error adding response to error
+    validationError.response = { status: 422, data: { error: 'Validation failed' } }
+    // @ts-expect-error adding isAxiosError to error
+    validationError.isAxiosError = true
+    vi.mocked(api.register).mockRejectedValueOnce(validationError)
     vi.spyOn(window, 'open').mockReturnValue({ close: vi.fn() } as any)
 
     render(
@@ -121,8 +117,10 @@ describe('WhatsAppLinkRequest', () => {
     fireEvent.click(screen.getByText('Continue'))
 
     await waitFor(() => {
-      expect(screen.getByText(/The link you provided is not accessible/i)).toBeInTheDocument()
+      const title = screen.getByRole('heading', { level: 1 })
+      expect(title).toBeInTheDocument() // just ensuring it's there
     }, { timeout: 10000 })
-    expect(api.register).not.toHaveBeenCalled()
+
+    expect(screen.getByText(/The link you provided is not accessible/i)).toBeInTheDocument()
   })
 })

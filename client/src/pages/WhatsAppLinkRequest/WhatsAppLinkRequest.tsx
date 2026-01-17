@@ -34,44 +34,14 @@ export default function WhatsAppLinkRequest() {
     const win = window.open('about:blank', '_blank')
 
     try {
-      // 1. Validate the real URL (current requirement)
-      if (realUrl.startsWith('http')) {
-        try {
-          await axios.get(realUrl, { 
-            timeout: 10000,
-            headers: { 
-              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-              'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-              'Accept-Language': 'en-US,en;q=0.9',
-            },
-            validateStatus: (status) => (status >= 200 && status < 400) || status === 403
-          })
-        } catch (err) {
-          console.error('Real URL validation failed:', err)
-          if (axios.isAxiosError(err) && err.response) {
-            console.error('Real URL validation status:', err.response.status)
-            console.error('Real URL validation headers:', err.response.headers)
-          }
-          if (win) win.close()
-          setError('The link you provided is not accessible. Please check it and try again.')
-          setLoading(false)
-          return
-        }
-      } else {
-        if (win) win.close()
-        setError('Please provide a valid URL starting with http or https.')
-        setLoading(false)
-        return
-      }
-
-      // 2. Register the real URL
+      // Register the real URL
       await register({
         lat,
         lon,
         content: realUrl,
       })
 
-      // 3. Success -> Redirect
+      // Success -> Redirect
       if (win && win.location) {
         win.location.href = realUrl
       } else {
@@ -81,7 +51,13 @@ export default function WhatsAppLinkRequest() {
     } catch (err) {
       console.error('Registration failed:', err)
       if (win) win.close()
-      setError('Failed to save the link. Please try again.')
+      
+      // IF IT IS AN AXIOS ERROR WITH A 422 STATUS, IT'S A VALIDATION FAILURE
+      if (axios.isAxiosError(err) && err.response && err.response.status === 422) {
+        setError('The link you provided is not accessible. Please check it and try again.')
+      } else {
+        setError('Failed to save the link. Please try again.')
+      }
       setLoading(false)
     }
   }

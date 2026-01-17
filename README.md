@@ -172,7 +172,16 @@ npm run test:cov --prefix server
 #### Troubleshooting
 - Client cannot reach API in dev: ensure the server is running on `http://localhost:3001` (or use `netlify dev`). Check `VITE_API_BASE` matches your API URL.
 - MongoDB backend: ensure `USE_DB=mongo`, `MONGO_URL`, and `MONGO_DB` are correctly set and that the database is reachable.
-- Supabase backend: ensure `USE_DB=supabase`, `SUPABASE_URL`, and `SUPABASE_KEY` are correctly set. You must create a `records` table in your Supabase project with at least `lat` (number), `lon` (number), `content` (text/json), and `createdAt` (timestamp).
+- Supabase backend:
+  - Ensure `USE_DB=supabase`, `SUPABASE_URL`, and `SUPABASE_KEY` are correctly set.
+  - You must create a `records` table in your Supabase project with at least `lat` (float8), `lon` (float8), `content` (text/jsonb), and `createdAt` (timestamptz).
+  - **Important (RLS)**: If Row Level Security (RLS) is enabled on the `records` table, you must add policies to allow anonymous access. Run the following SQL in your Supabase SQL Editor:
+    ```sql
+    -- Allow anonymous inserts
+    CREATE POLICY "Allow anonymous inserts" ON records FOR INSERT WITH CHECK (true);
+    -- Allow anonymous selects
+    CREATE POLICY "Allow anonymous selects" ON records FOR SELECT USING (true);
+    ```
 - Netlify dev: install Netlify CLI and run `netlify dev`. It proxies API requests and applies redirects.
 
 #### License

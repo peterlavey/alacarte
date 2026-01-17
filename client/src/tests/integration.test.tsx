@@ -295,13 +295,9 @@ describe('Integration Flows (Client + Server)', () => {
   it('Flow 3: Unknown location + invalid Google Drive URL scan', async () => {
     const invalidGDriveUrl = 'https://drive.google.com/file/d/invalid'
     
-    // Mock axios.get to fail for the validation call
-    vi.mocked(axios.get).mockImplementation(async (url) => {
-      if (url === invalidGDriveUrl) {
-        throw new Error('404 Not Found')
-      }
-      return { status: 200 }
-    })
+    // Mock server-side validation to fail for this URL
+    const { validateUrl } = await import('../../../server/utils/validation.js')
+    vi.mocked(validateUrl).mockResolvedValueOnce(false)
 
     render(
       <MemoryRouter initialEntries={['/']}>

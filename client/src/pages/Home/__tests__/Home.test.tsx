@@ -133,9 +133,15 @@ describe('Home Page', () => {
     expect(screen.getByText(/newly registered content/i)).toBeInTheDocument()
   })
 
-  it('does not call register if URL validation fails in handleScan', async () => {
+  it('shows Redirect failed if registration fails with validation error (422)', async () => {
+    const invalidUrl = 'https://google.com'
     vi.mocked(api.resolve).mockResolvedValue({ content: null })
-    vi.mocked(axios.get).mockRejectedValue(new Error('Validation failed'))
+    const validationError = new Error('Validation failed')
+    // @ts-expect-error adding response to error
+    validationError.response = { status: 422, data: { error: 'Validation failed' } }
+    // @ts-expect-error adding isAxiosError to error
+    validationError.isAxiosError = true
+    vi.mocked(api.register).mockRejectedValue(validationError)
     vi.spyOn(window, 'open').mockReturnValue({ close: vi.fn() } as any)
     
     render(<Home />)
@@ -147,54 +153,21 @@ describe('Home Page', () => {
     fireEvent.click(screen.getByText(/Scan QR code/i))
     
     await waitFor(() => {
-      expect(screen.getByTestId('mock-scanner')).toBeInTheDocument()
+      expect(screen.getByTestId(/mock-scanner/i)).toBeInTheDocument()
     })
     
     // Simulate scanning a URL
     fireEvent.click(screen.getByText(/Simulate URL Scan/i))
     
     await waitFor(() => {
-      expect(screen.getByText(/Redirect failed/i)).toBeInTheDocument()
-      expect(screen.getByText(/URL:/i)).toBeInTheDocument()
-      expect(screen.getByText(new RegExp('https://google.com', 'i'))).toBeInTheDocument()
-    })
+      const title = screen.getByRole('heading', { level: 1 })
+      expect(title).toHaveTextContent(/Redirect failed/i)
+    }, { timeout: 15000 })
     
-    expect(api.register).not.toHaveBeenCalled()
-  })
-
-  it('does not call register if Google Drive validation returns 404 in handleScan', async () => {
-    const invalidUrl = 'https://drive.google.com/file/d/invalid'
-    vi.mocked(api.resolve).mockResolvedValue({ content: null })
-    // Simulate axios returning a response with 404 status (which axios normally throws for by default)
-    const error404 = {
-      isAxiosError: true,
-      response: { status: 404, data: 'Not Found' }
-    }
-    vi.mocked(axios.get).mockRejectedValue(error404)
-    vi.spyOn(window, 'open').mockReturnValue({ close: vi.fn() } as any)
+    expect(screen.getByText(/URL:/i)).toBeInTheDocument()
+    expect(screen.getByText(new RegExp(invalidUrl, 'i'))).toBeInTheDocument()
     
-    render(<Home />)
-    
-    await waitFor(() => {
-      expect(screen.getByText(/Menu not available/i)).toBeInTheDocument()
-    })
-
-    fireEvent.click(screen.getByText(/Scan QR code/i))
-    
-    await waitFor(() => {
-      expect(screen.getByTestId('mock-scanner')).toBeInTheDocument()
-    })
-    
-    // Simulate scanning an invalid Google Drive URL
-    fireEvent.click(screen.getByText(/Simulate Invalid GDrive Scan/i))
-    
-    await waitFor(() => {
-      expect(screen.getByText(/Redirect failed/i)).toBeInTheDocument()
-      expect(screen.getByText(/URL:/i)).toBeInTheDocument()
-      expect(screen.getByText(new RegExp(invalidUrl, 'i'))).toBeInTheDocument()
-    })
-    
-    expect(api.register).not.toHaveBeenCalled()
+    expect(api.register).toHaveBeenCalled()
   })
 
   it('shows unavailable message if registration fails', async () => {
@@ -237,7 +210,6 @@ describe('Home Page', () => {
     const url = 'https://example.com/registered'
     vi.mocked(api.resolve).mockResolvedValue({ content: null })
     vi.mocked(api.register).mockResolvedValue({ content: url })
-    vi.mocked(axios.get).mockResolvedValue({ status: 200 })
     
     const openSpy = vi.spyOn(window, 'open').mockImplementation(() => {
         return { location: { href: '' }, close: vi.fn() } as any;
@@ -253,7 +225,7 @@ describe('Home Page', () => {
       fireEvent.click(screen.getByText(/Scan QR code/i))
 
       await waitFor(() => {
-        expect(screen.getByTestId('mock-scanner')).toBeInTheDocument()
+        expect(screen.getByTestId(/mock-scanner/i)).toBeInTheDocument()
       }, { timeout: 15000 })
 
       fireEvent.click(screen.getByText(/Simulate URL Scan/i))
@@ -284,10 +256,15 @@ describe('Home Page', () => {
     }
   }, 25000)
 
-  it('validates Google Drive URL before redirecting', async () => {
-    const url = 'https://drive.google.com/file/d/123'
-    vi.mocked(api.resolve).mockResolvedValue({ content: url })
-    vi.mocked(axios.get).mockResolvedValue({ status: 200 })
+  it('shows unavailable message if registration fails with validation error', async () => {
+    const url = 'https://invalid-url.com'
+    vi.mocked(api.resolve).mockResolvedValue({ content: null })
+    const validationError = new Error('Validation failed')
+    // @ts-expect-error adding response to error
+    validationError.response = { status: 422, data: { error: 'Validation failed' } }
+    // @ts-expect-error adding isAxiosError to error
+    validationError.isAxiosError = true
+    vi.mocked(api.register).mockRejectedValue(validationError)
     
     const openSpy = vi.spyOn(window, 'open').mockImplementation(() => {
         return { location: { href: '' }, close: vi.fn() } as any;
@@ -295,35 +272,20 @@ describe('Home Page', () => {
 
     try {
       render(<Home />)
-
+      
       await waitFor(() => {
-        expect(axios.get).toHaveBeenCalledWith(url, expect.any(Object))
-        expect(openSpy).toHaveBeenCalled()
-      }, { timeout: 15000 })
-    } finally {
-      openSpy.mockRestore()
-    }
-  }, 25000)
-
-  it('shows unavailable message if Google Drive validation fails', async () => {
-    const url = 'https://drive.google.com/file/d/invalid'
-    vi.mocked(api.resolve).mockResolvedValue({ content: url })
-    vi.mocked(axios.get).mockRejectedValue(new Error('Not Found'))
-    
-    const openSpy = vi.spyOn(window, 'open').mockImplementation(() => {
-        return { location: { href: '' }, close: vi.fn() } as any;
-    });
-
-    try {
-      render(<Home />)
-
-      await waitFor(() => {
-        expect(axios.get).toHaveBeenCalledWith(url, expect.any(Object))
-        expect(screen.getByText(/Redirect failed/i)).toBeInTheDocument()
-        expect(screen.getByText(/URL:/i)).toBeInTheDocument()
-        expect(screen.getByText(new RegExp(url, 'i'))).toBeInTheDocument()
-        expect(screen.getByText(/could not open it/i)).toBeInTheDocument()
+        expect(screen.getByText(/Menu not available/i)).toBeInTheDocument()
       })
+
+      fireEvent.click(screen.getByText(/Scan QR code/i))
+      fireEvent.click(screen.getByText(/Simulate URL Scan/i))
+      
+      await waitFor(() => {
+        const title = screen.getByRole('heading', { level: 1 })
+        expect(title).toHaveTextContent(/Redirect failed/i)
+      }, { timeout: 15000 })
+      
+      expect(screen.getByText(/URL:/i)).toBeInTheDocument()
     } finally {
       openSpy.mockRestore()
     }

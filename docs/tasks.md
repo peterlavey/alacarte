@@ -95,7 +95,7 @@
     - [x] Create Supabase storage repository (`server/repositories/storage/supabase.js`)
     - [x] Update storage factory (`server/repositories/storage/index.js`) to support Supabase
     - [x] Fix Netlify bundling for Supabase (dependency in server/package.json and external in netlify.toml)
-    - [ ] Add instructions for Supabase table setup in README.md
+    - [x] Add instructions for Supabase table setup and RLS in README.md
 - [x] **Integration Testing (Flows)**
     - [x] Implement integration tests for happy path, unknown location scan, invalid GDrive scan, and WhatsApp API flow.
     - [x] Ensure integration tests cover both client and server folder using `memory` database.

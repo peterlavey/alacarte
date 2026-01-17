@@ -30,8 +30,20 @@ export async function resolve(coords) {
 
 export async function register(data) {
   const { lat, lon, content } = data || {}
-  const res = await axiosInstance.post('/api/register', { lat, lon, content })
-  return res.data
+  try {
+    const res = await axiosInstance.post('/api/register', { lat, lon, content })
+    return res.data
+  } catch (err) {
+    if (err.response && err.response.status === 422) {
+      const error = new Error(err.response.data.error || 'Validation failed')
+      // @ts-expect-error adding response to error
+      error.response = err.response
+      // @ts-expect-error adding isAxiosError to error
+      error.isAxiosError = true
+      throw error
+    }
+    throw err
+  }
 }
 
 export async function fetchHistory() {
