@@ -18,6 +18,10 @@ export async function validateUrl(url) {
     return true
   } catch (error) {
     console.error(`Validation failed for ${url}:`, error.message)
+    if (error.response) {
+      console.error('Validation response status:', error.response.status)
+      console.error('Validation response headers:', error.response.headers)
+    }
     return false
   }
 }

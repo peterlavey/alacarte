@@ -72,6 +72,13 @@ export default function Home() {
               // Open window immediately to avoid popup blocker
               const win = window.open('about:blank', '_blank')
 
+              if (!win) {
+                setInvalidUrl(contentValue)
+                setErrorType('redirectFailed')
+                setMenuUnavailable(true)
+                return
+              }
+
               // If it's a Google Drive URL, validate it first
               if (contentValue.includes('drive.google.com')) {
                 try {
@@ -88,6 +95,10 @@ export default function Home() {
                   })
                 } catch (err) {
                   console.error('Google Drive validation failed:', err)
+                  if (axios.isAxiosError(err) && err.response) {
+                    console.error('GDrive Validation response status:', err.response.status)
+                    console.error('GDrive Validation response headers:', err.response.headers)
+                  }
                   if (win) win.close()
                   setInvalidUrl(contentValue)
                   setErrorType('redirectFailed')
@@ -98,13 +109,8 @@ export default function Home() {
                 }
               }
 
-              if (win && win.location) {
-                win.location.href = contentValue
-              } else if (!win) {
-                setInvalidUrl(contentValue)
-                setErrorType('redirectFailed')
-                setMenuUnavailable(true)
-              }
+              if (win) win.close()
+              window.open(contentValue, '_blank')
             }
           } else {
             setErrorType('notFound')
@@ -149,6 +155,15 @@ export default function Home() {
       let win: Window | null = null
       if (scannedText.startsWith('http') && !isWhatsAppUrl(scannedText)) {
         win = window.open('about:blank', '_blank')
+        if (!win) {
+          setInvalidUrl(scannedText)
+          setErrorType('redirectFailed')
+          setMenuUnavailable(true)
+          setShowScanner(false)
+          setLoading(false)
+          isRegistering.current = false
+          return
+        }
       }
 
       // NEW: Check if it's a WhatsApp URL
@@ -174,6 +189,11 @@ export default function Home() {
           })
         } catch (err) {
           console.error('URL validation failed before registration:', err)
+          // IF IT IS AN AXIOS ERROR WITH A RESPONSE, WE CAN LOG MORE
+          if (axios.isAxiosError(err) && err.response) {
+            console.error('Validation response status:', err.response.status)
+            console.error('Validation response headers:', err.response.headers)
+          }
           if (win) win.close()
           setInvalidUrl(scannedText)
           setErrorType('redirectFailed')
@@ -199,16 +219,8 @@ export default function Home() {
 
       // If content is a URL, open it in a new tab
       if (finalContent.startsWith('http')) {
-        if (win && win.location) {
-          win.location.href = finalContent
-        } else {
-          const secondWin = window.open(finalContent, '_blank')
-          if (!secondWin && !win) {
-            setInvalidUrl(finalContent)
-            setErrorType('redirectFailed')
-            setMenuUnavailable(true)
-          }
-        }
+        if (win) win.close()
+        window.open(finalContent, '_blank')
       } else {
         if (win) win.close()
       }

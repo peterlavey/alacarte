@@ -48,6 +48,10 @@ export default function WhatsAppLinkRequest() {
           })
         } catch (err) {
           console.error('Real URL validation failed:', err)
+          if (axios.isAxiosError(err) && err.response) {
+            console.error('Real URL validation status:', err.response.status)
+            console.error('Real URL validation headers:', err.response.headers)
+          }
           if (win) win.close()
           setError('The link you provided is not accessible. Please check it and try again.')
           setLoading(false)

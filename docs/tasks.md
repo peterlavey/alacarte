@@ -97,4 +97,5 @@
     - [x] Show different errors when content doesn't exist vs redirect failed.
     - [x] Show invalid URL when redirection or validation fails.
     - [x] Fix "Redirect failed" error by implementing robust popup-blocker bypassing redirection.
+    - [x] Update Home page and tests to use `window.open` as requested for URL redirection.
     - *(Plan: 7.5, Req: 7, 9, 11)*
