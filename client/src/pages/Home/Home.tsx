@@ -54,6 +54,7 @@ export default function Home() {
 
   useEffect(() => {
     if (coords && !content) {
+      setLoading(true)
       resolve(coords)
         .then(async (data: { content: string }) => {
           if (data && data.content) {
@@ -166,6 +167,7 @@ export default function Home() {
       setContent(finalContent)
       setShowScanner(false)
       setMenuUnavailable(false)
+      setLoading(false)
 
       // If content is a URL, open it in a new tab
       if (finalContent.startsWith('http')) {
@@ -193,6 +195,15 @@ export default function Home() {
       <SplashScreen 
         fadeOut={!loading} 
         onAnimationEnd={() => setSplashVisible(false)} 
+      />
+    )
+  }
+
+  if (loading && !content) {
+    return (
+      <SplashScreen 
+        fadeOut={false}
+        onAnimationEnd={() => {}}
       />
     )
   }

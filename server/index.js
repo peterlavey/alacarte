@@ -26,7 +26,7 @@ app.use(bodyParser.json())
 // API routes
 app.use('/api', apiRoutes)
 
-if (process.env.NETLIFY !== 'true') {
+if (process.env.NETLIFY !== 'true' && process.env.NODE_ENV !== 'test') {
   // Avoid top-level await for CJS bundlers; initialize before starting server
   ensureStorage().then(() => {
     const server = app.listen(PORT, () => {

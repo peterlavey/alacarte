@@ -90,3 +90,8 @@
 - [x] **WhatsApp API Redirection Fix**
     - [x] Broaden WhatsApp URL detection to include redirection services (e.g., cheetrack)
     - [x] Improve URL validation to handle access restrictions (User-Agent, 403 status)
+- [x] **Integration Testing (Flows)**
+    - [x] Implement integration tests for happy path, unknown location scan, invalid GDrive scan, and WhatsApp API flow.
+    - [x] Ensure integration tests cover both client and server folder using `memory` database.
+    - [x] Fix "Menu not available" bug in Home page registration flow.
+    - *(Plan: 7.5, Req: 7)*
