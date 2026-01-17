@@ -211,7 +211,7 @@ describe('Integration Flows (Client + Server)', () => {
 
     const mockApi = {
       post: vi.fn(postMock),
-      get: vi.fn(async (url: string) => {
+      get: vi.fn(async () => {
          return { status: 200, data: [] }
       }),
       defaults: { headers: { common: {} } },
@@ -221,7 +221,7 @@ describe('Integration Flows (Client + Server)', () => {
     setAxiosInstance(mockApi);
 
     // Mock axios global to prevent ANY real network calls
-    vi.mocked(axios.get).mockImplementation(async (url) => {
+    vi.mocked(axios.get).mockImplementation(async () => {
        return { status: 200, data: 'OK', headers: {}, config: {} }
     });
     vi.mocked(axios.post).mockImplementation(async (url, data) => {
@@ -317,7 +317,8 @@ describe('Integration Flows (Client + Server)', () => {
     fireEvent.click(screen.getByText(/Scan Invalid GDrive URL/i))
 
     await waitFor(() => {
-      expect(screen.getByText(/Menu not available/i)).toBeInTheDocument()
+      expect(screen.getByText(/Redirect failed/i)).toBeInTheDocument()
+      expect(screen.getByText(/could not open it/i)).toBeInTheDocument()
     })
 
     // Verify it was NOT saved
@@ -334,7 +335,6 @@ describe('Integration Flows (Client + Server)', () => {
 
   // 4. The case when a url doesn't exist for your location, simulate a qr scan but returns a wsp api content
   it('Flow 4: Unknown location + WhatsApp API flow', async () => {
-    const whatsappUrl = 'https://link.cheetrack.com/on_tap_providencia_qr_p1_4'
     const correctUrl = 'https://toto.menu/pisouno/menu'
     
     render(

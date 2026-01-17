@@ -152,7 +152,7 @@ describe('Home Page', () => {
     fireEvent.click(screen.getByText(/Simulate URL Scan/i))
     
     await waitFor(() => {
-      expect(screen.getByText(/Menu not available/i)).toBeInTheDocument()
+      expect(screen.getByText(/Redirect failed/i)).toBeInTheDocument()
     })
     
     expect(api.register).not.toHaveBeenCalled()
@@ -183,7 +183,7 @@ describe('Home Page', () => {
     fireEvent.click(screen.getByText(/Simulate Invalid GDrive Scan/i))
     
     await waitFor(() => {
-      expect(screen.getByText(/Menu not available/i)).toBeInTheDocument()
+      expect(screen.getByText(/Redirect failed/i)).toBeInTheDocument()
     })
     
     expect(api.register).not.toHaveBeenCalled()
@@ -268,10 +268,10 @@ describe('Home Page', () => {
       render(<Home />)
 
       await waitFor(() => {
-        expect(screen.getByText(/Menu not available/i)).toBeInTheDocument()
+        expect(screen.getByText(/Redirect failed/i)).toBeInTheDocument()
       })
       
-      expect(screen.getByText(/redirect failed/i)).toBeInTheDocument()
+      expect(screen.getByText(/could not open it/i)).toBeInTheDocument()
     } finally {
       window.open = originalOpen
     }
@@ -312,7 +312,8 @@ describe('Home Page', () => {
 
       await waitFor(() => {
         expect(axios.get).toHaveBeenCalledWith(url, expect.any(Object))
-        expect(screen.getByText(/Menu not available/i)).toBeInTheDocument()
+        expect(screen.getByText(/Redirect failed/i)).toBeInTheDocument()
+        expect(screen.getByText(/could not open it/i)).toBeInTheDocument()
         expect(openSpy).not.toHaveBeenCalled()
       })
     } finally {

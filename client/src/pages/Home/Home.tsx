@@ -21,6 +21,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null)
   const [showScanner, setShowScanner] = useState(false)
   const [menuUnavailable, setMenuUnavailable] = useState(false)
+  const [errorType, setErrorType] = useState<'notFound' | 'redirectFailed' | null>(null)
   const navigate = useNavigate()
   const isRegistering = React.useRef(false)
 
@@ -62,6 +63,7 @@ export default function Home() {
             setContent(contentValue)
             setShowScanner(false)
             setMenuUnavailable(false)
+            setErrorType(null)
 
             // If content is a URL, open it in a new tab
             if (contentValue.startsWith('http')) {
@@ -82,6 +84,7 @@ export default function Home() {
                 } catch (err) {
                   console.error('Google Drive validation failed:', err)
                   setMenuUnavailable(true)
+                  setErrorType('redirectFailed')
                   return
                 } finally {
                   setLoading(false)
@@ -91,15 +94,18 @@ export default function Home() {
               const win = window.open(contentValue, '_blank')
               if (!win) {
                 setMenuUnavailable(true)
+                setErrorType('redirectFailed')
               }
             }
           } else {
             setMenuUnavailable(true)
+            setErrorType('notFound')
           }
         })
         .catch((err: never) => {
           console.error('Resolve error:', err)
           setMenuUnavailable(true)
+          setErrorType('notFound')
         })
         .finally(() => {
           setLoading(false)
@@ -152,6 +158,7 @@ export default function Home() {
         } catch (err) {
           console.error('URL validation failed before registration:', err)
           setMenuUnavailable(true)
+          setErrorType('redirectFailed')
           setShowScanner(false)
           setLoading(false)
           isRegistering.current = false
@@ -167,6 +174,7 @@ export default function Home() {
       setContent(finalContent)
       setShowScanner(false)
       setMenuUnavailable(false)
+      setErrorType(null)
       setLoading(false)
 
       // If content is a URL, open it in a new tab
@@ -174,11 +182,13 @@ export default function Home() {
         const win = window.open(finalContent, '_blank')
         if (!win) {
           setMenuUnavailable(true)
+          setErrorType('redirectFailed')
         }
       }
     } catch (err: unknown) {
       console.error('Registration failed:', err)
       setMenuUnavailable(true)
+      setErrorType('notFound') // Or maybe a more generic error, but existing behavior used menuUnavailable
       setShowScanner(false)
       const message = err instanceof Error ? err.message : 'Failed to register'
       // We don't set the global error here to allow showing the menuUnavailable UI
@@ -229,8 +239,14 @@ export default function Home() {
         </div>
       ) : menuUnavailable && !showScanner ? (
         <div className={styles.unavailableSection}>
-          <h1 className={styles.title}>Menu not available</h1>
-          <p>We couldn't find a menu for this location or the redirect failed.</p>
+          <h1 className={styles.title}>
+            {errorType === 'redirectFailed' ? 'Redirect failed' : 'Menu not available'}
+          </h1>
+          <p>
+            {errorType === 'redirectFailed' 
+              ? 'We found a menu but could not open it. Please try scanning again.' 
+              : "We couldn't find a menu for this location."}
+          </p>
           <button onClick={() => setShowScanner(true)} className={styles.button}>
             Scan QR code
           </button>
