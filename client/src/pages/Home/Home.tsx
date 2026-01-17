@@ -22,6 +22,7 @@ export default function Home() {
   const [showScanner, setShowScanner] = useState(false)
   const [menuUnavailable, setMenuUnavailable] = useState(false)
   const [errorType, setErrorType] = useState<'notFound' | 'redirectFailed' | null>(null)
+  const [invalidUrl, setInvalidUrl] = useState<string | null>(null)
   const navigate = useNavigate()
   const isRegistering = React.useRef(false)
 
@@ -64,6 +65,7 @@ export default function Home() {
             setShowScanner(false)
             setMenuUnavailable(false)
             setErrorType(null)
+            setInvalidUrl(null)
 
             // If content is a URL, open it in a new tab
             if (contentValue.startsWith('http')) {
@@ -85,6 +87,7 @@ export default function Home() {
                   console.error('Google Drive validation failed:', err)
                   setMenuUnavailable(true)
                   setErrorType('redirectFailed')
+                  setInvalidUrl(contentValue)
                   return
                 } finally {
                   setLoading(false)
@@ -95,6 +98,7 @@ export default function Home() {
               if (!win) {
                 setMenuUnavailable(true)
                 setErrorType('redirectFailed')
+                setInvalidUrl(contentValue)
               }
             }
           } else {
@@ -159,6 +163,7 @@ export default function Home() {
           console.error('URL validation failed before registration:', err)
           setMenuUnavailable(true)
           setErrorType('redirectFailed')
+          setInvalidUrl(scannedText)
           setShowScanner(false)
           setLoading(false)
           isRegistering.current = false
@@ -175,6 +180,7 @@ export default function Home() {
       setShowScanner(false)
       setMenuUnavailable(false)
       setErrorType(null)
+      setInvalidUrl(null)
       setLoading(false)
 
       // If content is a URL, open it in a new tab
@@ -183,6 +189,7 @@ export default function Home() {
         if (!win) {
           setMenuUnavailable(true)
           setErrorType('redirectFailed')
+          setInvalidUrl(finalContent)
         }
       }
     } catch (err: unknown) {
@@ -247,6 +254,11 @@ export default function Home() {
               ? 'We found a menu but could not open it. Please try scanning again.' 
               : "We couldn't find a menu for this location."}
           </p>
+          {invalidUrl && (
+            <p className={styles.invalidUrl}>
+              URL: <code>{invalidUrl}</code>
+            </p>
+          )}
           <button onClick={() => setShowScanner(true)} className={styles.button}>
             Scan QR code
           </button>

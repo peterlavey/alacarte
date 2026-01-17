@@ -95,4 +95,5 @@
     - [x] Ensure integration tests cover both client and server folder using `memory` database.
     - [x] Fix "Menu not available" bug in Home page registration flow.
     - [x] Show different errors when content doesn't exist vs redirect failed.
+    - [x] Show invalid URL when redirection or validation fails.
     - *(Plan: 7.5, Req: 7)*

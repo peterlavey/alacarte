@@ -319,6 +319,7 @@ describe('Integration Flows (Client + Server)', () => {
     await waitFor(() => {
       expect(screen.getByText(/Redirect failed/i)).toBeInTheDocument()
       expect(screen.getByText(/could not open it/i)).toBeInTheDocument()
+      expect(screen.getByText(new RegExp(invalidGDriveUrl, 'i'))).toBeInTheDocument()
     })
 
     // Verify it was NOT saved

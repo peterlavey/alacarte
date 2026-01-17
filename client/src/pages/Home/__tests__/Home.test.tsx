@@ -55,6 +55,7 @@ describe('Home Page', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
+    document.body.innerHTML = ''
     
     // Mock navigator.geolocation
     const mockGeolocation = {
@@ -153,12 +154,15 @@ describe('Home Page', () => {
     
     await waitFor(() => {
       expect(screen.getByText(/Redirect failed/i)).toBeInTheDocument()
+      expect(screen.getByText(/URL:/i)).toBeInTheDocument()
+      expect(screen.getByText(new RegExp('https://google.com', 'i'))).toBeInTheDocument()
     })
     
     expect(api.register).not.toHaveBeenCalled()
   })
 
   it('does not call register if Google Drive validation returns 404 in handleScan', async () => {
+    const invalidUrl = 'https://drive.google.com/file/d/invalid'
     vi.mocked(api.resolve).mockResolvedValue({ content: null })
     // Simulate axios returning a response with 404 status (which axios normally throws for by default)
     const error404 = {
@@ -184,6 +188,8 @@ describe('Home Page', () => {
     
     await waitFor(() => {
       expect(screen.getByText(/Redirect failed/i)).toBeInTheDocument()
+      expect(screen.getByText(/URL:/i)).toBeInTheDocument()
+      expect(screen.getByText(new RegExp(invalidUrl, 'i'))).toBeInTheDocument()
     })
     
     expect(api.register).not.toHaveBeenCalled()
@@ -269,6 +275,8 @@ describe('Home Page', () => {
 
       await waitFor(() => {
         expect(screen.getByText(/Redirect failed/i)).toBeInTheDocument()
+        expect(screen.getByText(/URL:/i)).toBeInTheDocument()
+        expect(screen.getByText(new RegExp(url, 'i'))).toBeInTheDocument()
       })
       
       expect(screen.getByText(/could not open it/i)).toBeInTheDocument()
@@ -313,6 +321,8 @@ describe('Home Page', () => {
       await waitFor(() => {
         expect(axios.get).toHaveBeenCalledWith(url, expect.any(Object))
         expect(screen.getByText(/Redirect failed/i)).toBeInTheDocument()
+        expect(screen.getByText(/URL:/i)).toBeInTheDocument()
+        expect(screen.getByText(new RegExp(url, 'i'))).toBeInTheDocument()
         expect(screen.getByText(/could not open it/i)).toBeInTheDocument()
         expect(openSpy).not.toHaveBeenCalled()
       })
