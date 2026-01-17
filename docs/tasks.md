@@ -80,3 +80,8 @@
     - [x] Implement server-side validation in the `register` endpoint
     - [x] Update client to handle registration failures and show "Menu not available"
     - [x] Add unit and integration tests for server-side validation and client handling
+- [x] **WhatsApp API Flow (Plan: 8.5, Req: 12)**
+    - [x] Implement WhatsApp URL detection utility
+    - [x] Create WhatsAppLinkRequest page for real link input
+    - [x] Integrate WhatsApp flow in Home page scan handler
+    - [x] Add unit tests for the WhatsApp flow

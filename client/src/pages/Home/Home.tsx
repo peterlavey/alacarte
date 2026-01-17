@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { resolve, register } from '@/api'
 import axios from 'axios'
 import Canvas from '@/components/Canvas/Canvas'
 import Scanner from '@/components/Scanner/Scanner'
 import SplashScreen from '@/components/SplashScreen/SplashScreen'
+import { isWhatsAppUrl } from '@/utils/whatsapp'
 import styles from './Home.module.css'
 
 interface Coords {
@@ -19,6 +21,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null)
   const [showScanner, setShowScanner] = useState(false)
   const [menuUnavailable, setMenuUnavailable] = useState(false)
+  const navigate = useNavigate()
   const isRegistering = React.useRef(false)
 
   const getLocation = useCallback(() => {
@@ -119,6 +122,14 @@ export default function Home() {
 
     try {
       setLoading(true)
+
+      // NEW: Check if it's a WhatsApp URL
+      if (isWhatsAppUrl(scannedText)) {
+        setLoading(false)
+        isRegistering.current = false
+        navigate('/whatsapp-link', { state: { lat: coords.lat, lon: coords.lon } })
+        return
+      }
 
       // Validate URL before registering if it starts with http
       if (scannedText.startsWith('http')) {
