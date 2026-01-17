@@ -11,7 +11,13 @@ export default function WhatsAppLinkRequest() {
   
   const location = useLocation()
   const navigate = useNavigate()
-  const { lat, lon } = (location.state as { lat?: number; lon?: number }) || {}
+  const { lat, lon, whatsappUrl } = (location.state as { lat?: number; lon?: number; whatsappUrl?: string }) || {}
+
+  const handleOpenWhatsApp = () => {
+    if (whatsappUrl) {
+      window.open(whatsappUrl, '_blank')
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -79,8 +85,17 @@ export default function WhatsAppLinkRequest() {
     <div className={styles.container}>
       <h1 className={styles.title}>WhatsApp Link Detected</h1>
       <p className={styles.description}>
-        Please paste the real link you received in your WhatsApp message to continue.
+        We detected a WhatsApp link. Please open it to receive the message, then paste the real link below.
       </p>
+
+      <button 
+        type="button" 
+        onClick={handleOpenWhatsApp} 
+        className={styles.openButton}
+        disabled={!whatsappUrl}
+      >
+        Open WhatsApp
+      </button>
       
       <form onSubmit={handleSubmit} className={styles.form}>
         <input

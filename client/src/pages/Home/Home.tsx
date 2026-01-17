@@ -131,7 +131,7 @@ export default function Home() {
       if (isWhatsAppUrl(scannedText)) {
         setLoading(false)
         isRegistering.current = false
-        navigate('/whatsapp-link', { state: { lat: coords.lat, lon: coords.lon } })
+        navigate('/whatsapp-link', { state: { lat: coords.lat, lon: coords.lon, whatsappUrl: scannedText } })
         return
       }
 

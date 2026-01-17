@@ -30,15 +30,32 @@ describe('WhatsAppLinkRequest', () => {
     window.location = { href: '' }
   })
 
-  it('renders correctly with coordinates', () => {
+  it('renders correctly with coordinates and WhatsApp URL', () => {
     render(
-      <MemoryRouter initialEntries={[{ state: { lat: 10, lon: 20 } }]}>
+      <MemoryRouter initialEntries={[{ state: { lat: 10, lon: 20, whatsappUrl: 'https://wa.me/123' } }]}>
         <WhatsAppLinkRequest />
       </MemoryRouter>
     )
 
     expect(screen.getByText(/WhatsApp Link Detected/i)).toBeInTheDocument()
+    expect(screen.getByText(/Open WhatsApp/i)).toBeInTheDocument()
     expect(screen.getByPlaceholderText(/your-real-link/i)).toBeInTheDocument()
+  })
+
+  it('opens WhatsApp link when clicking the button', () => {
+    const windowSpy = vi.spyOn(window, 'open').mockImplementation(() => null)
+    
+    render(
+      <MemoryRouter initialEntries={[{ state: { lat: 10, lon: 20, whatsappUrl: 'https://wa.me/123' } }]}>
+        <WhatsAppLinkRequest />
+      </MemoryRouter>
+    )
+
+    const openBtn = screen.getByText(/Open WhatsApp/i)
+    fireEvent.click(openBtn)
+
+    expect(windowSpy).toHaveBeenCalledWith('https://wa.me/123', '_blank')
+    windowSpy.mockRestore()
   })
 
   it('shows error if coordinates are missing', () => {
