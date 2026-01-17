@@ -8,8 +8,8 @@ let storage
 let mem
 
 beforeEach(async () => {
-  storage = await import('../storage/index.js')
-  mem = await import('../storage/memory.js')
+  storage = await import('../repositories/storage/index.js')
+  mem = await import('../repositories/storage/memory.js')
   mem.__clearAll()
   await storage.initStorage()
 })
