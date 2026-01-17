@@ -104,6 +104,9 @@ describe('WhatsAppLinkRequest', () => {
     validationError.isAxiosError = true
     vi.mocked(api.register).mockRejectedValueOnce(validationError)
     vi.spyOn(window, 'open').mockReturnValue({ close: vi.fn() } as any)
+    
+    // Explicitly mock axios.isAxiosError to return true for our validationError
+    vi.spyOn(axios, 'isAxiosError').mockImplementation((err) => err === validationError)
 
     render(
       <MemoryRouter initialEntries={[{ state: { lat: 10, lon: 20 } }]}>
@@ -117,10 +120,11 @@ describe('WhatsAppLinkRequest', () => {
     fireEvent.click(screen.getByText('Continue'))
 
     await waitFor(() => {
-      const title = screen.getByRole('heading', { level: 1 })
-      expect(title).toBeInTheDocument() // just ensuring it's there
-    }, { timeout: 10000 })
+      expect(api.register).toHaveBeenCalled()
+    })
 
-    expect(screen.getByText(/The link you provided is not accessible/i)).toBeInTheDocument()
-  })
+    await waitFor(() => {
+      expect(screen.getByText(/The link you provided is not accessible/i)).toBeInTheDocument()
+    }, { timeout: 10000 })
+  }, 15000)
 })

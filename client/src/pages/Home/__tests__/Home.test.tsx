@@ -144,6 +144,9 @@ describe('Home Page', () => {
     vi.mocked(api.register).mockRejectedValue(validationError)
     vi.spyOn(window, 'open').mockReturnValue({ close: vi.fn() } as any)
     
+    // Explicitly mock axios.isAxiosError to return true for our validationError
+    vi.spyOn(axios, 'isAxiosError').mockImplementation((err) => err === validationError)
+    
     render(<Home />)
     
     await waitFor(() => {
@@ -160,14 +163,16 @@ describe('Home Page', () => {
     fireEvent.click(screen.getByText(/Simulate URL Scan/i))
     
     await waitFor(() => {
+      expect(api.register).toHaveBeenCalled()
+    })
+
+    await waitFor(() => {
       const title = screen.getByRole('heading', { level: 1 })
       expect(title).toHaveTextContent(/Redirect failed/i)
-    }, { timeout: 15000 })
+    }, { timeout: 10000 })
     
     expect(screen.getByText(/URL:/i)).toBeInTheDocument()
     expect(screen.getByText(new RegExp(invalidUrl, 'i'))).toBeInTheDocument()
-    
-    expect(api.register).toHaveBeenCalled()
   })
 
   it('shows unavailable message if registration fails', async () => {
@@ -266,6 +271,9 @@ describe('Home Page', () => {
     validationError.isAxiosError = true
     vi.mocked(api.register).mockRejectedValue(validationError)
     
+    // Explicitly mock axios.isAxiosError to return true for our validationError
+    vi.spyOn(axios, 'isAxiosError').mockImplementation((err) => err === validationError)
+
     const openSpy = vi.spyOn(window, 'open').mockImplementation(() => {
         return { location: { href: '' }, close: vi.fn() } as any;
     });
@@ -281,9 +289,13 @@ describe('Home Page', () => {
       fireEvent.click(screen.getByText(/Simulate URL Scan/i))
       
       await waitFor(() => {
+        expect(api.register).toHaveBeenCalled()
+      })
+
+      await waitFor(() => {
         const title = screen.getByRole('heading', { level: 1 })
         expect(title).toHaveTextContent(/Redirect failed/i)
-      }, { timeout: 15000 })
+      }, { timeout: 10000 })
       
       expect(screen.getByText(/URL:/i)).toBeInTheDocument()
     } finally {

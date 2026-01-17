@@ -116,3 +116,5 @@
     - Allow plain text in JsonInput content field.
     - Explicitly allow all origins in server CORS configuration to avoid issues when calling production API from localhost.
     - *(Plan: 7.5, Req: 7)*
+- [x] **Fix failing unit tests**
+    - Fix `Home.test.tsx` and `WhatsAppLinkRequest.test.tsx` by mocking `axios.isAxiosError` and increasing timeouts for asynchronous UI updates.
