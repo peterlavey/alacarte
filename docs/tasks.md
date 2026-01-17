@@ -85,6 +85,7 @@
     - [x] Create WhatsAppLinkRequest page for real link input
     - [x] Integrate WhatsApp flow in Home page scan handler
     - [x] Add "Open WhatsApp" button to execute the link and receive the real URL
+    - [x] Clarify WhatsApp link request message (final browser URL)
     - [x] Add unit tests for the WhatsApp flow
 - [x] **WhatsApp API Redirection Fix**
     - [x] Broaden WhatsApp URL detection to include redirection services (e.g., cheetrack)

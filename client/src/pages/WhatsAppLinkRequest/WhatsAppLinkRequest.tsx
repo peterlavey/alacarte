@@ -85,7 +85,8 @@ export default function WhatsAppLinkRequest() {
     <div className={styles.container}>
       <h1 className={styles.title}>WhatsApp Link Detected</h1>
       <p className={styles.description}>
-        We detected a WhatsApp link. Please open it to receive the message, then paste the real link below.
+        We detected a WhatsApp link. Open it to receive the message, then click the link in the message.
+        <strong>Copy the final URL from your browser's address bar</strong> and paste it below.
       </p>
 
       <button 
@@ -102,7 +103,7 @@ export default function WhatsAppLinkRequest() {
           type="url"
           value={realUrl}
           onChange={(e) => setRealUrl(e.target.value)}
-          placeholder="https://example.com/your-real-link"
+          placeholder="Paste the final browser URL here"
           required
           className={styles.input}
           disabled={loading}

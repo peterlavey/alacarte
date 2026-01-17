@@ -39,7 +39,7 @@ describe('WhatsAppLinkRequest', () => {
 
     expect(screen.getByText(/WhatsApp Link Detected/i)).toBeInTheDocument()
     expect(screen.getByText(/Open WhatsApp/i)).toBeInTheDocument()
-    expect(screen.getByPlaceholderText(/your-real-link/i)).toBeInTheDocument()
+    expect(screen.getByPlaceholderText(/Paste the final browser URL here/i)).toBeInTheDocument()
   })
 
   it('opens WhatsApp link when clicking the button', () => {
@@ -78,7 +78,7 @@ describe('WhatsAppLinkRequest', () => {
       </MemoryRouter>
     )
 
-    const input = screen.getByPlaceholderText(/your-real-link/i)
+    const input = screen.getByPlaceholderText(/Paste the final browser URL here/i)
     fireEvent.change(input, { target: { value: 'https://real-link.com' } })
     
     const submitBtn = screen.getByText('Continue')
@@ -108,7 +108,7 @@ describe('WhatsAppLinkRequest', () => {
       </MemoryRouter>
     )
 
-    const input = screen.getByPlaceholderText(/your-real-link/i)
+    const input = screen.getByPlaceholderText(/Paste the final browser URL here/i)
     fireEvent.change(input, { target: { value: 'https://bad-link.com' } })
     
     fireEvent.click(screen.getByText('Continue'))
