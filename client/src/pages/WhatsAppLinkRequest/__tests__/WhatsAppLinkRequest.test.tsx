@@ -68,7 +68,11 @@ describe('WhatsAppLinkRequest', () => {
     fireEvent.click(submitBtn)
 
     await waitFor(() => {
-      expect(axios.get).toHaveBeenCalledWith('https://real-link.com', expect.any(Object))
+      expect(axios.get).toHaveBeenCalledWith('https://real-link.com', expect.objectContaining({
+        headers: expect.objectContaining({
+          'User-Agent': expect.any(String)
+        })
+      }))
       expect(api.register).toHaveBeenCalledWith({
         lat: 10,
         lon: 20,

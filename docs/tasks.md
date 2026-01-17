@@ -85,3 +85,6 @@
     - [x] Create WhatsAppLinkRequest page for real link input
     - [x] Integrate WhatsApp flow in Home page scan handler
     - [x] Add unit tests for the WhatsApp flow
+- [x] **WhatsApp API Redirection Fix**
+    - [x] Broaden WhatsApp URL detection to include redirection services (e.g., cheetrack)
+    - [x] Improve URL validation to handle access restrictions (User-Agent, 403 status)

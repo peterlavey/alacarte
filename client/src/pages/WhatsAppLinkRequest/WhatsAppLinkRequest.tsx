@@ -30,7 +30,11 @@ export default function WhatsAppLinkRequest() {
         try {
           await axios.get(realUrl, { 
             timeout: 5000,
-            headers: { 'Range': 'bytes=0-0' }
+            headers: { 
+              'Range': 'bytes=0-0',
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+            },
+            validateStatus: (status) => (status >= 200 && status < 400) || status === 403
           })
         } catch (err) {
           console.error('Real URL validation failed:', err)

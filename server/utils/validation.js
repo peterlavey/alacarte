@@ -8,8 +8,11 @@ export async function validateUrl(url) {
   try {
     await axios.get(url, {
       timeout: 5000,
-      headers: { 'Range': 'bytes=0-0' },
-      validateStatus: (status) => status >= 200 && status < 400, // Consider 3xx as success for now or handle them
+      headers: { 
+        'Range': 'bytes=0-0',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+      },
+      validateStatus: (status) => (status >= 200 && status < 400) || status === 403, 
     })
     return true
   } catch (error) {

@@ -71,7 +71,11 @@ export default function Home() {
                   await axios.get(contentValue, { 
                     timeout: 5000,
                     // We don't need the whole content, just checking if it's accessible
-                    headers: { 'Range': 'bytes=0-0' } 
+                    headers: { 
+                      'Range': 'bytes=0-0',
+                      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+                    },
+                    validateStatus: (status) => (status >= 200 && status < 400) || status === 403
                   })
                 } catch (err) {
                   console.error('Google Drive validation failed:', err)
@@ -136,7 +140,11 @@ export default function Home() {
         try {
           await axios.get(scannedText, { 
             timeout: 5000,
-            headers: { 'Range': 'bytes=0-0' }
+            headers: { 
+              'Range': 'bytes=0-0',
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+            },
+            validateStatus: (status) => (status >= 200 && status < 400) || status === 403
           })
         } catch (err) {
           console.error('URL validation failed before registration:', err)
