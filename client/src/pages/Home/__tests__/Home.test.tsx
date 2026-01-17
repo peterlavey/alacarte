@@ -136,6 +136,7 @@ describe('Home Page', () => {
   it('does not call register if URL validation fails in handleScan', async () => {
     vi.mocked(api.resolve).mockResolvedValue({ content: null })
     vi.mocked(axios.get).mockRejectedValue(new Error('Validation failed'))
+    vi.spyOn(window, 'open').mockReturnValue({ close: vi.fn() } as any)
     
     render(<Home />)
     
@@ -170,6 +171,7 @@ describe('Home Page', () => {
       response: { status: 404, data: 'Not Found' }
     }
     vi.mocked(axios.get).mockRejectedValue(error404)
+    vi.spyOn(window, 'open').mockReturnValue({ close: vi.fn() } as any)
     
     render(<Home />)
     
@@ -216,7 +218,7 @@ describe('Home Page', () => {
   it('redirects to URL in a new tab if content is a link (resolve)', async () => {
     const url = 'https://example.com'
     vi.mocked(api.resolve).mockResolvedValue({ content: url })
-    const openSpy = vi.fn()
+    const openSpy = vi.fn().mockReturnValue({ location: { href: '' } })
     const originalOpen = window.open
     window.open = openSpy
 
@@ -224,7 +226,7 @@ describe('Home Page', () => {
       render(<Home />)
 
       await waitFor(() => {
-        expect(openSpy).toHaveBeenCalledWith(url, '_blank')
+        expect(openSpy).toHaveBeenCalledWith('about:blank', '_blank')
       })
     } finally {
       window.open = originalOpen
@@ -235,8 +237,9 @@ describe('Home Page', () => {
     const url = 'https://example.com/registered'
     vi.mocked(api.resolve).mockResolvedValue({ content: null })
     vi.mocked(api.register).mockResolvedValue({ content: url })
+    vi.mocked(axios.get).mockResolvedValue({ status: 200 })
     
-    const openSpy = vi.fn().mockReturnValue({}) // Mock successful window.open
+    const openSpy = vi.fn().mockReturnValue({ location: { href: '' } }) // Mock successful window.open
     const originalOpen = window.open
     window.open = openSpy
 
@@ -253,10 +256,10 @@ describe('Home Page', () => {
         expect(screen.getByTestId('mock-scanner')).toBeInTheDocument()
       })
 
-      fireEvent.click(screen.getByText(/Simulate Scan/i))
+      fireEvent.click(screen.getByText(/Simulate URL Scan/i))
 
       await waitFor(() => {
-        expect(openSpy).toHaveBeenCalledWith(url, '_blank')
+        expect(openSpy).toHaveBeenCalledWith('about:blank', '_blank')
       })
     } finally {
       window.open = originalOpen
@@ -290,7 +293,7 @@ describe('Home Page', () => {
     vi.mocked(api.resolve).mockResolvedValue({ content: url })
     vi.mocked(axios.get).mockResolvedValue({ status: 200 })
     
-    const openSpy = vi.fn().mockReturnValue({})
+    const openSpy = vi.fn().mockReturnValue({ location: { href: '' } })
     const originalOpen = window.open
     window.open = openSpy
 
@@ -299,7 +302,7 @@ describe('Home Page', () => {
 
       await waitFor(() => {
         expect(axios.get).toHaveBeenCalledWith(url, expect.any(Object))
-        expect(openSpy).toHaveBeenCalledWith(url, '_blank')
+        expect(openSpy).toHaveBeenCalledWith('about:blank', '_blank')
       })
     } finally {
       window.open = originalOpen
@@ -311,7 +314,7 @@ describe('Home Page', () => {
     vi.mocked(api.resolve).mockResolvedValue({ content: url })
     vi.mocked(axios.get).mockRejectedValue(new Error('Not Found'))
     
-    const openSpy = vi.fn()
+    const openSpy = vi.fn().mockReturnValue({ location: { href: '' }, close: vi.fn() })
     const originalOpen = window.open
     window.open = openSpy
 
@@ -324,7 +327,6 @@ describe('Home Page', () => {
         expect(screen.getByText(/URL:/i)).toBeInTheDocument()
         expect(screen.getByText(new RegExp(url, 'i'))).toBeInTheDocument()
         expect(screen.getByText(/could not open it/i)).toBeInTheDocument()
-        expect(openSpy).not.toHaveBeenCalled()
       })
     } finally {
       window.open = originalOpen

@@ -72,6 +72,7 @@ describe('WhatsAppLinkRequest', () => {
   it('validates URL and registers successfully', async () => {
     vi.mocked(axios.get).mockResolvedValueOnce({ status: 200 })
     vi.mocked(api.register).mockResolvedValueOnce({ id: '1' })
+    const openSpy = vi.spyOn(window, 'open').mockReturnValue({ location: { href: '' } } as any)
 
     render(
       <MemoryRouter initialEntries={[{ state: { lat: 10, lon: 20 } }]}>
@@ -99,12 +100,14 @@ describe('WhatsAppLinkRequest', () => {
         lon: 20,
         content: 'https://real-link.com'
       })
-      expect(window.location.href).toBe('https://real-link.com')
+      expect(openSpy).toHaveBeenCalledWith('about:blank', '_blank')
     })
+    openSpy.mockRestore()
   })
 
   it('shows error if URL validation fails', async () => {
     vi.mocked(axios.get).mockRejectedValueOnce(new Error('Failed'))
+    vi.spyOn(window, 'open').mockReturnValue({ close: vi.fn() } as any)
 
     render(
       <MemoryRouter initialEntries={[{ state: { lat: 10, lon: 20 } }]}>

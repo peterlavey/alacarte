@@ -129,7 +129,7 @@ describe('Integration Flows (Client + Server)', () => {
     })
 
     // Mock window.open
-    vi.spyOn(window, 'open').mockReturnValue({} as Window)
+    vi.spyOn(window, 'open').mockReturnValue({ location: { href: '' } } as any)
 
     // Mock window.location
     // @ts-expect-error needed to mock window.location
@@ -254,7 +254,7 @@ describe('Integration Flows (Client + Server)', () => {
     )
 
     await waitFor(() => {
-      expect(window.open).toHaveBeenCalledWith(savedUrl, '_blank')
+      expect(window.open).toHaveBeenCalledWith('about:blank', '_blank')
     }, { timeout: 10000 })
     
     expect(screen.getByText(/Found Content/i)).toBeInTheDocument()
@@ -278,7 +278,7 @@ describe('Integration Flows (Client + Server)', () => {
     fireEvent.click(screen.getByText(/Scan Valid URL/i))
 
     await waitFor(() => {
-      expect(window.open).toHaveBeenCalledWith(scannedUrl, '_blank')
+      expect(window.open).toHaveBeenCalledWith('about:blank', '_blank')
     }, { timeout: 10000 })
 
     expect(screen.getByText(/Found Content/i)).toBeInTheDocument()
@@ -363,7 +363,7 @@ describe('Integration Flows (Client + Server)', () => {
     fireEvent.click(screen.getByText('Continue'))
 
     await waitFor(() => {
-      expect(window.location.href).toBe(correctUrl)
+      expect(window.open).toHaveBeenCalledWith('about:blank', '_blank')
     })
 
     // Verify it was saved

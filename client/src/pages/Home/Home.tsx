@@ -69,6 +69,9 @@ export default function Home() {
 
             // If content is a URL, open it in a new tab
             if (contentValue.startsWith('http')) {
+              // Open window immediately to avoid popup blocker
+              const win = window.open('about:blank', '_blank')
+
               // If it's a Google Drive URL, validate it first
               if (contentValue.includes('drive.google.com')) {
                 try {
@@ -85,8 +88,9 @@ export default function Home() {
                   })
                 } catch (err) {
                   console.error('Google Drive validation failed:', err)
-                  setMenuUnavailable(true)
+                  if (win) win.close()
                   setErrorType('redirectFailed')
+                  setMenuUnavailable(true)
                   setInvalidUrl(contentValue)
                   return
                 } finally {
@@ -94,22 +98,23 @@ export default function Home() {
                 }
               }
 
-              const win = window.open(contentValue, '_blank')
-              if (!win) {
+              if (win) {
+                win.location.href = contentValue
+              } else {
                 setMenuUnavailable(true)
                 setErrorType('redirectFailed')
                 setInvalidUrl(contentValue)
               }
             }
           } else {
-            setMenuUnavailable(true)
             setErrorType('notFound')
+            setMenuUnavailable(true)
           }
         })
         .catch((err: never) => {
           console.error('Resolve error:', err)
-          setMenuUnavailable(true)
           setErrorType('notFound')
+          setMenuUnavailable(true)
         })
         .finally(() => {
           setLoading(false)
@@ -139,8 +144,16 @@ export default function Home() {
     try {
       setLoading(true)
 
+      // Open window early if it's likely a URL to avoid popup blocker
+      // We'll close it if it's not a URL or if validation fails
+      let win: Window | null = null
+      if (scannedText.startsWith('http') && !isWhatsAppUrl(scannedText)) {
+        win = window.open('about:blank', '_blank')
+      }
+
       // NEW: Check if it's a WhatsApp URL
       if (isWhatsAppUrl(scannedText)) {
+        if (win) win.close()
         setLoading(false)
         isRegistering.current = false
         navigate('/whatsapp-link', { state: { lat: coords.lat, lon: coords.lon, whatsappUrl: scannedText } })
@@ -161,8 +174,9 @@ export default function Home() {
           })
         } catch (err) {
           console.error('URL validation failed before registration:', err)
-          setMenuUnavailable(true)
+          if (win) win.close()
           setErrorType('redirectFailed')
+          setMenuUnavailable(true)
           setInvalidUrl(scannedText)
           setShowScanner(false)
           setLoading(false)
@@ -185,24 +199,28 @@ export default function Home() {
 
       // If content is a URL, open it in a new tab
       if (finalContent.startsWith('http')) {
-        const win = window.open(finalContent, '_blank')
-        if (!win) {
-          setMenuUnavailable(true)
-          setErrorType('redirectFailed')
-          setInvalidUrl(finalContent)
+        if (win) {
+          win.location.href = finalContent
+        } else {
+          const secondWin = window.open(finalContent, '_blank')
+          if (!secondWin) {
+            setMenuUnavailable(true)
+            setErrorType('redirectFailed')
+            setInvalidUrl(finalContent)
+          }
         }
+      } else {
+        if (win) win.close()
       }
     } catch (err: unknown) {
       console.error('Registration failed:', err)
       setMenuUnavailable(true)
-      setErrorType('notFound') // Or maybe a more generic error, but existing behavior used menuUnavailable
+      setErrorType('notFound') 
       setShowScanner(false)
+      setLoading(false)
       const message = err instanceof Error ? err.message : 'Failed to register'
-      // We don't set the global error here to allow showing the menuUnavailable UI
-      // but we can log it or show a temporary notification if we had one.
       console.warn('Register error:', message)
     } finally {
-      setLoading(false)
       isRegistering.current = false
     }
   }

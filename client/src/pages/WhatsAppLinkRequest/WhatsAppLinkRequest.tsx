@@ -30,6 +30,9 @@ export default function WhatsAppLinkRequest() {
     setLoading(true)
     setError(null)
 
+    // Open window immediately to avoid popup blocker
+    const win = window.open('about:blank', '_blank')
+
     try {
       // 1. Validate the real URL (current requirement)
       if (realUrl.startsWith('http')) {
@@ -45,11 +48,13 @@ export default function WhatsAppLinkRequest() {
           })
         } catch (err) {
           console.error('Real URL validation failed:', err)
+          if (win) win.close()
           setError('The link you provided is not accessible. Please check it and try again.')
           setLoading(false)
           return
         }
       } else {
+        if (win) win.close()
         setError('Please provide a valid URL starting with http or https.')
         setLoading(false)
         return
@@ -63,11 +68,16 @@ export default function WhatsAppLinkRequest() {
       })
 
       // 3. Success -> Redirect
-      window.location.href = realUrl
+      if (win) {
+        win.location.href = realUrl
+      } else {
+        window.location.href = realUrl
+      }
+      // Note: we don't setLoading(false) here because we are redirecting
     } catch (err) {
       console.error('Registration failed:', err)
+      if (win) win.close()
       setError('Failed to save the link. Please try again.')
-    } finally {
       setLoading(false)
     }
   }
