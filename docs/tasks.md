@@ -124,3 +124,13 @@
     - Fix React Hook rules violation in `Debug.test.tsx`
     - Replace `any` with specific types or `unknown` in several test files
     - Verify with `npm run lint` and all unit/integration tests
+- [x] **Cleanup: Remove empty client/server folder**
+- [x] **Cleanup: Remove empty client/client folder**
+- [x] **Display "not found" image when content is unavailable**
+    - [x] Add `not found.jpeg` image to `Home.tsx` unavailable state.
+    - [x] Style the image in `Home.module.css`.
+    - [x] Update `Home.test.tsx` to verify image presence.
+- [x] **Refactor Home page components**
+    - [x] Extract `ContentSection`, `UnavailableSection`, and `ScannerSection` to separate files.
+    - [x] Simplify `Home.tsx` by using the new components.
+    - [x] Verify that all tests still pass.

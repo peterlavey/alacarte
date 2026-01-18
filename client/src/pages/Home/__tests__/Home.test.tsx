@@ -97,6 +97,8 @@ describe('Home Page', () => {
       expect(screen.getByText(/Menu not available/i)).toBeInTheDocument()
     })
     
+    expect(screen.getByAltText(/Not found/i)).toBeInTheDocument()
+    
     expect(screen.queryByTestId('mock-scanner')).not.toBeInTheDocument()
     
     fireEvent.click(screen.getByText(/Scan QR code/i))

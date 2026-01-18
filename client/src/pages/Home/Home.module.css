@@ -64,3 +64,9 @@
 .secondaryButton:hover {
   background-color: #f3f4f6;
 }
+.notFoundImage {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 1.5rem;
+  border-radius: 0.5rem;
+}
