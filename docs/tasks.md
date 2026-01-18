@@ -141,3 +141,9 @@
     - [x] Add screenshots metadata to manifest (Plan: 9.1, Req: 12).
 - [x] **Update Documentation for APK Export (Plan: 9.2, Req: 12)**
     - [x] Add PWABuilder instructions to README.md.
+
+- [x] **Fix PWABuilder Validation Issues (Plan: 9.3, Req: 12)**
+    - [x] Add `id` and fix `start_url` in manifest.
+    - [x] Add 192x192 PNG icon with `purpose: any`.
+    - [x] Fix screenshot 404s by adding actual images.
+    - [x] Ensure service worker is properly configured via `vite-plugin-pwa`.

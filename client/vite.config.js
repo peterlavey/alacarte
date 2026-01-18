@@ -12,8 +12,10 @@ export default defineConfig(() => {
       react(),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['favicon.svg', 'apple-touch-icon.svg', 'mask-icon.svg'],
+        includeAssets: ['favicon.svg', 'apple-touch-icon.svg', 'mask-icon.svg', 'pwa-192x192.png', 'pwa-512x512.png', 'images/screenshot-mobile.png', 'images/screenshot-desktop.png'],
         manifest: {
+          id: '/',
+          start_url: '/',
           name: 'Alacarte',
           short_name: 'Alacarte',
           description: 'Geolocation File Retrieval Application',
@@ -24,20 +26,34 @@ export default defineConfig(() => {
           categories: ['utilities', 'productivity'],
           icons: [
             {
-              src: 'pwa-192x192.svg',
+              src: 'pwa-192x192.png',
               sizes: '192x192',
-              type: 'image/svg+xml'
+              type: 'image/png',
+              purpose: 'any'
             },
             {
-              src: 'pwa-512x512.svg',
+              src: 'pwa-512x512.png',
               sizes: '512x512',
-              type: 'image/svg+xml'
+              type: 'image/png',
+              purpose: 'maskable'
+            },
+            {
+              src: 'pwa-192x192.svg',
+              sizes: '192x192',
+              type: 'image/svg+xml',
+              purpose: 'any'
             },
             {
               src: 'pwa-512x512.svg',
               sizes: '512x512',
               type: 'image/svg+xml',
-              purpose: 'any maskable'
+              purpose: 'any'
+            },
+            {
+              src: 'pwa-512x512.svg',
+              sizes: '512x512',
+              type: 'image/svg+xml',
+              purpose: 'maskable'
             }
           ],
           screenshots: [
@@ -59,7 +75,7 @@ export default defineConfig(() => {
         }
       })
     ],
-    base: './',
+    base: '/',
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),
