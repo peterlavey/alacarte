@@ -25,6 +25,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onAnimationEnd, fadeOut = f
     <div className={`${styles.splashScreen} ${fadeOut ? styles.fadeOut : ''}`}>
       <div className={styles.content}>
         <h1 className={styles.logo}>Alacarte</h1>
+        <p className={styles.tagline}>Fine Dining Experiences</p>
       </div>
     </div>
   )

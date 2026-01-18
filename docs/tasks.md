@@ -147,3 +147,21 @@
     - [x] Add 192x192 PNG icon with `purpose: any`.
     - [x] Fix screenshot 404s by adding actual images.
     - [x] Ensure service worker is properly configured via `vite-plugin-pwa`.
+
+## Phase 10: Premium UI & UX
+- [x] **Design System & Typography (Plan: 10.1, Req: 13)**
+    - [x] Update `client/index.html` with Google Fonts (Playfair Display, Inter).
+    - [x] Update `client/src/styles.css` with premium color palette (Elegant Blue & Gold) and global styles.
+- [x] **Redesign Home Page & Core Components (Plan: 10.2, Req: 13)**
+    - [x] Refactor `SplashScreen` for elegant arrival experience (Blue & Gold).
+    - [x] Redesign `Home.tsx` and its sub-components (`ContentSection`, `UnavailableSection`, `ScannerSection`).
+    - [x] Implement card-based layout for content display.
+    - [x] Use `wood.png` background for "Menu Unavailable" and "Offline" states.
+    - [x] Add side margins and refined shadows to menu cards for "on table" effect.
+- [x] **Microinteractions & Animations (Plan: 10.3, Req: 13)**
+    - [x] Add subtle hover/tap states and shadows.
+    - [x] Implement smooth transition animations between states.
+- [x] **Accessibility & Mobile Polish (Plan: 10.4, Req: 13)**
+    - [x] Verify contrast ratios and font readability.
+    - [x] Ensure large tappable targets for mobile users.
+    - [x] Conduct a final UI audit for consistency and tone.

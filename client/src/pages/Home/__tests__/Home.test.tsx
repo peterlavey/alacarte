@@ -84,7 +84,7 @@ describe('Home Page', () => {
       })
     })
     
-    expect(screen.getByText(/Found Content/i)).toBeInTheDocument()
+    expect(screen.getByText(/Welcome/i)).toBeInTheDocument()
     expect(screen.getByText(/some content/i)).toBeInTheDocument()
   })
 
@@ -94,7 +94,7 @@ describe('Home Page', () => {
     render(<Home />)
     
     await waitFor(() => {
-      expect(screen.getByText(/Menu not available/i)).toBeInTheDocument()
+      expect(screen.getByText(/Discover Your Menu/i)).toBeInTheDocument()
     })
     
     expect(screen.getByAltText(/Not found/i)).toBeInTheDocument()
@@ -112,7 +112,7 @@ describe('Home Page', () => {
     render(<Home />)
     
     await waitFor(() => {
-      expect(screen.getByText(/Menu not available/i)).toBeInTheDocument()
+      expect(screen.getByText(/Discover Your Menu/i)).toBeInTheDocument()
     })
 
     fireEvent.click(screen.getByText(/Scan QR code/i))
@@ -131,7 +131,7 @@ describe('Home Page', () => {
       })
     })
     
-    expect(screen.getByText(/Found Content/i)).toBeInTheDocument()
+    expect(screen.getByText(/Welcome/i)).toBeInTheDocument()
     expect(screen.getByText(/newly registered content/i)).toBeInTheDocument()
   })
 
@@ -152,7 +152,7 @@ describe('Home Page', () => {
     render(<Home />)
     
     await waitFor(() => {
-      expect(screen.getByText(/Menu not available/i)).toBeInTheDocument()
+      expect(screen.getByText(/Discover Your Menu/i)).toBeInTheDocument()
     })
 
     fireEvent.click(screen.getByText(/Scan QR code/i))
@@ -170,10 +170,9 @@ describe('Home Page', () => {
 
     await waitFor(() => {
       const title = screen.getByRole('heading', { level: 1 })
-      expect(title).toHaveTextContent(/Redirect failed/i)
+      expect(title).toHaveTextContent(/Menu Unavailable/i)
     }, { timeout: 10000 })
     
-    expect(screen.getByText(/URL:/i)).toBeInTheDocument()
     expect(screen.getByText(new RegExp(invalidUrl, 'i'))).toBeInTheDocument()
   })
 
@@ -184,14 +183,14 @@ describe('Home Page', () => {
     render(<Home />)
     
     await waitFor(() => {
-      expect(screen.getByText(/Menu not available/i)).toBeInTheDocument()
+      expect(screen.getByText(/Discover Your Menu/i)).toBeInTheDocument()
     })
 
     fireEvent.click(screen.getByText(/Scan QR code/i))
     fireEvent.click(screen.getByText(/Simulate Scan/i))
     
     await waitFor(() => {
-      expect(screen.getByText(/Menu not available/i)).toBeInTheDocument()
+      expect(screen.getByText(/Discover Your Menu/i)).toBeInTheDocument()
     })
   })
 
@@ -226,7 +225,7 @@ describe('Home Page', () => {
       render(<Home />)
 
       await waitFor(() => {
-        expect(screen.getByText(/Menu not available/i)).toBeInTheDocument()
+        expect(screen.getByText(/Discover Your Menu/i)).toBeInTheDocument()
       }, { timeout: 15000 })
 
       fireEvent.click(screen.getByText(/Scan QR code/i))
@@ -254,10 +253,10 @@ describe('Home Page', () => {
       render(<Home />)
 
       await waitFor(() => {
-        expect(screen.getByText(/Redirect failed/i)).toBeInTheDocument()
+        expect(screen.getByText(/Menu Unavailable/i)).toBeInTheDocument()
       }, { timeout: 15000 })
       
-      expect(screen.getByText(/could not open it/i)).toBeInTheDocument()
+      expect(screen.getByText(/seems unreachable/i)).toBeInTheDocument()
     } finally {
       openSpy.mockRestore()
     }
@@ -283,7 +282,7 @@ describe('Home Page', () => {
       render(<Home />)
       
       await waitFor(() => {
-        expect(screen.getByText(/Menu not available/i)).toBeInTheDocument()
+        expect(screen.getByText(/Discover Your Menu/i)).toBeInTheDocument()
       })
 
       fireEvent.click(screen.getByText(/Scan QR code/i))
@@ -295,10 +294,9 @@ describe('Home Page', () => {
 
       await waitFor(() => {
         const title = screen.getByRole('heading', { level: 1 })
-        expect(title).toHaveTextContent(/Redirect failed/i)
+        expect(title).toHaveTextContent(/Menu Unavailable/i)
       }, { timeout: 10000 })
       
-      expect(screen.getByText(/URL:/i)).toBeInTheDocument()
     } finally {
       openSpy.mockRestore()
     }

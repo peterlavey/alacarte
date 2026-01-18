@@ -7,9 +7,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f8f5f2; /* Relaxing cream/beige background */
+  background-color: var(--elegant-blue);
   z-index: 9999;
-  transition: opacity 0.5s ease-out, visibility 0.5s;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s;
 }
 
 .fadeOut {
@@ -19,34 +19,45 @@
 
 .content {
   text-align: center;
-  animation: fadeInDown 1.2s ease-out;
 }
 
 .logo {
-  font-family: 'Playfair Display', serif; /* Assuming this is available or we use a fallback */
-  font-size: 4rem;
-  font-weight: 300;
-  color: #2c3e50;
+  font-family: var(--font-serif);
+  font-size: 3.5rem;
+  font-weight: 400;
+  color: var(--gold);
   margin: 0;
-  letter-spacing: 0.1em;
-  text-transform: lowercase;
-  font-style: italic;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  animation: logoIn 1.5s cubic-bezier(0.2, 0, 0.2, 1);
 }
 
-@keyframes fadeInDown {
-  from {
+.tagline {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--gold-light);
+  margin-top: 1rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: fadeIn 1s ease-out 0.8s forwards;
+}
+
+@keyframes logoIn {
+  0% {
     opacity: 0;
-    transform: translateY(-20px);
+    letter-spacing: 0.5em;
+    transform: scale(1.05);
   }
-  to {
+  100% {
     opacity: 1;
-    transform: translateY(0);
+    letter-spacing: 0.2em;
+    transform: scale(1);
   }
 }
 
-/* Fallback font if Playfair Display is not loaded */
-@supports not (font-family: 'Playfair Display',serif) {
-  .logo {
-    font-family: 'Georgia', serif;
-  }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
