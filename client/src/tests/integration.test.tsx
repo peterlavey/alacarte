@@ -6,8 +6,8 @@ import Home from '../pages/Home/Home'
 import WhatsAppLinkRequest from '../pages/WhatsAppLinkRequest/WhatsAppLinkRequest'
 // Mock Axios
 vi.mock('axios', async (importActual) => {
-  const actual: any = await importActual()
-  const mockAxios: any = vi.fn(async (config: any) => {
+  const actual: unknown = await importActual()
+  const mockAxios = vi.fn(async (config: { method?: string, url?: string, data?: unknown }) => {
     if (config.method?.toUpperCase() === 'POST') {
       return mockAxios.post(config.url, config.data)
     }
@@ -15,19 +15,19 @@ vi.mock('axios', async (importActual) => {
       return mockAxios.get(config.url)
     }
     return { status: 200, data: {} }
-  })
+  }) as unknown as any; // Using any for mock object properties
   mockAxios.post = vi.fn()
   mockAxios.get = vi.fn()
   mockAxios.create = vi.fn().mockReturnValue(mockAxios)
   mockAxios.defaults = { headers: { common: {} } }
-  mockAxios.isAxiosError = (err: any) => !!err.response
+  mockAxios.isAxiosError = (err: { response?: unknown }) => !!err.response
   
   // Directly mock the axios instance used by axios internal dispatch
   // This is a bit hacky but helps avoid some JSDom issues
   mockAxios.request = mockAxios
   
   return {
-    ...actual,
+    ...(actual as object),
     default: mockAxios,
     post: mockAxios.post,
     get: mockAxios.get,
@@ -129,7 +129,7 @@ describe('Integration Flows (Client + Server)', () => {
     })
 
     // Mock window.open
-    vi.spyOn(window, 'open').mockReturnValue({ location: { href: '' }, close: vi.fn() } as any)
+    vi.spyOn(window, 'open').mockReturnValue({ location: { href: '' }, close: vi.fn() } as unknown as Window)
 
     // Mock window.location
     // @ts-expect-error needed to mock window.location
@@ -152,7 +152,7 @@ describe('Integration Flows (Client + Server)', () => {
     })
 
     // Create a mock axios instance that calls the Express app
-    const postMock = async (url: string, data: any) => {
+    const postMock = async (url: string, data: unknown) => {
       let path = url
       try {
         if (url.startsWith('http')) {
@@ -172,7 +172,7 @@ describe('Integration Flows (Client + Server)', () => {
           unpipe: vi.fn(),
           listeners: () => [],
           emit: vi.fn(),
-        } as any;
+        } as unknown as any;
         
         const res = {
           statusCode: 200,
@@ -184,7 +184,7 @@ describe('Integration Flows (Client + Server)', () => {
             res.statusCode = code;
             return res;
           },
-          json: (body: any) => {
+          json: (body: unknown) => {
             res.headersSent = true
             if (res.statusCode >= 400) {
               reject({ response: { status: res.statusCode, data: body, headers: {} }, isAxiosError: true, config: {} });
@@ -192,7 +192,7 @@ describe('Integration Flows (Client + Server)', () => {
               resolve({ data: body, status: res.statusCode, headers: {}, config: {} });
             }
           },
-          send: (body: any) => {
+          send: (body: unknown) => {
             if (typeof body === 'object') res.json(body)
             else {
               res.headersSent = true
@@ -203,7 +203,7 @@ describe('Integration Flows (Client + Server)', () => {
           on: vi.fn(),
           emit: vi.fn(),
           once: vi.fn(),
-        } as any;
+        } as unknown as any;
 
         app(req, res);
       });
@@ -216,22 +216,22 @@ describe('Integration Flows (Client + Server)', () => {
       }),
       defaults: { headers: { common: {} } },
       interceptors: { request: { use: vi.fn() }, response: { use: vi.fn() } }
-    } as any;
+    } as unknown as any;
 
     setAxiosInstance(mockApi);
 
     // Mock axios global to prevent ANY real network calls
     vi.mocked(axios.get).mockImplementation(async () => {
-       return { status: 200, data: 'OK', headers: {}, config: {} }
+       return { status: 200, data: 'OK', headers: {}, config: {} } as any
     });
     vi.mocked(axios.post).mockImplementation(async (url, data) => {
        if (!url || typeof url !== 'string' || !url.startsWith('http') || url.includes('/api/')) {
-         return postMock(url || '', data)
+         return postMock(url || '', data) as any
        }
-       return { status: 200, data: 'OK', headers: {}, config: {} }
+       return { status: 200, data: 'OK', headers: {}, config: {} } as any
     });
     vi.mocked(axios.create).mockReturnValue(mockApi);
-    (axios as any).isAxiosError = (err: any) => !!err.response;
+    (axios as any).isAxiosError = (err: { response?: unknown }) => !!err.response;
   })
 
   // 1. The happy path, should redirect to a url previously saved
@@ -325,8 +325,9 @@ describe('Integration Flows (Client + Server)', () => {
         lon: mockCoords.longitude
       })
       throw new Error('Should have failed')
-    } catch (err: any) {
-      expect(err.response.status).toBe(404)
+    } catch (err: unknown) {
+      const error = err as { response: { status: number } }
+      expect(error.response.status).toBe(404)
     }
   })
 

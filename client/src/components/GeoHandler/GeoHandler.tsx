@@ -14,16 +14,16 @@ interface GeoHandlerProps {
 export default function GeoHandler({ onCoords, onError }: GeoHandlerProps) {
   useEffect(() => {
     if (!('geolocation' in navigator)) {
-      onError && onError(new Error('Geolocation not supported'))
+      if (onError) onError(new Error('Geolocation not supported'))
       return
     }
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const { latitude, longitude } = pos.coords || {}
-        onCoords && onCoords({ lat: latitude, lon: longitude })
+        if (onCoords) onCoords({ lat: latitude, lon: longitude })
       },
       (err) => {
-        onError && onError(err)
+        if (onError) onError(err)
       },
       { enableHighAccuracy: true, timeout: 10000 }
     )

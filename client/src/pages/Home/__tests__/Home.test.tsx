@@ -97,6 +97,8 @@ describe('Home Page', () => {
       expect(screen.getByText(/Menu not available/i)).toBeInTheDocument()
     })
     
+    expect(screen.getByAltText(/Not found/i)).toBeInTheDocument()
+    
     expect(screen.queryByTestId('mock-scanner')).not.toBeInTheDocument()
     
     fireEvent.click(screen.getByText(/Scan QR code/i))
@@ -142,7 +144,7 @@ describe('Home Page', () => {
     // @ts-expect-error adding isAxiosError to error
     validationError.isAxiosError = true
     vi.mocked(api.register).mockRejectedValue(validationError)
-    vi.spyOn(window, 'open').mockReturnValue({ close: vi.fn() } as any)
+    vi.spyOn(window, 'open').mockReturnValue({ close: vi.fn() } as unknown as Window)
     
     // Explicitly mock axios.isAxiosError to return true for our validationError
     vi.spyOn(axios, 'isAxiosError').mockImplementation((err) => err === validationError)
@@ -197,7 +199,7 @@ describe('Home Page', () => {
     const url = 'https://example.com'
     vi.mocked(api.resolve).mockResolvedValue({ content: url })
     const openSpy = vi.spyOn(window, 'open').mockImplementation(() => {
-        return { location: { href: '' }, close: vi.fn() } as any;
+        return { location: { href: '' }, close: vi.fn() } as unknown as Window;
     });
 
     try {
@@ -217,7 +219,7 @@ describe('Home Page', () => {
     vi.mocked(api.register).mockResolvedValue({ content: url })
     
     const openSpy = vi.spyOn(window, 'open').mockImplementation(() => {
-        return { location: { href: '' }, close: vi.fn() } as any;
+        return { location: { href: '' }, close: vi.fn() } as unknown as Window;
     });
 
     try {
@@ -262,7 +264,6 @@ describe('Home Page', () => {
   }, 25000)
 
   it('shows unavailable message if registration fails with validation error', async () => {
-    const url = 'https://invalid-url.com'
     vi.mocked(api.resolve).mockResolvedValue({ content: null })
     const validationError = new Error('Validation failed')
     // @ts-expect-error adding response to error
@@ -275,7 +276,7 @@ describe('Home Page', () => {
     vi.spyOn(axios, 'isAxiosError').mockImplementation((err) => err === validationError)
 
     const openSpy = vi.spyOn(window, 'open').mockImplementation(() => {
-        return { location: { href: '' }, close: vi.fn() } as any;
+        return { location: { href: '' }, close: vi.fn() } as unknown as Window;
     });
 
     try {

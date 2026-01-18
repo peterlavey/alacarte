@@ -71,7 +71,7 @@ describe('WhatsAppLinkRequest', () => {
 
   it('validates URL and registers successfully', async () => {
     vi.mocked(api.register).mockResolvedValueOnce({ id: '1' })
-    const openSpy = vi.spyOn(window, 'open').mockReturnValue({ location: { href: '' } } as any)
+    const openSpy = vi.spyOn(window, 'open').mockReturnValue({ location: { href: '' } } as unknown as Window)
 
     render(
       <MemoryRouter initialEntries={[{ state: { lat: 10, lon: 20 } }]}>
@@ -103,7 +103,7 @@ describe('WhatsAppLinkRequest', () => {
     // @ts-expect-error adding isAxiosError to error
     validationError.isAxiosError = true
     vi.mocked(api.register).mockRejectedValueOnce(validationError)
-    vi.spyOn(window, 'open').mockReturnValue({ close: vi.fn() } as any)
+    vi.spyOn(window, 'open').mockReturnValue({ close: vi.fn() } as unknown as Window)
     
     // Explicitly mock axios.isAxiosError to return true for our validationError
     vi.spyOn(axios, 'isAxiosError').mockImplementation((err) => err === validationError)

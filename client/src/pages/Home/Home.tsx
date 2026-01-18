@@ -2,10 +2,11 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { resolve, register } from '@/api'
 import axios from 'axios'
-import Canvas from '@/components/Canvas/Canvas'
-import Scanner from '@/components/Scanner/Scanner'
 import SplashScreen from '@/components/SplashScreen/SplashScreen'
 import { isWhatsAppUrl } from '@/utils/whatsapp'
+import ContentSection from './components/ContentSection'
+import UnavailableSection from './components/UnavailableSection'
+import ScannerSection from './components/ScannerSection'
 import styles from './Home.module.css'
 
 interface Coords {
@@ -214,45 +215,22 @@ export default function Home() {
   return (
     <div className={styles.container}>
       {content && !menuUnavailable ? (
-        <div className={styles.contentSection}>
-          <h1 className={styles.title}>Found Content</h1>
-          <Canvas content={content} />
-          <button onClick={() => { setContent(null); setMenuUnavailable(true); }} className={styles.button}>
-            Scan Another
-          </button>
-        </div>
+        <ContentSection 
+          content={content} 
+          onScanAnother={() => { setContent(null); setMenuUnavailable(true); }} 
+        />
       ) : menuUnavailable && !showScanner ? (
-        <div className={styles.unavailableSection}>
-          <h1 className={styles.title}>
-            {errorType === 'redirectFailed' ? 'Redirect failed' : 'Menu not available'}
-          </h1>
-          <p>
-            {errorType === 'redirectFailed' 
-              ? 'We found a menu but could not open it. Please try scanning again.' 
-              : "We couldn't find a menu for this location."}
-          </p>
-          {invalidUrl && (
-            <p className={styles.invalidUrl}>
-              URL: <code>{invalidUrl}</code>
-            </p>
-          )}
-          <button onClick={() => setShowScanner(true)} className={styles.button}>
-            Scan QR code
-          </button>
-        </div>
+        <UnavailableSection 
+          errorType={errorType}
+          invalidUrl={invalidUrl}
+          onScanClick={() => setShowScanner(true)}
+        />
       ) : showScanner ? (
-        <div className={styles.scannerSection}>
-          <h1 className={styles.title}>Scan QR code</h1>
-          <p>Scan a QR code to register this location</p>
-          <Scanner 
-            active={true} 
-            onDecode={handleScan} 
-            onError={(err: Error) => setError(err.message)} 
-          />
-          <button onClick={() => setShowScanner(false)} className={styles.secondaryButton}>
-            Cancel
-          </button>
-        </div>
+        <ScannerSection 
+          onScan={handleScan}
+          onError={(err: Error) => setError(err.message)}
+          onCancel={() => setShowScanner(false)}
+        />
       ) : null}
     </div>
   )

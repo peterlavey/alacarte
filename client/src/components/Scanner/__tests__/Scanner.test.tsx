@@ -5,7 +5,7 @@ import Scanner from '../Scanner'
 
 // Mock the third-party scanner component
 vi.mock('@yudiel/react-qr-scanner', () => ({
-  Scanner: ({ onScan, onError }: { onScan: (res: any) => void, onError: (err: any) => void }) => (
+  Scanner: ({ onScan, onError }: { onScan: (res: unknown) => void, onError: (err: Error) => void }) => (
     <div data-testid="mock-qr-scanner">
       <button onClick={() => onScan('mock-scanned-result')}>Trigger Scan</button>
       <button onClick={() => onError(new Error('mock-error'))}>Trigger Error</button>

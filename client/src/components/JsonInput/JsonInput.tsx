@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styles from './JsonInput.module.css'
 
 interface JsonInputProps {
-  onSubmit: (data: any, lat: number, lon: number) => void
+  onSubmit: (data: unknown, lat: number, lon: number) => void
   disabled?: boolean
   initialLat?: number
   initialLon?: number
@@ -41,8 +41,8 @@ export default function JsonInput({ onSubmit, disabled, initialLat, initialLon }
         return
       }
 
-      onSubmit && onSubmit(content, latNum, lonNum)
-    } catch (err) {
+      if (onSubmit) onSubmit(content, latNum, lonNum)
+    } catch {
       setError('Unexpected error submitting content')
     }
   }

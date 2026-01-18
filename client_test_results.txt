@@ -1,0 +1,285 @@
+
+> alacarte-client@0.1.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /Users/peter/Workspace/alacarte/client
+
+stderr | src/tests/integration.test.tsx > Integration Flows (Client + Server) > Flow 2: Unknown location + valid URL scan
+Resolve error: {
+  response: {
+    status: 404,
+    data: { error: 'No record found within threshold' },
+    headers: {}
+  },
+  isAxiosError: true,
+  config: {}
+}
+
+stderr | src/tests/integration.test.tsx > Integration Flows (Client + Server) > Flow 3: Unknown location + invalid Google Drive URL scan
+Resolve error: {
+  response: {
+    status: 404,
+    data: { error: 'No record found within threshold' },
+    headers: {}
+  },
+  isAxiosError: true,
+  config: {}
+}
+
+stdout | src/tests/integration.test.tsx > Integration Flows (Client + Server) > Flow 3: Unknown location + invalid Google Drive URL scan
+Validation error detected (422)
+
+stderr | src/tests/integration.test.tsx > Integration Flows (Client + Server) > Flow 3: Unknown location + invalid Google Drive URL scan
+Registration failed: Error: Invalid content URL
+    at Module.register (/Users/peter/Workspace/alacarte/client/src/api.js:38:21)
+    at handleScan (/Users/peter/Workspace/alacarte/client/src/pages/Home/Home.tsx:148:20) {
+  response: { status: 422, data: { error: 'Invalid content URL' }, headers: {} },
+  isAxiosError: true
+}
+Register error: Invalid content URL
+
+stderr | src/tests/integration.test.tsx > Integration Flows (Client + Server) > Flow 4: Unknown location + WhatsApp API flow
+Resolve error: {
+  response: {
+    status: 404,
+    data: { error: 'No record found within threshold' },
+    headers: {}
+  },
+  isAxiosError: true,
+  config: {}
+}
+
+ ✓ src/tests/integration.test.tsx (4 tests) 48ms
+stderr | src/pages/Home/__tests__/Home.test.tsx > Home Page > shows Redirect failed if registration fails with validation error (422)
+Registration failed: Error: Validation failed
+    at /Users/peter/Workspace/alacarte/client/src/pages/Home/__tests__/Home.test.tsx:139:29
+    at file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:146:14
+    at file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:533:11
+    at runWithTimeout (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:39:7)
+    at runTest (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1056:17)
+    at runSuite (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1205:15)
+    at runSuite (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1205:15)
+    at runFiles (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1262:5)
+    at startTests (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1271:3)
+    at file:///Users/peter/Workspace/alacarte/client/node_modules/vitest/dist/chunks/runBaseTests.3qpJUEJM.js:126:11 {
+  response: { status: 422, data: { error: 'Validation failed' } },
+  isAxiosError: true
+}
+Register error: Validation failed
+
+stderr | src/pages/Home/__tests__/Home.test.tsx > Home Page > shows unavailable message if registration fails
+Registration failed: Error: Registration failed
+    at /Users/peter/Workspace/alacarte/client/src/pages/Home/__tests__/Home.test.tsx:175:47
+    at file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:146:14
+    at file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:533:11
+    at runWithTimeout (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:39:7)
+    at runTest (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1056:17)
+    at runSuite (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1205:15)
+    at runSuite (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1205:15)
+    at runFiles (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1262:5)
+    at startTests (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1271:3)
+    at file:///Users/peter/Workspace/alacarte/client/node_modules/vitest/dist/chunks/runBaseTests.3qpJUEJM.js:126:11
+Register error: Registration failed
+
+stderr | src/pages/Home/__tests__/Home.test.tsx > Home Page > shows unavailable message if registration fails with validation error
+Registration failed: Error: Validation failed
+    at /Users/peter/Workspace/alacarte/client/src/pages/Home/__tests__/Home.test.tsx:262:29
+    at file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:146:14
+    at file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:533:11
+    at runWithTimeout (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:39:7)
+    at runTest (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1056:17)
+    at runSuite (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1205:15)
+    at runSuite (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1205:15)
+    at runFiles (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1262:5)
+    at startTests (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1271:3)
+    at file:///Users/peter/Workspace/alacarte/client/node_modules/vitest/dist/chunks/runBaseTests.3qpJUEJM.js:126:11 {
+  response: { status: 422, data: { error: 'Validation failed' } },
+  isAxiosError: true
+}
+Register error: Validation failed
+
+ ❯ src/pages/Home/__tests__/Home.test.tsx (9 tests | 2 failed) 10051ms
+   × Home Page > shows Redirect failed if registration fails with validation error (422) 5003ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × Home Page > shows unavailable message if registration fails with validation error 5002ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+stderr | src/pages/WhatsAppLinkRequest/__tests__/WhatsAppLinkRequest.test.tsx > WhatsAppLinkRequest > shows error if URL registration fails with validation error
+Registration failed: Error: Validation failed
+    at /Users/peter/Workspace/alacarte/client/src/pages/WhatsAppLinkRequest/__tests__/WhatsAppLinkRequest.test.tsx:100:29
+    at file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:146:14
+    at file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:533:11
+    at runWithTimeout (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:39:7)
+    at runTest (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1056:17)
+    at runSuite (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1205:15)
+    at runSuite (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1205:15)
+    at runFiles (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1262:5)
+    at startTests (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1271:3)
+    at file:///Users/peter/Workspace/alacarte/client/node_modules/vitest/dist/chunks/runBaseTests.3qpJUEJM.js:126:11 {
+  response: { status: 422, data: { error: 'Validation failed' } },
+  isAxiosError: true
+}
+
+ ❯ src/pages/WhatsAppLinkRequest/__tests__/WhatsAppLinkRequest.test.tsx (5 tests | 1 failed) 22ms
+   × WhatsAppLinkRequest > shows error if URL registration fails with validation error 6ms
+     → Unable to find an element with the text: /The link you provided is not accessible/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_d09f25"[39m
+    [36m>[39m
+      [36m<h1[39m
+        [33mclass[39m=[32m"_title_d09f25"[39m
+      [36m>[39m
+        [0mWhatsApp Link Detected[0m
+      [36m</h1>[39m
+      [36m<p[39m
+        [33mclass[39m=[32m"_description_d09f25"[39m
+      [36m>[39m
+        [0mWe detected a WhatsApp link. Open it to receive the message, then click the link in the message.[0m
+        [36m<strong>[39m
+          [0mCopy the final URL from your browser's address bar[0m
+        [36m</strong>[39m
+        [0m and paste it below.[0m
+      [36m</p>[39m
+      [36m<button[39m
+        [33mclass[39m=[32m"_openButton_d09f25"[39m
+        [33mdisabled[39m=[32m""[39m
+        [33mtype[39m=[32m"button"[39m
+      [36m>[39m
+        [0mOpen WhatsApp[0m
+      [36m</button>[39m
+      [36m<form[39m
+        [33mclass[39m=[32m"_form_d09f25"[39m
+      [36m>[39m
+        [36m<input[39m
+          [33mclass[39m=[32m"_input_d09f25"[39m
+          [33mplaceholder[39m=[32m"Paste the final browser URL here"[39m
+          [33mrequired[39m=[32m""[39m
+          [33mtype[39m=[32m"url"[39m
+          [33mvalue[39m=[32m"https://bad-link.com"[39m
+        [36m/>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"_error_d09f25"[39m
+        [36m>[39m
+          [0mFailed to save the link. Please try again.[0m
+        [36m</p>[39m
+        [36m<button[39m
+          [33mclass[39m=[32m"_button_d09f25"[39m
+          [33mtype[39m=[32m"submit"[39m
+        [36m>[39m
+          [0mContinue[0m
+        [36m</button>[39m
+        [36m<button[39m
+          [33mclass[39m=[32m"_secondaryButton_d09f25"[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [0mCancel[0m
+        [36m</button>[39m
+      [36m</form>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ✓ src/pages/Debug/__tests__/Debug.test.tsx (4 tests) 126ms
+ ✓ src/components/JsonInput/__tests__/JsonInput.test.tsx (6 tests) 15ms
+ ✓ src/components/Scanner/__tests__/Scanner.test.tsx (5 tests) 4ms
+ ✓ src/api.test.js (3 tests) 1ms
+ ✓ src/hooks/__tests__/useNetworkStatus.test.ts (3 tests) 1ms
+ ✓ src/pages/Offline/__tests__/Offline.test.tsx (3 tests) 5ms
+ ✓ src/components/SplashScreen/__tests__/SplashScreen.test.tsx (3 tests) 4ms
+ ✓ src/components/Canvas/__tests__/Canvas.test.tsx (3 tests) 1ms
+ ✓ src/utils/__tests__/whatsapp.test.ts (4 tests) 0ms
+ ✓ src/components/__tests__/History.test.tsx (1 test) 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/pages/Home/__tests__/Home.test.tsx > Home Page > shows Redirect failed if registration fails with validation error (422)
+ FAIL  src/pages/Home/__tests__/Home.test.tsx > Home Page > shows unavailable message if registration fails with validation error
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  src/pages/WhatsAppLinkRequest/__tests__/WhatsAppLinkRequest.test.tsx > WhatsAppLinkRequest > shows error if URL registration fails with validation error
+TestingLibraryElementError: Unable to find an element with the text: /The link you provided is not accessible/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_d09f25"[39m
+    [36m>[39m
+      [36m<h1[39m
+        [33mclass[39m=[32m"_title_d09f25"[39m
+      [36m>[39m
+        [0mWhatsApp Link Detected[0m
+      [36m</h1>[39m
+      [36m<p[39m
+        [33mclass[39m=[32m"_description_d09f25"[39m
+      [36m>[39m
+        [0mWe detected a WhatsApp link. Open it to receive the message, then click the link in the message.[0m
+        [36m<strong>[39m
+          [0mCopy the final URL from your browser's address bar[0m
+        [36m</strong>[39m
+        [0m and paste it below.[0m
+      [36m</p>[39m
+      [36m<button[39m
+        [33mclass[39m=[32m"_openButton_d09f25"[39m
+        [33mdisabled[39m=[32m""[39m
+        [33mtype[39m=[32m"button"[39m
+      [36m>[39m
+        [0mOpen WhatsApp[0m
+      [36m</button>[39m
+      [36m<form[39m
+        [33mclass[39m=[32m"_form_d09f25"[39m
+      [36m>[39m
+        [36m<input[39m
+          [33mclass[39m=[32m"_input_d09f25"[39m
+          [33mplaceholder[39m=[32m"Paste the final browser URL here"[39m
+          [33mrequired[39m=[32m""[39m
+          [33mtype[39m=[32m"url"[39m
+          [33mvalue[39m=[32m"https://bad-link.com"[39m
+        [36m/>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"_error_d09f25"[39m
+        [36m>[39m
+          [0mFailed to save the link. Please try again.[0m
+        [36m</p>[39m
+        [36m<button[39m
+          [33mclass[39m=[32m"_button_d09f25"[39m
+          [33mtype[39m=[32m"submit"[39m
+        [36m>[39m
+          [0mContinue[0m
+        [36m</button>[39m
+        [36m<button[39m
+          [33mclass[39m=[32m"_secondaryButton_d09f25"[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [0mCancel[0m
+        [36m</button>[39m
+      [36m</form>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/pages/WhatsAppLinkRequest/__tests__/WhatsAppLinkRequest.test.tsx:124:19
+    122|     }, { timeout: 10000 })
+    123| 
+    124|     expect(screen.getByText(/The link you provided is not accessible/i…
+       |                   ^
+    125|   })
+    126| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ Test Files  2 failed | 11 passed (13)
+      Tests  3 failed | 50 passed (53)
+   Start at  20:43:16
+   Duration  10.78s (transform 132ms, setup 25ms, collect 257ms, tests 10.28s, environment 131ms, prepare 25ms)
+

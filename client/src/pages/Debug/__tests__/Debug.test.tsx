@@ -13,7 +13,7 @@ vi.mock('@/api', () => ({
 
 // Mock components
 vi.mock('@/components/GeoHandler/GeoHandler', () => ({
-  default: ({ onCoords }: { onCoords: (c: any) => void }) => {
+  default: function MockGeoHandler({ onCoords }: { onCoords: (c: { lat: number, lon: number }) => void }) {
     React.useEffect(() => {
       onCoords({ lat: 10, lon: 20 })
     }, [onCoords])
@@ -34,7 +34,7 @@ vi.mock('@/components/History/History', () => ({
 }))
 
 vi.mock('@/components/JsonInput/JsonInput', () => ({
-  default: ({ onSubmit, initialLat, initialLon }: any) => (
+  default: ({ onSubmit, initialLat, initialLon }: { onSubmit: (d: unknown, lat: number, lon: number) => void, initialLat: number, initialLon: number }) => (
     <div data-testid="json-input">
       <button onClick={() => onSubmit({ test: 'data' }, initialLat, initialLon)}>Submit Mock</button>
       <button onClick={() => onSubmit({ manual: 'data' }, 99, 88)}>Submit Manual Mock</button>
@@ -100,7 +100,7 @@ describe('Debug Page', () => {
   })
 
   it('calls resolve again if coords change', async () => {
-    const { rerender } = render(<Debug />)
+    render(<Debug />)
 
     await waitFor(() => {
       expect(api.resolve).toHaveBeenCalledTimes(1)
