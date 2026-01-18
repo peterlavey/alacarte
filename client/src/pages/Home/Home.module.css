@@ -55,7 +55,7 @@
 }
 
 .contentSection, .scannerSection, .unavailableSection {
-  width: calc(93% - 2rem);
+  width: calc(90% - 2rem);
   max-width: 500px;
   background: var(--white);
   padding: 2.5rem;
