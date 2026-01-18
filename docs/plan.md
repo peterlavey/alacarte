@@ -146,3 +146,12 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
     - Implement server-side validation in the `register` endpoint as a final gatekeeper.
     - Ensure failed validation (client or server) prevents database persistence and shows appropriate feedback.
     - *Relates to Requirements: 11*
+
+## Phase 9: APK Export & PWABuilder Integration (Priority: Low)
+**Goal:** Optimize the PWA for native app generation using PWABuilder.
+- **9.1 Enhanced Web Manifest**
+    - Update `vite-plugin-pwa` configuration to include all recommended fields for PWABuilder (orientation, categories, screenshots metadata, etc.).
+    - *Relates to Requirements: 12*
+- **9.2 Deployment & Verification**
+    - Deploy the updated manifest and verify its quality score on PWABuilder.
+    - *Relates to Requirements: 12*

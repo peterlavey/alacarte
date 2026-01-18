@@ -101,3 +101,11 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 - **WHEN** the registration API is called with a URL, **THEN** the server SHALL also perform validation to ensure the URL is accessible before persisting the record.
 - **WHEN** the validation fails (either client-side or server-side), **THEN** the system SHALL NOT save the record and SHALL show the "Menu not available" message.
 - **WHEN** the validation succeeds, **THEN** the system SHALL proceed with registration and redirection.
+
+### 12. APK Export Support
+**User Story:**
+> As a user, I want to be able to download and install the application as an Android APK so that I can have a native-like experience on my mobile device.
+
+**Acceptance Criteria:**
+- **WHEN** the application is built, **THEN** it SHALL include a web manifest that meets PWABuilder's requirements for APK generation.
+- **WHEN** the manifest is validated by PWABuilder, **THEN** it SHALL provide all necessary metadata (name, icons, start_url, display, orientation, screenshots, etc.) to ensure a high-quality native wrapper.

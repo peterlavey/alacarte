@@ -164,6 +164,21 @@ npm run test:cov --prefix server
   - Serves the Express app via a Netlify Function at `/.netlify/functions/api`
   - Redirects `/api/*` to the function and other paths to `index.html` for SPA routing
 
+#### Exporting as APK (via PWABuilder)
+This project is configured as a Progressive Web App (PWA) and optimized for export as a native Android APK using [PWABuilder](https://www.pwabuilder.com/).
+
+**Steps to export APK:**
+1. **Deploy to Production**: Ensure your application is deployed to a public URL (e.g., via Netlify).
+2. **Visit PWABuilder**: Go to [pwabuilder.com](https://www.pwabuilder.com/).
+3. **Enter URL**: Paste your production URL and click "Start".
+4. **Review Report**: PWABuilder will analyze your PWA manifest. Our `vite.config.js` is already configured with:
+    - `standalone` display mode and `portrait` orientation.
+    - Standard icons and maskable icons.
+    - Categories and description.
+    - Placeholder screenshot metadata (you may need to upload actual images in the PWABuilder dashboard for best results).
+5. **Package for Stores**: Click "Package for Stores" and select "Android".
+6. **Download APK**: Follow the prompts to download your generated APK file.
+
 #### TODOs
 - Add a proper license file (see below).
 - Document authentication, authorization, and security considerations if/when added.

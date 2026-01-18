@@ -18,6 +18,10 @@ export default defineConfig(() => {
           short_name: 'Alacarte',
           description: 'Geolocation File Retrieval Application',
           theme_color: '#3b82f6',
+          background_color: '#ffffff',
+          display: 'standalone',
+          orientation: 'portrait',
+          categories: ['utilities', 'productivity'],
           icons: [
             {
               src: 'pwa-192x192.svg',
@@ -34,6 +38,22 @@ export default defineConfig(() => {
               sizes: '512x512',
               type: 'image/svg+xml',
               purpose: 'any maskable'
+            }
+          ],
+          screenshots: [
+            {
+              src: 'images/screenshot-mobile.png',
+              sizes: '1080x1920',
+              type: 'image/png',
+              form_factor: 'narrow',
+              label: 'Home Screen'
+            },
+            {
+              src: 'images/screenshot-desktop.png',
+              sizes: '1920x1080',
+              type: 'image/png',
+              form_factor: 'wide',
+              label: 'Home Screen'
             }
           ]
         }

@@ -134,3 +134,10 @@
     - [x] Extract `ContentSection`, `UnavailableSection`, and `ScannerSection` to separate files.
     - [x] Simplify `Home.tsx` by using the new components.
     - [x] Verify that all tests still pass.
+
+## Phase 9: APK Export & PWABuilder Integration
+- [x] **Enhance PWA Manifest for PWABuilder (Plan: 9.1, Req: 12)**
+    - [x] Add `display: standalone`, `orientation: portrait`, `background_color`, `categories`, and `description` to manifest.
+    - [x] Add screenshots metadata to manifest (Plan: 9.1, Req: 12).
+- [x] **Update Documentation for APK Export (Plan: 9.2, Req: 12)**
+    - [x] Add PWABuilder instructions to README.md.
