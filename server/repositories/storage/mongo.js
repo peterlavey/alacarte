@@ -1,5 +1,5 @@
-import { MongoClient } from 'mongodb'
-import { getDistanceFromLatLonInMeters } from '../../utils/geo.js'
+import {MongoClient} from 'mongodb'
+import {getDistanceFromLatLonInMeters} from '../../utils/geo.js'
 
 let client
 let db
@@ -25,16 +25,23 @@ export async function saveRecord(record) {
 }
 
 export async function getAllRecords() {
-  const docs = await collection.find({}, { sort: { createdAt: -1 } }).toArray()
-  return docs
+  return await collection.find({}, {sort: {createdAt: -1}}).toArray()
 }
 
 export async function findNearestRecord(lat, lon, thresholdMeters) {
-  // Naive: fetch all and compute distances
-  const all = await getAllRecords()
+  // Optimization: filter by the first two decimal places (~1.1km grid)
+  // using a range query to keep it efficient at the DB level
+  const margin = 0.01
+  const candidates = await collection
+    .find({
+      lat: { $gte: lat - margin, $lte: lat + margin },
+      lon: { $gte: lon - margin, $lte: lon + margin },
+    })
+    .toArray()
+
   let nearest = null
   let minDist = Infinity
-  for (const rec of all) {
+  for (const rec of candidates) {
     const d = getDistanceFromLatLonInMeters(lat, lon, rec.lat, rec.lon)
     if (d < minDist) {
       minDist = d

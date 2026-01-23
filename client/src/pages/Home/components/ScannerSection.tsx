@@ -6,12 +6,13 @@ interface ScannerSectionProps {
   onScan: (result: unknown) => void
   onError: (err: Error) => void
   onCancel: () => void
+  title?: string
 }
 
-export default function ScannerSection({ onScan, onError, onCancel }: ScannerSectionProps) {
+export default function ScannerSection({ onScan, onError, onCancel, title = 'Scan QR' }: ScannerSectionProps) {
   return (
     <div className={styles.scannerSection}>
-      <h1 className={styles.title}>Scan QR</h1>
+      <h1 className={styles.title}>{title}</h1>
       <p style={{ color: 'var(--muted-text)', marginBottom: '2rem' }}>
         Point your camera at the restaurant's QR code.
       </p>

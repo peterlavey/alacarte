@@ -169,3 +169,20 @@
     - [x] Verify contrast ratios and font readability.
     - [x] Ensure large tappable targets for mobile users.
     - [x] Conduct a final UI audit for consistency and tone.
+
+## Phase 11: Performance Optimization
+- [x] **Optimize Nearest Record Lookup (Plan: 11.1, Req: 14)**
+    - [x] Update `memory.js` storage to filter by coordinate grid.
+    - [x] Update `mongo.js` storage to filter by coordinate grid.
+    - [x] Update `supabase.js` storage to filter by coordinate grid.
+    - [x] Add unit tests for optimized lookup.
+- [x] **Verify nearest record selection with multiple close candidates (Plan: 11.2, Req: 14)**
+    - [x] Add unit test with locations at 20m, 15m, 32m, and 13m.
+    - [x] Confirm that the nearest (13m) is returned.
+
+## Phase 12: Bug Fixes & UX Improvements
+- [x] **Fix "Scan different QR" button (Plan: 12.1, Req: 2)**
+    - [x] Block automatic `resolve` when explicitly scanning a new QR code.
+    - [x] Update `ContentSection` to directly open scanner.
+    - [x] Update `ScannerSection` to support custom titles.
+    - [x] Add unit test for "Scan different QR" flow.

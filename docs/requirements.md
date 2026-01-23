@@ -122,3 +122,12 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 - **WHEN** the user interacts with the UI, **THEN** it SHALL provide smooth microinteractions (hover/tap states, subtle shadows) and unobtrusive transition animations.
 - **WHEN** navigating the app, **THEN** it SHALL maintain a mobile-first, easy-to-scan, and minimalist layout.
 - **WHEN** displaying text and targets, **THEN** it SHALL meet accessibility standards for contrast and tappable size.
+
+### 14. Performance-Optimized Nearest Record Lookup
+**User Story:**
+> As a system administrator, I want the system to efficiently find the nearest record without scanning all entries so that the application remains responsive as the database grows.
+
+**Acceptance Criteria:**
+- **WHEN** searching for the nearest record, **THEN** the system SHALL first filter records based on a coordinate grid (e.g., matching the first two decimal places of latitude and longitude).
+- **WHEN** multiple records exist within the filtered grid, **THEN** the system SHALL perform precise distance calculations (Haversine) only on that subset.
+- **WHEN** no records are found in the immediate grid, **THEN** it SHALL still return null if none are within the `thresholdMeters`.

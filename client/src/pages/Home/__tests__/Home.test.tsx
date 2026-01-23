@@ -301,4 +301,36 @@ describe('Home Page', () => {
       openSpy.mockRestore()
     }
   })
+
+  it('allows scanning a different QR code after finding a location', async () => {
+    vi.mocked(api.resolve).mockResolvedValue({ content: 'initial content' })
+    vi.mocked(api.register).mockResolvedValue({ content: 'new content' })
+    
+    render(<Home />)
+    
+    // 1. Initial resolution
+    await waitFor(() => {
+      expect(screen.getByText(/initial content/i)).toBeInTheDocument()
+    })
+    
+    // 2. Click "Scan different QR"
+    fireEvent.click(screen.getByText(/Scan different QR/i))
+    
+    // 3. Verify scanner is shown with correct title
+    expect(screen.getByTestId('mock-scanner')).toBeInTheDocument()
+    expect(screen.getByText(/Scan Different QR/i)).toBeInTheDocument()
+    
+    // 4. Simulate a new scan
+    fireEvent.click(screen.getByText(/Simulate Scan/i))
+    
+    // 5. Verify registration and new content
+    await waitFor(() => {
+      expect(api.register).toHaveBeenCalled()
+      expect(screen.getByText(/new content/i)).toBeInTheDocument()
+    })
+    
+    // Verify resolve was NOT called again while scanning new
+    // (it should have been called only once initially)
+    expect(api.resolve).toHaveBeenCalledTimes(1)
+  })
 })

@@ -53,4 +53,43 @@ describe('memory storage backend (migrated from node:test)', () => {
     const result = await storage.findNearestRecord(1, 1, 50) // ~157km away, threshold 50m
     expect(result).toBeNull()
   })
+
+  it('findNearestRecord handles grid optimization boundaries', async () => {
+    const now = new Date().toISOString()
+    // Record at 40.0, 70.0
+    await storage.saveRecord({ lat: 40.0, lon: 70.0, content: 'Target', createdAt: now })
+
+    // Query just within the 0.01 margin (0.009 difference)
+    const within = await storage.findNearestRecord(40.009, 70.009, 2000) // ~1.4km away, threshold 2000m
+    expect(within).toBeTruthy()
+    expect(within.content).toBe('Target')
+
+    // Query just outside the 0.01 margin (0.011 difference)
+    const outside = await storage.findNearestRecord(40.011, 70.011, 2000)
+    expect(outside).toBeNull()
+  })
+
+  it('findNearestRecord correctly selects the absolute nearest among multiple close candidates', async () => {
+    const now = new Date().toISOString()
+    const userLat = 40.7128
+    const userLon = -74.006
+
+    // We want locations at specific distances: 20m, 15m, 32m, 13m
+    // Roughly, 1 degree is 111,000 meters. 
+    // 1 meter is approx 0.000009 degrees.
+    
+    const mToDeg = 0.000009 
+
+    await storage.saveRecord({ lat: userLat + 20 * mToDeg, lon: userLon, content: '20m', createdAt: now })
+    await storage.saveRecord({ lat: userLat + 15 * mToDeg, lon: userLon, content: '15m', createdAt: now })
+    await storage.saveRecord({ lat: userLat + 32 * mToDeg, lon: userLon, content: '32m', createdAt: now })
+    await storage.saveRecord({ lat: userLat + 13 * mToDeg, lon: userLon, content: '13m', createdAt: now })
+
+    const result = await storage.findNearestRecord(userLat, userLon, 50)
+    expect(result).toBeTruthy()
+    expect(result.content).toBe('13m')
+    // We can also check if the distance is roughly 13m
+    expect(result.distance).toBeLessThan(14)
+    expect(result.distance).toBeGreaterThan(12)
+  })
 })

@@ -28,7 +28,19 @@ export async function findNearestRecord(lat, lon, thresholdMeters) {
   let nearest = null
   let minDist = Infinity
 
-  for (const rec of records) {
+  // Optimization: filter by the first two decimal places (approx 1.1km grid)
+  const gridLat = Math.floor(lat * 100) / 100
+  const gridLon = Math.floor(lon * 100) / 100
+
+  // We check the current grid and adjacent grids to be safe, 
+  // as the threshold could cross grid boundaries.
+  // 0.01 degree is ~1.1km, so checking the immediate neighbors 
+  // is plenty for a 30m-100m threshold.
+  const candidates = records.filter((rec) => {
+    return Math.abs(rec.lat - lat) <= 0.01 && Math.abs(rec.lon - lon) <= 0.01
+  })
+
+  for (const rec of candidates) {
     const d = getDistanceFromLatLonInMeters(lat, lon, rec.lat, rec.lon)
     if (d < minDist) {
       minDist = d
