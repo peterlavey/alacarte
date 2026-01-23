@@ -56,9 +56,9 @@ describe('API routes', () => {
     await storage.saveRecord({ lat: 40.0, lon: -74.0, content: 'A', createdAt: now })
     await storage.saveRecord({ lat: 40.0003, lon: -74.0003, content: 'B', createdAt: now })
 
-    // Default threshold 50m likely finds one
+    // Default threshold 30m likely finds one
     const near = await request(app).post('/api/resolve').send({ lat: 40.00015, lon: -74.00015 })
-    // May be 404 if distance > 50m, so try with custom threshold too
+    // May be 404 if distance > 30m, so try with custom threshold too
     if (near.status === 404) {
       const near2 = await request(app).post('/api/resolve').send({ lat: 40.00015, lon: -74.00015, thresholdMeters: 100 })
       expect(near2.status).toBe(200)

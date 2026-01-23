@@ -30,6 +30,10 @@
 - [x] **Secrets & Environment Setup on Netlify**
     - Configure `VITE_API_BASE=/.netlify/functions/api` for client builds and DB env vars.
     - *(Plan: 6.3, Req: 6)*
+- [x] **Change default threshold to 30m**
+    - Update `server/routes/resolve.js` default to 30.
+    - Update `docs/requirements.md` and `docs/plan.md`.
+    - *(Plan: 2.2, Req: 1)*
 - [ ] **GitHub Actions: Acceptance Tests**
     - Add workflow to run Newman against Netlify Deploy Preview (PR) and Production (main) URLs.
     - *(Plan: 6.4, Req: 6)*

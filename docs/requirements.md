@@ -11,7 +11,7 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 
 **Acceptance Criteria:**
 - **WHEN** the application loads, **THEN** it SHALL retrieve the user's geographic coordinates (latitude, longitude).
-- **WHEN** the coordinates are sent to the server, **THEN** the system SHALL check for an existing record within a 10-meter radius.
+- **WHEN** the coordinates are sent to the server, **THEN** the system SHALL check for an existing record within a 30-meter radius.
 - **WHEN** a record is found within range, **THEN** the system SHALL return the associated file content.
 - **WHEN** no record is found within range, **THEN** the system SHALL indicate that no content exists for this location.
 

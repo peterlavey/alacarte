@@ -16,7 +16,7 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
     - Setup Express.js server with necessary middleware (CORS, Body Parsing).
     - *Relates to Requirements: N/A (Infrastructure)*
 - **2.2 Spatial Logic Module**
-    - Implement the logic to calculate distances between coordinates (e.g., Haversine formula) to satisfy the "10-meter" rule.
+    - Implement the logic to calculate distances between coordinates (e.g., Haversine formula) to satisfy the "30-meter" rule.
     - *Relates to Requirements: 1, 5*
 - **2.3 Persistence Layer**
     - Implement a storage mechanism (in-memory or file-based) to store records as `{ coordinates, content, timestamp }`.
