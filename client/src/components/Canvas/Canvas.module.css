@@ -1,14 +1,40 @@
 .empty {
-  padding: 12px;
-  color: #666;
+  padding: 1.5rem;
+  color: var(--muted-text);
+  font-style: italic;
 }
 
 .pre {
-  padding: 12px;
-  background: #0b1020;
-  color: #cce6ff;
-  border-radius: 8px;
-  min-height: 160px;
+  padding: 1.5rem;
+  background: var(--warm-beige);
+  color: var(--charcoal);
+  border-radius: 4px;
+  min-height: 120px;
+  max-height: 300px;
   overflow: auto;
   margin: 0;
+  text-align: left;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+  border: 1px solid var(--border);
+}
+
+.urlContent {
+  padding: 2rem;
+  background: var(--white);
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.urlText {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: var(--accent-color);
+  word-break: break-all;
 }

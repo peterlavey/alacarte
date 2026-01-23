@@ -11,7 +11,7 @@ router.post('/resolve', async (req, res) => {
     return res.status(400).json({ error: 'lat and lon must be numbers' })
   }
 
-  const threshold = typeof thresholdMeters === 'number' ? thresholdMeters : 50 // default 50m
+  const threshold = typeof thresholdMeters === 'number' ? thresholdMeters : 30 // default 30m
   const result = await findNearestRecord(lat, lon, threshold)
 
   if (!result) {

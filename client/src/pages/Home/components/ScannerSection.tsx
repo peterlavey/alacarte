@@ -11,15 +11,19 @@ interface ScannerSectionProps {
 export default function ScannerSection({ onScan, onError, onCancel }: ScannerSectionProps) {
   return (
     <div className={styles.scannerSection}>
-      <h1 className={styles.title}>Scan QR code</h1>
-      <p>Scan a QR code to register this location</p>
-      <Scanner 
-        active={true} 
-        onDecode={onScan} 
-        onError={onError} 
-      />
+      <h1 className={styles.title}>Scan QR</h1>
+      <p style={{ color: 'var(--muted-text)', marginBottom: '2rem' }}>
+        Point your camera at the restaurant's QR code.
+      </p>
+      <div style={{ borderRadius: '8px', overflow: 'hidden', marginBottom: '2rem' }}>
+        <Scanner 
+          active={true} 
+          onDecode={onScan} 
+          onError={onError} 
+        />
+      </div>
       <button onClick={onCancel} className={styles.secondaryButton}>
-        Cancel
+        Go Back
       </button>
     </div>
   )

@@ -213,7 +213,7 @@ export default function Home() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${menuUnavailable && !showScanner ? styles.woodBackground : ''} fade-in`}>
       {content && !menuUnavailable ? (
         <ContentSection 
           content={content} 

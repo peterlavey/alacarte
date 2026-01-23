@@ -16,7 +16,7 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
     - Setup Express.js server with necessary middleware (CORS, Body Parsing).
     - *Relates to Requirements: N/A (Infrastructure)*
 - **2.2 Spatial Logic Module**
-    - Implement the logic to calculate distances between coordinates (e.g., Haversine formula) to satisfy the "10-meter" rule.
+    - Implement the logic to calculate distances between coordinates (e.g., Haversine formula) to satisfy the "30-meter" rule.
     - *Relates to Requirements: 1, 5*
 - **2.3 Persistence Layer**
     - Implement a storage mechanism (in-memory or file-based) to store records as `{ coordinates, content, timestamp }`.
@@ -146,3 +146,27 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
     - Implement server-side validation in the `register` endpoint as a final gatekeeper.
     - Ensure failed validation (client or server) prevents database persistence and shows appropriate feedback.
     - *Relates to Requirements: 11*
+
+## Phase 9: APK Export & PWABuilder Integration (Priority: Low)
+**Goal:** Optimize the PWA for native app generation using PWABuilder.
+- **9.1 Enhanced Web Manifest**
+    - Update `vite-plugin-pwa` configuration to include all recommended fields for PWABuilder (orientation, categories, screenshots metadata, etc.).
+    - *Relates to Requirements: 12*
+- **9.2 Deployment & Verification**
+    - Deploy the updated manifest and verify its quality score on PWABuilder.
+    - *Relates to Requirements: 12*
+
+## Phase 10: Premium UI & UX (Priority: Medium)
+**Goal:** Create an elegant, sophisticated UI for a restaurant menu app.
+- **10.1 Design System & Typography**
+    - Define a calm, sober color palette and select premium fonts.
+    - *Relates to Requirements: 13*
+- **10.2 Layout & Component Redesign**
+    - Implement card-based layouts with ample white space and clear hierarchy.
+    - *Relates to Requirements: 13*
+- **10.3 Microinteractions & Animations**
+    - Add smooth transitions and hover/tap states.
+    - *Relates to Requirements: 13*
+- **10.4 Accessibility & Mobile Optimization**
+    - Ensure high contrast and large tappable targets for a mobile-first experience.
+    - *Relates to Requirements: 13*

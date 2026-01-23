@@ -11,7 +11,7 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 
 **Acceptance Criteria:**
 - **WHEN** the application loads, **THEN** it SHALL retrieve the user's geographic coordinates (latitude, longitude).
-- **WHEN** the coordinates are sent to the server, **THEN** the system SHALL check for an existing record within a 10-meter radius.
+- **WHEN** the coordinates are sent to the server, **THEN** the system SHALL check for an existing record within a 30-meter radius.
 - **WHEN** a record is found within range, **THEN** the system SHALL return the associated file content.
 - **WHEN** no record is found within range, **THEN** the system SHALL indicate that no content exists for this location.
 
@@ -101,3 +101,24 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 - **WHEN** the registration API is called with a URL, **THEN** the server SHALL also perform validation to ensure the URL is accessible before persisting the record.
 - **WHEN** the validation fails (either client-side or server-side), **THEN** the system SHALL NOT save the record and SHALL show the "Menu not available" message.
 - **WHEN** the validation succeeds, **THEN** the system SHALL proceed with registration and redirection.
+
+### 12. APK Export Support
+**User Story:**
+> As a user, I want to be able to download and install the application as an Android APK so that I can have a native-like experience on my mobile device.
+
+**Acceptance Criteria:**
+- **WHEN** the application is built, **THEN** it SHALL include a web manifest that meets PWABuilder's requirements for APK generation.
+- **WHEN** the manifest is validated by PWABuilder, **THEN** it SHALL provide all necessary metadata (name, icons, start_url, display, orientation, screenshots, etc.) to ensure a high-quality native wrapper.
+
+### 13. Premium Restaurant Menu UI
+**User Story:**
+> As a customer at a high-end restaurant, I want an elegant and sophisticated digital menu interface so that my dining experience feels premium and refined.
+
+**Acceptance Criteria:**
+118:- **WHEN** the application is loaded, **THEN** it SHALL use a calm, sober color palette (elegant blue, charcoal, warm beige, and subtle gold accents).
+- **WHEN** text is displayed, **THEN** it SHALL use a refined serif font for headings (e.g., Playfair Display) and a clean sans-serif for body text (e.g., Inter or Roboto), with clear hierarchy and generous spacing.
+- **WHEN** content is found, **THEN** it SHALL be presented in card-based layouts with ample white space, subtle dividers, and consistent padding.
+- **WHEN** food photography is present, **THEN** it SHALL have soft rounded corners and low-saturation filters.
+- **WHEN** the user interacts with the UI, **THEN** it SHALL provide smooth microinteractions (hover/tap states, subtle shadows) and unobtrusive transition animations.
+- **WHEN** navigating the app, **THEN** it SHALL maintain a mobile-first, easy-to-scan, and minimalist layout.
+- **WHEN** displaying text and targets, **THEN** it SHALL meet accessibility standards for contrast and tappable size.

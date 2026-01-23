@@ -257,7 +257,7 @@ describe('Integration Flows (Client + Server)', () => {
       expect(window.open).toHaveBeenCalledWith('about:blank', '_blank')
     }, { timeout: 10000 })
     
-    expect(screen.getByText(/Found Content/i)).toBeInTheDocument()
+    expect(screen.getByText(/Welcome/i)).toBeInTheDocument()
   })
 
   // 2. The case when a url doesn't exist for your location, simulate a qr scan and redirect to the url
@@ -272,7 +272,7 @@ describe('Integration Flows (Client + Server)', () => {
       </MemoryRouter>
     )
 
-    await waitFor(() => expect(screen.getByText(/Menu not available/i)).toBeInTheDocument())
+    await waitFor(() => expect(screen.getByText(/Discover Your Menu/i)).toBeInTheDocument())
 
     fireEvent.click(screen.getByText(/Scan QR code/i))
     fireEvent.click(screen.getByText(/Scan Valid URL/i))
@@ -281,7 +281,7 @@ describe('Integration Flows (Client + Server)', () => {
       expect(window.open).toHaveBeenCalledWith('about:blank', '_blank')
     }, { timeout: 10000 })
 
-    expect(screen.getByText(/Found Content/i)).toBeInTheDocument()
+    expect(screen.getByText(/Welcome/i)).toBeInTheDocument()
 
     // Verify it was saved in the server by resolving again
     const resolveRes = await axios.post('/api/resolve', {
@@ -307,14 +307,14 @@ describe('Integration Flows (Client + Server)', () => {
       </MemoryRouter>
     )
 
-    await waitFor(() => expect(screen.getByText(/Menu not available/i)).toBeInTheDocument())
+    await waitFor(() => expect(screen.getByText(/Discover Your Menu/i)).toBeInTheDocument())
 
     fireEvent.click(screen.getByText(/Scan QR code/i))
     fireEvent.click(screen.getByText(/Scan Invalid GDrive URL/i))
 
     await waitFor(() => {
-      expect(screen.getByText(/Redirect failed/i)).toBeInTheDocument()
-      expect(screen.getByText(/could not open it/i)).toBeInTheDocument()
+      expect(screen.getByText(/Menu Unavailable/i)).toBeInTheDocument()
+      expect(screen.getByText(/seems unreachable/i)).toBeInTheDocument()
       expect(screen.getByText(new RegExp(invalidGDriveUrl, 'i'))).toBeInTheDocument()
     }, { timeout: 10000 })
 
@@ -344,7 +344,7 @@ describe('Integration Flows (Client + Server)', () => {
       </MemoryRouter>
     )
 
-    await waitFor(() => expect(screen.getByText(/Menu not available/i)).toBeInTheDocument())
+    await waitFor(() => expect(screen.getByText(/Discover Your Menu/i)).toBeInTheDocument())
 
     fireEvent.click(screen.getByText(/Scan QR code/i))
     fireEvent.click(screen.getByText(/Scan WhatsApp URL/i))

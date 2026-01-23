@@ -16,21 +16,25 @@ export default function UnavailableSection({ errorType, invalidUrl, onScanClick 
         className={styles.notFoundImage} 
       />
       <h1 className={styles.title}>
-        {errorType === 'redirectFailed' ? 'Redirect failed' : 'Menu not available'}
+        {errorType === 'redirectFailed' ? 'Menu Unavailable' : 'Discover Your Menu'}
       </h1>
-      <p>
+      <p style={{ color: 'var(--muted-text)', marginBottom: '2rem' }}>
         {errorType === 'redirectFailed' 
-          ? 'We found a menu but could not open it. Please try scanning again.' 
-          : "We couldn't find a menu for this location."}
+          ? 'We found a link, but it seems unreachable at the moment.' 
+          : "We couldn't locate a menu at this exact spot."}
       </p>
+      
       {invalidUrl && (
-        <p className={styles.invalidUrl}>
-          URL: <code>{invalidUrl}</code>
-        </p>
+        <div className={styles.invalidUrl}>
+          <code>{invalidUrl}</code>
+        </div>
       )}
-      <button onClick={onScanClick} className={styles.button}>
-        Scan QR code
-      </button>
+      
+      <div style={{ marginTop: '2rem' }}>
+        <button onClick={onScanClick} className={styles.button}>
+          Scan QR Code
+        </button>
+      </div>
     </div>
   )
 }

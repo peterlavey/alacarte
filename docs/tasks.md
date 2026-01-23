@@ -30,6 +30,10 @@
 - [x] **Secrets & Environment Setup on Netlify**
     - Configure `VITE_API_BASE=/.netlify/functions/api` for client builds and DB env vars.
     - *(Plan: 6.3, Req: 6)*
+- [x] **Change default threshold to 30m**
+    - Update `server/routes/resolve.js` default to 30.
+    - Update `docs/requirements.md` and `docs/plan.md`.
+    - *(Plan: 2.2, Req: 1)*
 - [ ] **GitHub Actions: Acceptance Tests**
     - Add workflow to run Newman against Netlify Deploy Preview (PR) and Production (main) URLs.
     - *(Plan: 6.4, Req: 6)*
@@ -134,3 +138,34 @@
     - [x] Extract `ContentSection`, `UnavailableSection`, and `ScannerSection` to separate files.
     - [x] Simplify `Home.tsx` by using the new components.
     - [x] Verify that all tests still pass.
+
+## Phase 9: APK Export & PWABuilder Integration
+- [x] **Enhance PWA Manifest for PWABuilder (Plan: 9.1, Req: 12)**
+    - [x] Add `display: standalone`, `orientation: portrait`, `background_color`, `categories`, and `description` to manifest.
+    - [x] Add screenshots metadata to manifest (Plan: 9.1, Req: 12).
+- [x] **Update Documentation for APK Export (Plan: 9.2, Req: 12)**
+    - [x] Add PWABuilder instructions to README.md.
+
+- [x] **Fix PWABuilder Validation Issues (Plan: 9.3, Req: 12)**
+    - [x] Add `id` and fix `start_url` in manifest.
+    - [x] Add 192x192 PNG icon with `purpose: any`.
+    - [x] Fix screenshot 404s by adding actual images.
+    - [x] Ensure service worker is properly configured via `vite-plugin-pwa`.
+
+## Phase 10: Premium UI & UX
+- [x] **Design System & Typography (Plan: 10.1, Req: 13)**
+    - [x] Update `client/index.html` with Google Fonts (Playfair Display, Inter).
+    - [x] Update `client/src/styles.css` with premium color palette (Elegant Blue & Gold) and global styles.
+- [x] **Redesign Home Page & Core Components (Plan: 10.2, Req: 13)**
+    - [x] Refactor `SplashScreen` for elegant arrival experience (Blue & Gold).
+    - [x] Redesign `Home.tsx` and its sub-components (`ContentSection`, `UnavailableSection`, `ScannerSection`).
+    - [x] Implement card-based layout for content display.
+    - [x] Use `wood.png` background for "Menu Unavailable" and "Offline" states.
+    - [x] Add side margins and refined shadows to menu cards for "on table" effect.
+- [x] **Microinteractions & Animations (Plan: 10.3, Req: 13)**
+    - [x] Add subtle hover/tap states and shadows.
+    - [x] Implement smooth transition animations between states.
+- [x] **Accessibility & Mobile Polish (Plan: 10.4, Req: 13)**
+    - [x] Verify contrast ratios and font readability.
+    - [x] Ensure large tappable targets for mobile users.
+    - [x] Conduct a final UI audit for consistency and tone.
