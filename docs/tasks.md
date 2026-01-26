@@ -153,15 +153,12 @@
     - [x] Ensure service worker is properly configured via `vite-plugin-pwa`.
 
 ## Phase 10: Premium UI & UX
-- [x] **Design System & Typography (Plan: 10.1, Req: 13)**
-    - [x] Update `client/index.html` with Google Fonts (Playfair Display, Inter).
-    - [x] Update `client/src/styles.css` with premium color palette (Elegant Blue & Gold) and global styles.
-- [x] **Redesign Home Page & Core Components (Plan: 10.2, Req: 13)**
-    - [x] Refactor `SplashScreen` for elegant arrival experience (Blue & Gold).
-    - [x] Redesign `Home.tsx` and its sub-components (`ContentSection`, `UnavailableSection`, `ScannerSection`).
-    - [x] Implement card-based layout for content display.
-    - [x] Use `wood.png` background for "Menu Unavailable" and "Offline" states.
-    - [x] Add side margins and refined shadows to menu cards for "on table" effect.
+- [x] **Premium UI & UX (Plan: 10, Req: 13)**
+    - [x] Design System & Typography
+    - [x] Redesign Home Page & Core Components
+    - [x] Use wood background in all pages
+    - [x] Implement card-based layout for content display
+    - [x] Add side margins and refined shadows to menu cards
 - [x] **Microinteractions & Animations (Plan: 10.3, Req: 13)**
     - [x] Add subtle hover/tap states and shadows.
     - [x] Implement smooth transition animations between states.

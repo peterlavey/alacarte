@@ -120,7 +120,7 @@ export default function Debug() {
   )
 
   return (
-    <div className="app-grid">
+    <div className="app-grid wood-background">
       <GeoHandler
         onCoords={handleCoords}
         onError={handleGeoError}

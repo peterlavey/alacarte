@@ -64,7 +64,7 @@ export default function WhatsAppLinkRequest() {
 
   if (lat === undefined || lon === undefined) {
     return (
-      <div className={styles.container}>
+      <div className={`${styles.container} wood-background`}>
         <h1 className={styles.title}>Missing Information</h1>
         <p>Could not find location coordinates. Please go back and scan the QR code again.</p>
         <button onClick={() => navigate('/')} className={styles.button}>Go Back</button>
@@ -73,7 +73,7 @@ export default function WhatsAppLinkRequest() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} wood-background`}>
       <h1 className={styles.title}>WhatsApp Link Detected</h1>
       <p className={styles.description}>
         We detected a WhatsApp link. Open it to receive the message, then click the link in the message.

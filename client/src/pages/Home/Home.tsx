@@ -209,7 +209,7 @@ export default function Home() {
 
   if (error && !showScanner && !content) {
     return (
-      <div className={styles.container}>
+      <div className={`${styles.container} wood-background`}>
         <p className={styles.error}>{error}</p>
         <button onClick={getLocation} className={styles.button}>Retry</button>
       </div>
@@ -217,7 +217,7 @@ export default function Home() {
   }
 
   return (
-    <div className={`${styles.container} ${menuUnavailable && !showScanner ? styles.woodBackground : ''} fade-in`}>
+    <div className={`${styles.container} wood-background fade-in`}>
       {content && !menuUnavailable ? (
         <ContentSection 
           content={content} 
