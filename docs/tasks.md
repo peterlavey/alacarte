@@ -183,3 +183,10 @@
     - [x] Update `ContentSection` to directly open scanner.
     - [x] Update `ScannerSection` to support custom titles.
     - [x] Add unit test for "Scan different QR" flow.
+
+## Phase 13: Local File Persistence
+- [x] **Local JSON File Storage Backend (Plan: 5.2, Req: 5)**
+    - [x] Create `server/repositories/storage/jsonfile.js`
+    - [x] Support persistence to a JSON file (default `database.json`)
+    - [x] Update storage factory to support `USE_DB=jsonfile`
+    - [x] Add comprehensive unit tests for `jsonfile` backend

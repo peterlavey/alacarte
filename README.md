@@ -119,7 +119,8 @@ Client (Vite) — variables must be prefixed with `VITE_` to be exposed to the c
 
 Server (Express)
 - `PORT`: Port for the API server (default 3001).
-- `USE_DB`: Storage backend selector: `memory` (default), `supabase`, or `mongo`.
+- `USE_DB`: Storage backend selector: `memory` (default), `supabase`, `mongo`, or `jsonfile`.
+- `STORAGE_FILE_PATH`: Path to the JSON file for `jsonfile` storage (default `database.json` in the current working directory).
 - `SUPABASE_URL`: Your Supabase project URL (required if `USE_DB=supabase`).
 - `SUPABASE_KEY`: Your Supabase API key (anon/public is sufficient) (required if `USE_DB=supabase`).
 - `MONGO_URL`: MongoDB connection string (default `mongodb://127.0.0.1:27017`).
@@ -186,6 +187,7 @@ This project is configured as a Progressive Web App (PWA) and optimized for expo
 
 #### Troubleshooting
 - Client cannot reach API in dev: ensure the server is running on `http://localhost:3001` (or use `netlify dev`). Check `VITE_API_BASE` matches your API URL.
+- jsonfile backend: ensure `USE_DB=jsonfile` and optionally `STORAGE_FILE_PATH`. The file will be created automatically if it doesn't exist.
 - MongoDB backend: ensure `USE_DB=mongo`, `MONGO_URL`, and `MONGO_DB` are correctly set and that the database is reachable.
 - Supabase backend:
   - Ensure `USE_DB=supabase`, `SUPABASE_URL`, and `SUPABASE_KEY` are correctly set.

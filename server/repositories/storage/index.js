@@ -1,7 +1,7 @@
 import 'dotenv/config'
 
 // Storage facade selecting backend by environment variables
-// USE_DB=memory (default) | mongo | supabase
+// USE_DB=memory (default) | mongo | supabase | jsonfile
 
 const useDb = (process.env.USE_DB || 'memory').toLowerCase()
 
@@ -14,6 +14,9 @@ async function getBackend() {
       }
       if (useDb === 'supabase') {
         return await import('./supabase.js')
+      }
+      if (useDb === 'jsonfile') {
+        return await import('./jsonfile.js')
       }
       return await import('./memory.js')
     })()
