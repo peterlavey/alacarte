@@ -80,6 +80,14 @@ netlify dev
 # Opens Netlify proxy (default http://localhost:8888) and runs Vite in Netlify mode
 ```
 
+- **Local Development with JSON File Database**:
+```bash
+# Set environment to use jsonfile database
+export USE_DB=jsonfile
+# Run both client and server simultaneously
+npm run dev:local
+```
+
 Entry points
 - Client: Vite serves the app from `client/` (default dev port 5173; production build outputs `client/dist`).
 - Server: `server/index.js` (listens on `PORT` env or 3001 by default).
@@ -87,8 +95,11 @@ Entry points
 
 #### Scripts
 Root (`package.json`)
-```
-npm test                  # (placeholder) prints message and exits
+```bash
+npm run dev:server      # Start Express only (from root)
+npm run dev:client      # Start Vite only (from root)
+npm run dev:local       # Start both simultaneously (recommended for local use)
+npm test                # (placeholder) prints message and exits
 ```
 
 Client (`client/package.json`)

@@ -7,7 +7,10 @@
     "test": "echo \"Use workspace tests: client/server\"",
     "lint": "eslint .",
     "format": "prettier -w .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "dev:local": "concurrently \"npm run dev:server\" \"npm run dev --prefix client -- --mode development\""
   },
   "private": true,
   "type": "module",
@@ -27,6 +30,7 @@
     "@eslint/js": "^9.39.2",
     "@typescript-eslint/eslint-plugin": "^8.13.0",
     "@typescript-eslint/parser": "^8.13.0",
+    "concurrently": "^9.2.1",
     "eslint": "^9.14.0",
     "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-react-hooks": "^5.0.0",

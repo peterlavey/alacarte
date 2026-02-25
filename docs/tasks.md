@@ -190,3 +190,5 @@
     - [x] Support persistence to a JSON file (default `database.json`)
     - [x] Update storage factory to support `USE_DB=jsonfile`
     - [x] Add comprehensive unit tests for `jsonfile` backend
+- [x] **Configure `dev:local` to use local API base (Plan: 7.11, Req: 7)**
+- [x] **Fix `dev:local` 404 error by correctly passing Vite arguments (Plan: 7.11, Req: 7)**

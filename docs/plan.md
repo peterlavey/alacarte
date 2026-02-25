@@ -126,6 +126,10 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
     - Convert the client to a Progressive Web App (PWA) using `vite-plugin-pwa`.
     - Configure manifest, service worker, and app icons.
     - *Relates to Requirements: 7*
+- **7.9 Local Development API Configuration**
+    - Ensure `dev:local` script correctly sets `VITE_API_BASE` for local development.
+    - Remove hardcoded production defaults from API service.
+    - *Relates to Requirements: 7*
 
 ## Phase 8: Connectivity & Feedback (Priority: Medium)
 **Goal:** Improve user experience by handling offline scenarios and providing redirection feedback.
