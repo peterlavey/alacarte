@@ -24,6 +24,8 @@ export async function initStorage() {
 
 async function saveToFile() {
   try {
+    const dir = path.dirname(filePath)
+    await fs.mkdir(dir, { recursive: true })
     await fs.writeFile(filePath, JSON.stringify(records, null, 2), 'utf-8')
   } catch (error) {
     console.error('Error saving storage file:', error)

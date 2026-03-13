@@ -188,6 +188,7 @@
 - [x] **Local JSON File Storage Backend (Plan: 5.2, Req: 5)**
     - [x] Create `server/repositories/storage/jsonfile.js`
     - [x] Support persistence to a JSON file (default `database.json`)
+    - [x] Create directory structure if it doesn't exist
     - [x] Update storage factory to support `USE_DB=jsonfile`
     - [x] Add comprehensive unit tests for `jsonfile` backend
 - [x] **Configure `dev:local` to use local API base (Plan: 7.11, Req: 7)**
