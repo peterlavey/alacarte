@@ -7,8 +7,9 @@ const filePath = process.env.STORAGE_FILE_PATH || path.join(process.cwd(), 'data
 let records = []
 
 export async function initStorage() {
+  const currentFilePath = process.env.STORAGE_FILE_PATH || path.join(process.cwd(), 'database.json')
   try {
-    const data = await fs.readFile(filePath, 'utf-8')
+    const data = await fs.readFile(currentFilePath, 'utf-8')
     records = JSON.parse(data)
   } catch (error) {
     if (error.code === 'ENOENT') {
@@ -23,10 +24,11 @@ export async function initStorage() {
 }
 
 async function saveToFile() {
+  const currentFilePath = process.env.STORAGE_FILE_PATH || path.join(process.cwd(), 'database.json')
   try {
-    const dir = path.dirname(filePath)
+    const dir = path.dirname(currentFilePath)
     await fs.mkdir(dir, { recursive: true })
-    await fs.writeFile(filePath, JSON.stringify(records, null, 2), 'utf-8')
+    await fs.writeFile(currentFilePath, JSON.stringify(records, null, 2), 'utf-8')
   } catch (error) {
     console.error('Error saving storage file:', error)
     throw error

@@ -192,4 +192,9 @@
     - [x] Update storage factory to support `USE_DB=jsonfile`
     - [x] Add comprehensive unit tests for `jsonfile` backend
 - [x] **Configure `dev:local` to use local API base (Plan: 7.11, Req: 7)**
-- [x] **Fix `dev:local` 404 error by correctly passing Vite arguments (Plan: 7.11, Req: 7)**
+## Phase 15: Google Places Integration
+- [x] **Implement Google Places API Fallback (Plan: 15.1, Req: 16)**
+    - [x] Create Google Places utility for nearby search and details.
+    - [x] Integrate fallback logic in `/api/resolve` endpoint.
+    - [x] Implement automatic caching of Google results in local storage.
+    - [x] Add integration tests for Google Places fallback.

@@ -131,3 +131,12 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 - **WHEN** searching for the nearest record, **THEN** the system SHALL first filter records based on a coordinate grid (e.g., matching the first two decimal places of latitude and longitude).
 - **WHEN** multiple records exist within the filtered grid, **THEN** the system SHALL perform precise distance calculations (Haversine) only on that subset.
 - **WHEN** no records are found in the immediate grid, **THEN** it SHALL still return null if none are within the `thresholdMeters`.
+
+### 15. Google Places Integration
+**User Story:**
+> As a user, I want the system to automatically find my current restaurant even if it hasn't been manually registered, so that the app works "out of the box" in any established business.
+
+**Acceptance Criteria:**
+- **WHEN** no local record is found for the user's location, **THEN** the system SHALL consult the Google Places API.
+- **WHEN** a restaurant or bar is found via Google Places within the threshold, **THEN** the system SHALL return its website or Google Maps URL as content.
+- **WHEN** a new place is found via Google, **THEN** the system SHALL automatically register it in the local database to accelerate future requests.
