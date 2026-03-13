@@ -18,7 +18,7 @@ export default function ContentSection({ content, onScanAnother }: ContentSectio
         <Canvas content={content} />
       </div>
       <button onClick={onScanAnother} className={styles.secondaryButton}>
-        Scan different QR
+        Try Again
       </button>
     </div>
   )

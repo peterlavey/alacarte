@@ -1,22 +1,17 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import request from 'supertest';
-import app, { ensureStorage } from '../index.js';
+import app from '../index.js';
 import * as googlePlaces from '../utils/googlePlaces.js';
-import { __clearAll } from '../repositories/storage/memory.js';
 
 vi.mock('../utils/googlePlaces.js');
 
 describe('Google Places Integration', () => {
   beforeEach(async () => {
-    await ensureStorage();
-    if (process.env.USE_DB === 'memory') {
-      await __clearAll();
-    }
     vi.clearAllMocks();
     process.env.GOOGLE_MAPS_API_KEY = 'fake-key';
   });
 
-  it('should fallback to Google Places if no local record is found', async () => {
+  it('should resolve restaurant using Google Places API', async () => {
     const lat = -33.4189;
     const lon = -70.6033;
     
@@ -35,11 +30,11 @@ describe('Google Places Integration', () => {
 
     expect(response.status).toBe(200);
     expect(response.body.content).toBe('https://test-restaurant.com');
-    expect(response.body.record.metadata.source).toBe('google_places');
+    expect(response.body.record.name).toBe('Test Restaurant');
     expect(googlePlaces.findNearbyRestaurant).toHaveBeenCalledWith(lat, lon, 30);
   });
 
-  it('should return 404 if both local and Google Places fail', async () => {
+  it('should return 404 if Google Places finds no results', async () => {
     googlePlaces.findNearbyRestaurant.mockResolvedValue(null);
 
     const response = await request(app)
@@ -49,7 +44,7 @@ describe('Google Places Integration', () => {
     expect(response.status).toBe(404);
   });
 
-  it('should not call Google Places if API KEY is missing', async () => {
+  it('should return 500 if Google Maps API KEY is missing', async () => {
     const originalKey = process.env.GOOGLE_MAPS_API_KEY;
     delete process.env.GOOGLE_MAPS_API_KEY;
 
@@ -57,7 +52,7 @@ describe('Google Places Integration', () => {
       .post('/api/resolve')
       .send({ lat: 10, lon: 10, thresholdMeters: 30 });
 
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(500);
     expect(googlePlaces.findNearbyRestaurant).not.toHaveBeenCalled();
 
     process.env.GOOGLE_MAPS_API_KEY = originalKey;

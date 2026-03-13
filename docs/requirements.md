@@ -1,55 +1,30 @@
 # Requirements Document
 
 ## Introduction
-The goal of this project is to develop a Geolocation-based File Retrieval System. The application utilizes a user's real-world location to serve specific content (files). If the location is not recognized, the system falls back to a QR code scanner to "learn" the location and associate it with content for future visits, thereby eliminating the need for repeated scanning.
+The goal of this project is to develop a Geolocation-based Restaurant Menu Retrieval System. The application utilizes a user's real-world location to automatically find the nearest restaurant or bar using the Google Places API and redirect them directly to its digital menu or website.
 
 ## Requirements
 
 ### 1. Geolocation-Based Content Retrieval
 **User Story:**
-> As a user, I want the application to automatically show me the relevant file for my current location so that I don't have to manually search or scan a code.
+> As a user, I want the application to automatically show me the relevant menu for my current location so that I don't have to manually search or scan a code.
 
 **Acceptance Criteria:**
 - **WHEN** the application loads, **THEN** it SHALL retrieve the user's geographic coordinates (latitude, longitude).
-- **WHEN** the coordinates are sent to the server, **THEN** the system SHALL check for an existing record within a 30-meter radius.
-- **WHEN** a record is found within range, **THEN** the system SHALL return the associated file content.
-- **WHEN** no record is found within range, **THEN** the system SHALL indicate that no content exists for this location.
+- **WHEN** the coordinates are sent to the server, **THEN** the system SHALL consult the Google Places API to find the nearest restaurant or bar within a 30-meter radius.
+- **WHEN** a place is found within range, **THEN** the system SHALL return its website or Google Maps URL as content.
+- **WHEN** no place is found within range, **THEN** the system SHALL indicate that no restaurant or bar was found for this location.
 
-### 2. QR Code Fallback & Registration
+
+### 2. Manual Data Entry (BFF Requirement)
 **User Story:**
-> As a user, I want to scan a QR code if my location is not recognized so that I can view the file and save this location for next time.
+> As a developer or power user, I want to manually input coordinates so that I can test the system without moving physically.
 
 **Acceptance Criteria:**
-- **WHEN** the system determines no file exists for the current location, **THEN** it SHALL activate the camera for QR code scanning.
-- **WHEN** a QR code is successfully scanned, **THEN** the system SHALL register the current coordinates and the QR content as a new record.
-- **WHEN** the registration is successful, **THEN** the system SHALL display the content from the QR code immediately.
+- **WHEN** a user enters coordinates (e.g., lat: 10, lon: 20) into a form, **THEN** the system SHALL allow submission to the API.
+- **WHEN** the manual data is submitted, **THEN** the system SHALL process it exactly as it would real geolocation data (searching Google Places).
 
-### 3. Manual Data Entry (BFF Requirement)
-**User Story:**
-> As a developer or power user, I want to manually input JSON data representing coordinates so that I can test the system without moving physically.
 
-**Acceptance Criteria:**
-- **WHEN** a user enters JSON data (e.g., `{ "lat": 10, "lon": 20 }`) into a text input, **THEN** the system SHALL allow submission to the API.
-- **WHEN** the manual data is submitted, **THEN** the system SHALL process it exactly as it would real geolocation data (searching or registering).
-
-### 4. Execution History & Visualization
-**User Story:**
-> As a user, I want to see a history of my location lookups and visualized results so that I can track where I have been and what I accessed.
-
-**Acceptance Criteria:**
-- **WHEN** the application is active, **THEN** it SHALL display a list of past execution results (found files or registrations).
-- **WHEN** a user selects a history item, **THEN** the "Canvas" area SHALL visualize the stored input coordinates and the resulting file/content.
-- **WHEN** data is displayed, **THEN** it SHALL be rendered in a clear, readable format on the canvas.
-
-### 5. Data Persistence & Integrity
-**User Story:**
-> As a system administrator, I want location data to be stored reliably so that the "learn once, use everywhere" promise is kept.
-
-**Acceptance Criteria:**
-- **WHEN** a new location is registered, **THEN** it SHALL be persisted in the backend storage.
-- **WHEN** multiple requests occur, **THEN** the system SHALL maintain data integrity (no lost writes).
-- **WHEN** querying for results, **THEN** the system SHALL support efficient retrieval based on coordinate proximity.
-- **WHEN** configuring the system, **THEN** it SHALL support multiple storage backends including In-Memory (for testing), MongoDB, Supabase, and a Local JSON File (for persistent local development).
 
 ### 6. CI/CD & Deployment (Netlify & GitHub Actions)
 **Stakeholder Need:**
@@ -59,10 +34,6 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 - **WHEN** code is pushed to GitHub, **THEN** Netlify SHALL build the client from `client/` and publish `client/dist` with SPA routing enabled.
 - **WHEN** the API is deployed, **THEN** a single Netlify Function SHALL wrap the existing Express app and expose endpoints under `/.netlify/functions/api`.
 - **WHEN** the Netlify site is built, **THEN** the client SHALL use `VITE_API_BASE=/.netlify/functions/api` (configurable in Netlify env vars).
-- **WHEN** PRs are opened on GitHub, **THEN** Netlify Deploy Previews SHALL be generated.
-- **WHEN** code is pushed to any branch or a PR is created, **THEN** GitHub Actions SHOULD run server and client tests.
-- **WHEN** the GitHub pipeline runs, **THEN** acceptance tests (Newman) MAY run against the Deploy Preview or Production URLs, publishing JUnit artifacts.
-- **WHEN** the pipeline runs, **THEN** secrets (e.g., database credentials) SHALL be provided through environment variables (GitHub Secrets or Netlify Env); repository-stored `.env` secrets SHALL NOT be required for successful builds.
 
 ### 7. UI Code Guidelines Compliance
 **Stakeholder Need:**
@@ -74,7 +45,7 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 - **WHEN** new logic is introduced, **THEN** unit tests SHALL be added using Vitest under a `__tests__` directory adjacent to the file.
 - **WHEN** code is committed, **THEN** it SHOULD pass ESLint and Prettier formatting checks.
 
-### 8. Internet Connection Verification
+### 5. Internet Connection Verification
 **User Story:**
 > As a user, I want the application to inform me when I don't have an internet connection so that I understand why the application might not be working correctly.
 
@@ -83,7 +54,7 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 - **WHEN** no internet connection is detected, **THEN** the system SHALL display a dedicated "Offline" page.
 - **WHEN** the connection is restored, **THEN** the system SHALL allow the user to continue or automatically refresh.
 
-### 10. Google Drive Content Validation
+### 6. Google Drive Content Validation
 **User Story:**
 > As a user, I want the application to verify that a Google Drive link is valid before trying to open it so that I don't get redirected to a broken link and instead get the option to scan a new QR code.
 
@@ -92,17 +63,8 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 - **WHEN** the Google Drive link is valid, **THEN** the system SHALL redirect the user to the content.
 - **WHEN** the Google Drive link is invalid or the response is an error, **THEN** the system SHALL display the "Menu not available" message and provide an option to scan a new QR code.
 
-### 11. Pre-Registration Validation
-**User Story:**
-> As a system administrator, I want the system to validate URLs and Google Drive links before saving them to the database so that we don't store broken or malicious links.
 
-**Acceptance Criteria:**
-- **WHEN** a QR code is scanned and contains a URL, **THEN** the system SHALL validate the URL's accessibility (and Google Drive accessibility if applicable) BEFORE calling the registration API.
-- **WHEN** the registration API is called with a URL, **THEN** the server SHALL also perform validation to ensure the URL is accessible before persisting the record.
-- **WHEN** the validation fails (either client-side or server-side), **THEN** the system SHALL NOT save the record and SHALL show the "Menu not available" message.
-- **WHEN** the validation succeeds, **THEN** the system SHALL proceed with registration and redirection.
-
-### 12. APK Export Support
+### 7. APK Export Support
 **User Story:**
 > As a user, I want to be able to download and install the application as an Android APK so that I can have a native-like experience on my mobile device.
 
@@ -110,7 +72,7 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 - **WHEN** the application is built, **THEN** it SHALL include a web manifest that meets PWABuilder's requirements for APK generation.
 - **WHEN** the manifest is validated by PWABuilder, **THEN** it SHALL provide all necessary metadata (name, icons, start_url, display, orientation, screenshots, etc.) to ensure a high-quality native wrapper.
 
-### 13. Premium Restaurant Menu UI
+### 8. Premium Restaurant Menu UI
 **User Story:**
 > As a customer at a high-end restaurant, I want an elegant and sophisticated digital menu interface so that my dining experience feels premium and refined.
 
@@ -123,20 +85,11 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 - **WHEN** navigating the app, **THEN** it SHALL maintain a mobile-first, easy-to-scan, and minimalist layout.
 - **WHEN** displaying text and targets, **THEN** it SHALL meet accessibility standards for contrast and tappable size.
 
-### 14. Performance-Optimized Nearest Record Lookup
+
+### 9. Google Places Integration
 **User Story:**
-> As a system administrator, I want the system to efficiently find the nearest record without scanning all entries so that the application remains responsive as the database grows.
+> As a user, I want the system to automatically find my current restaurant using Google's database, so that the app works "out of the box" in any established business.
 
 **Acceptance Criteria:**
-- **WHEN** searching for the nearest record, **THEN** the system SHALL first filter records based on a coordinate grid (e.g., matching the first two decimal places of latitude and longitude).
-- **WHEN** multiple records exist within the filtered grid, **THEN** the system SHALL perform precise distance calculations (Haversine) only on that subset.
-- **WHEN** no records are found in the immediate grid, **THEN** it SHALL still return null if none are within the `thresholdMeters`.
-
-### 15. Google Places Integration
-**User Story:**
-> As a user, I want the system to automatically find my current restaurant even if it hasn't been manually registered, so that the app works "out of the box" in any established business.
-
-**Acceptance Criteria:**
-- **WHEN** no local record is found for the user's location, **THEN** the system SHALL consult the Google Places API.
+- **WHEN** the user's location is resolved, **THEN** the system SHALL consult the Google Places API.
 - **WHEN** a restaurant or bar is found via Google Places within the threshold, **THEN** the system SHALL return its website or Google Maps URL as content.
-- **WHEN** a new place is found via Google, **THEN** the system SHALL automatically register it in the local database to accelerate future requests.

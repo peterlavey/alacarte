@@ -20,9 +20,9 @@ export async function findNearbyRestaurant(lat, lon, radius = 50) {
     // 1. Nearby Search to find places of type 'restaurant' or 'bar'
     const response = await axios.get(`${GOOGLE_PLACES_API_URL}/nearbysearch/json`, {
       params: {
+        type: 'restaurant, bar',
         location: `${lat},${lon}`,
         radius,
-        type: 'restaurant', // You could also include 'bar' if needed
         key: apiKey,
       },
     });

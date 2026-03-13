@@ -4,10 +4,10 @@ import styles from '../Home.module.css'
 interface UnavailableSectionProps {
   errorType: 'notFound' | 'redirectFailed' | null
   invalidUrl: string | null
-  onScanClick: () => void
+  onRetryClick: () => void
 }
 
-export default function UnavailableSection({ errorType, invalidUrl, onScanClick }: UnavailableSectionProps) {
+export default function UnavailableSection({ errorType, invalidUrl, onRetryClick }: UnavailableSectionProps) {
   return (
     <div className={styles.unavailableSection}>
       <img 
@@ -31,8 +31,8 @@ export default function UnavailableSection({ errorType, invalidUrl, onScanClick 
       )}
       
       <div style={{ marginTop: '2rem' }}>
-        <button onClick={onScanClick} className={styles.button}>
-          Scan QR Code
+        <button onClick={onRetryClick} className={styles.button}>
+          Retry
         </button>
       </div>
     </div>
