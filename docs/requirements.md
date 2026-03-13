@@ -49,7 +49,7 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 - **WHEN** a new location is registered, **THEN** it SHALL be persisted in the backend storage.
 - **WHEN** multiple requests occur, **THEN** the system SHALL maintain data integrity (no lost writes).
 - **WHEN** querying for results, **THEN** the system SHALL support efficient retrieval based on coordinate proximity.
-- **WHEN** configuring the system, **THEN** it SHALL support multiple storage backends including In-Memory (for testing), MongoDB, and Supabase.
+- **WHEN** configuring the system, **THEN** it SHALL support multiple storage backends including In-Memory (for testing), MongoDB, Supabase, and a Local JSON File (for persistent local development).
 
 ### 6. CI/CD & Deployment (Netlify & GitHub Actions)
 **Stakeholder Need:**
@@ -122,3 +122,21 @@ The goal of this project is to develop a Geolocation-based File Retrieval System
 - **WHEN** the user interacts with the UI, **THEN** it SHALL provide smooth microinteractions (hover/tap states, subtle shadows) and unobtrusive transition animations.
 - **WHEN** navigating the app, **THEN** it SHALL maintain a mobile-first, easy-to-scan, and minimalist layout.
 - **WHEN** displaying text and targets, **THEN** it SHALL meet accessibility standards for contrast and tappable size.
+
+### 14. Performance-Optimized Nearest Record Lookup
+**User Story:**
+> As a system administrator, I want the system to efficiently find the nearest record without scanning all entries so that the application remains responsive as the database grows.
+
+**Acceptance Criteria:**
+- **WHEN** searching for the nearest record, **THEN** the system SHALL first filter records based on a coordinate grid (e.g., matching the first two decimal places of latitude and longitude).
+- **WHEN** multiple records exist within the filtered grid, **THEN** the system SHALL perform precise distance calculations (Haversine) only on that subset.
+- **WHEN** no records are found in the immediate grid, **THEN** it SHALL still return null if none are within the `thresholdMeters`.
+
+### 15. Google Places Integration
+**User Story:**
+> As a user, I want the system to automatically find my current restaurant even if it hasn't been manually registered, so that the app works "out of the box" in any established business.
+
+**Acceptance Criteria:**
+- **WHEN** no local record is found for the user's location, **THEN** the system SHALL consult the Google Places API.
+- **WHEN** a restaurant or bar is found via Google Places within the threshold, **THEN** the system SHALL return its website or Google Maps URL as content.
+- **WHEN** a new place is found via Google, **THEN** the system SHALL automatically register it in the local database to accelerate future requests.

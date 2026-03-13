@@ -1,20 +1,51 @@
+import fs from 'fs/promises'
+import path from 'path'
 import { getDistanceFromLatLonInMeters } from '../../utils/geo.js'
 
-// In-memory storage backend
-const records = []
+// File-based storage backend using a JSON file
+const filePath = process.env.STORAGE_FILE_PATH || path.join(process.cwd(), 'database.json')
+let records = []
 
 export async function initStorage() {
-  console.log('Initializing In-Memory storage (volatile)');
-  // nothing to init for memory
+  const currentFilePath = process.env.STORAGE_FILE_PATH || path.join(process.cwd(), 'database.json')
+  console.log(`Initializing JSON file storage at: ${currentFilePath}`);
+  try {
+    const data = await fs.readFile(currentFilePath, 'utf-8')
+    records = JSON.parse(data)
+    console.log(`Loaded ${records.length} records from ${currentFilePath}`);
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      // If the file doesn't exist, start with an empty array
+      console.log(`Storage file not found. Creating new one at: ${currentFilePath}`);
+      records = []
+      await saveToFile()
+    } else {
+      console.error('Error loading storage file:', error)
+      throw error
+    }
+  }
+}
+
+async function saveToFile() {
+  const currentFilePath = process.env.STORAGE_FILE_PATH || path.join(process.cwd(), 'database.json')
+  try {
+    const dir = path.dirname(currentFilePath)
+    await fs.mkdir(dir, { recursive: true })
+    await fs.writeFile(currentFilePath, JSON.stringify(records, null, 2), 'utf-8')
+  } catch (error) {
+    console.error('Error saving storage file:', error)
+    throw error
+  }
 }
 
 export async function closeStorage() {
-  // nothing to close
+  await saveToFile()
 }
 
 // Save a new record: { lat, lon, content, createdAt }
 export async function saveRecord(record) {
   records.push(record)
+  await saveToFile()
   return record
 }
 
@@ -56,6 +87,7 @@ export async function findNearestRecord(lat, lon, thresholdMeters) {
 }
 
 // For testing
-export function __clearAll() {
-  records.length = 0
+export async function __clearAll() {
+  records = []
+  await saveToFile()
 }

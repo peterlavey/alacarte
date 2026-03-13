@@ -11,6 +11,7 @@ export async function initStorage() {
     throw new Error('SUPABASE_URL and SUPABASE_KEY are required when USE_DB=supabase')
   }
 
+  console.log(`Initializing Supabase storage at: ${url}`);
   supabase = createClient(url, key)
 }
 
@@ -41,13 +42,26 @@ export async function getAllRecords() {
 }
 
 export async function findNearestRecord(lat, lon, thresholdMeters) {
-  // Supabase doesn't easily support geodistance in the free tier without PostGIS
-  // but we can fetch and filter just like the Mongo implementation did
-  const all = await getAllRecords()
+  // Optimization: filter by the first two decimal places (~1.1km grid)
+  // using range queries to keep it efficient at the DB level
+  const margin = 0.01
+  const { data: candidates, error } = await supabase
+    .from('records')
+    .select('*')
+    .gte('lat', lat - margin)
+    .lte('lat', lat + margin)
+    .gte('lon', lon - margin)
+    .lte('lon', lon + margin)
+
+  if (error) {
+    console.error('Supabase fetch error:', error)
+    throw error
+  }
+
   let nearest = null
   let minDist = Infinity
 
-  for (const rec of all) {
+  for (const rec of candidates) {
     const d = getDistanceFromLatLonInMeters(lat, lon, rec.lat, rec.lon)
     if (d < minDist) {
       minDist = d

@@ -153,15 +153,12 @@
     - [x] Ensure service worker is properly configured via `vite-plugin-pwa`.
 
 ## Phase 10: Premium UI & UX
-- [x] **Design System & Typography (Plan: 10.1, Req: 13)**
-    - [x] Update `client/index.html` with Google Fonts (Playfair Display, Inter).
-    - [x] Update `client/src/styles.css` with premium color palette (Elegant Blue & Gold) and global styles.
-- [x] **Redesign Home Page & Core Components (Plan: 10.2, Req: 13)**
-    - [x] Refactor `SplashScreen` for elegant arrival experience (Blue & Gold).
-    - [x] Redesign `Home.tsx` and its sub-components (`ContentSection`, `UnavailableSection`, `ScannerSection`).
-    - [x] Implement card-based layout for content display.
-    - [x] Use `wood.png` background for "Menu Unavailable" and "Offline" states.
-    - [x] Add side margins and refined shadows to menu cards for "on table" effect.
+- [x] **Premium UI & UX (Plan: 10, Req: 13)**
+    - [x] Design System & Typography
+    - [x] Redesign Home Page & Core Components
+    - [x] Use wood background in all pages
+    - [x] Implement card-based layout for content display
+    - [x] Add side margins and refined shadows to menu cards
 - [x] **Microinteractions & Animations (Plan: 10.3, Req: 13)**
     - [x] Add subtle hover/tap states and shadows.
     - [x] Implement smooth transition animations between states.
@@ -169,3 +166,39 @@
     - [x] Verify contrast ratios and font readability.
     - [x] Ensure large tappable targets for mobile users.
     - [x] Conduct a final UI audit for consistency and tone.
+
+## Phase 11: Performance Optimization
+- [x] **Optimize Nearest Record Lookup (Plan: 11.1, Req: 14)**
+    - [x] Update `memory.js` storage to filter by coordinate grid.
+    - [x] Update `mongo.js` storage to filter by coordinate grid.
+    - [x] Update `supabase.js` storage to filter by coordinate grid.
+    - [x] Add unit tests for optimized lookup.
+- [x] **Verify nearest record selection with multiple close candidates (Plan: 11.2, Req: 14)**
+    - [x] Add unit test with locations at 20m, 15m, 32m, and 13m.
+    - [x] Confirm that the nearest (13m) is returned.
+
+## Phase 12: Bug Fixes & UX Improvements
+- [x] **Fix "Scan different QR" button (Plan: 12.1, Req: 2)**
+    - [x] Block automatic `resolve` when explicitly scanning a new QR code.
+    - [x] Update `ContentSection` to directly open scanner.
+    - [x] Update `ScannerSection` to support custom titles.
+    - [x] Add unit test for "Scan different QR" flow.
+
+## Phase 13: Local File Persistence
+- [x] **Local JSON File Storage Backend (Plan: 5.2, Req: 5)**
+    - [x] Create `server/repositories/storage/jsonfile.js`
+    - [x] Support persistence to a JSON file (default `database.json`)
+    - [x] Create directory structure if it doesn't exist
+    - [x] Update storage factory to support `USE_DB=jsonfile`
+    - [x] Add comprehensive unit tests for `jsonfile` backend
+- [x] **Configure `dev:local` to use local API base (Plan: 7.11, Req: 7)**
+- [x] **Add Node.js debugger to `dev:local` script**
+    - Update server's dev script to use `nodemon --inspect`.
+    - *(Plan: 7.12, Req: 7)*
+## Phase 15: Google Places Integration
+- [x] **Implement Google Places API Fallback (Plan: 15.1, Req: 16)**
+    - [x] Create Google Places utility for nearby search and details.
+    - [x] Integrate fallback logic in `/api/resolve` endpoint.
+    - [x] Implement automatic caching of Google results in local storage.
+    - [x] Add integration tests for Google Places fallback.
+    - [x] Add logs to verify Google API functionality.

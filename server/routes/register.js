@@ -16,8 +16,10 @@ router.post('/register', async (req, res) => {
   }
 
   // Validate URL content before saving
+  console.log(`Registering record: [${lat}, ${lon}] with content: ${content}`);
   const isValid = await validateUrl(content)
   if (!isValid) {
+    console.warn(`Validation failed for content URL: ${content}`);
     return res.status(422).json({ error: 'Invalid content URL' })
   }
 
@@ -29,6 +31,7 @@ router.post('/register', async (req, res) => {
   }
 
   await saveRecord(record)
+  console.log(`Record registered successfully: [${lat}, ${lon}]`);
   return res.status(201).json({ ok: true, record })
 })
 

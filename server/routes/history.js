@@ -5,7 +5,9 @@ const router = Router()
 
 // GET /api/history — return all records
 router.get('/history', async (req, res) => {
-  res.json({ records: await getAllRecords() })
+  const records = await getAllRecords();
+  console.log(`History requested. Returning ${records.length} records.`);
+  res.json({ records })
 })
 
 export default router

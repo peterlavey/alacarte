@@ -7,7 +7,7 @@ const Offline: React.FC = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} wood-background`}>
       <div className={styles.content}>
         <div className={styles.icon}>🌐</div>
         <h1 className={styles.title}>No Internet Connection</h1>

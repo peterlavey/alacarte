@@ -22,6 +22,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null)
   const [showScanner, setShowScanner] = useState(false)
   const [menuUnavailable, setMenuUnavailable] = useState(false)
+  const [isScanningNew, setIsScanningNew] = useState(false)
   const [errorType, setErrorType] = useState<'notFound' | 'redirectFailed' | null>(null)
   const [invalidUrl, setInvalidUrl] = useState<string | null>(null)
   const navigate = useNavigate()
@@ -56,7 +57,7 @@ export default function Home() {
   }, [getLocation])
 
   useEffect(() => {
-    if (coords && !content) {
+    if (coords && !content && !isScanningNew) {
       setLoading(true)
       resolve(coords)
         .then(async (data: { content: string }) => {
@@ -67,6 +68,7 @@ export default function Home() {
             setMenuUnavailable(false)
             setErrorType(null)
             setInvalidUrl(null)
+            setIsScanningNew(false)
 
             // If content is a URL, open it in a new tab
             if (contentValue.startsWith('http')) {
@@ -97,7 +99,7 @@ export default function Home() {
           setLoading(false)
         })
     }
-  }, [coords, content])
+  }, [coords, content, isScanningNew])
 
   const handleScan = async (result: unknown) => {
     if (!coords || !result || isRegistering.current) return
@@ -152,6 +154,7 @@ export default function Home() {
       })
       const finalContent = data.content || scannedText
       setContent(finalContent)
+      setIsScanningNew(false)
       setShowScanner(false)
       setMenuUnavailable(false)
       setErrorType(null)
@@ -177,6 +180,7 @@ export default function Home() {
       }
       setMenuUnavailable(true)
       setShowScanner(false)
+      setIsScanningNew(false)
       setLoading(false)
       const message = err instanceof Error ? err.message : 'Failed to register'
       console.warn('Register error:', message)
@@ -205,7 +209,7 @@ export default function Home() {
 
   if (error && !showScanner && !content) {
     return (
-      <div className={styles.container}>
+      <div className={`${styles.container} wood-background`}>
         <p className={styles.error}>{error}</p>
         <button onClick={getLocation} className={styles.button}>Retry</button>
       </div>
@@ -213,11 +217,15 @@ export default function Home() {
   }
 
   return (
-    <div className={`${styles.container} ${menuUnavailable && !showScanner ? styles.woodBackground : ''} fade-in`}>
+    <div className={`${styles.container} wood-background fade-in`}>
       {content && !menuUnavailable ? (
         <ContentSection 
           content={content} 
-          onScanAnother={() => { setContent(null); setMenuUnavailable(true); }} 
+          onScanAnother={() => { 
+            setContent(null); 
+            setIsScanningNew(true);
+            setShowScanner(true);
+          }} 
         />
       ) : menuUnavailable && !showScanner ? (
         <UnavailableSection 
@@ -229,7 +237,14 @@ export default function Home() {
         <ScannerSection 
           onScan={handleScan}
           onError={(err: Error) => setError(err.message)}
-          onCancel={() => setShowScanner(false)}
+          onCancel={() => {
+            setShowScanner(false)
+            if (isScanningNew) {
+              setIsScanningNew(false)
+              getLocation() // Re-trigger location check to show previous content
+            }
+          }}
+          title={isScanningNew ? 'Scan Different QR' : 'Scan QR'}
         />
       ) : null}
     </div>

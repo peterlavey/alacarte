@@ -67,7 +67,7 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
     - *Relates to Requirements: 5*
 - **5.2 Repository Abstraction**
     - Abstract storage behind a repository layer to decouple from DB vendor specifics.
-    - Support multiple backends (memory, mongo, supabase).
+    - Support multiple backends (memory, mongo, supabase, jsonfile).
     - *Relates to Requirements: 5*
 - **5.3 Persistence Tests**
     - Add tests to validate storage operations and proximity queries across different backends.
@@ -125,6 +125,10 @@ This plan outlines the strategy to build the full-stack Geolocation File Retriev
 - **7.8 PWA Conversion**
     - Convert the client to a Progressive Web App (PWA) using `vite-plugin-pwa`.
     - Configure manifest, service worker, and app icons.
+    - *Relates to Requirements: 7*
+- **7.9 Local Development API Configuration**
+    - Ensure `dev:local` script correctly sets `VITE_API_BASE` for local development.
+    - Remove hardcoded production defaults from API service.
     - *Relates to Requirements: 7*
 
 ## Phase 8: Connectivity & Feedback (Priority: Medium)
