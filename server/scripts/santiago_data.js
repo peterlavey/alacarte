@@ -215,8 +215,8 @@ const santiagoRestaurants = [
     content: "https://www.google.com/search?q=Casino+Social+J+R+Menu",
     name: "Casino Social J.R."
   },
-  // --- EXPANSIÓN MASIVA ---
-  // Ñuñoa (Plaza Ñuñoa)
+  // --- MASSIVE EXPANSION ---
+  // Ñuñoa (Ñuñoa Square)
   { lat: -33.4542, lon: -70.5976, name: "La Tecla", content: "https://www.latecla.cl/carta" },
   { lat: -33.4545, lon: -70.5982, name: "El Mesón del Buen Comer", content: "https://www.google.com/search?q=El+Meson+del+Buen+Comer+Menu" },
   { lat: -33.4538, lon: -70.5968, name: "Bar de René (Ñuñoa)", content: "https://www.google.com/search?q=Bar+de+Rene+Menu" },
@@ -224,13 +224,13 @@ const santiagoRestaurants = [
   { lat: -33.4532, lon: -70.5985, name: "Underground Bar", content: "https://www.google.com/search?q=Underground+Bar+Nunoa+Menu" },
   { lat: -33.4551, lon: -70.5979, name: "Hops", content: "https://www.google.com/search?q=Hops+Nunoa+Menu" },
   
-  // Maipú (Plaza de Maipú / Pajaritos)
+  // Maipú (Maipú Square / Pajaritos)
   { lat: -33.5104, lon: -70.7572, name: "El Palacio del Choclo", content: "https://www.google.com/search?q=El+Palacio+del+Choclo+Maipu+Menu" },
   { lat: -33.5112, lon: -70.7585, name: "Fuente Maipú", content: "https://www.google.com/search?q=Fuente+Maipu+Menu" },
   { lat: -33.5095, lon: -70.7561, name: "Bar Central Maipú", content: "https://www.google.com/search?q=Bar+Central+Maipu+Menu" },
   { lat: -33.5125, lon: -70.7592, name: "Pizzería La Nostra", content: "https://www.google.com/search?q=Pizzeria+La+Nostra+Maipu+Menu" },
   
-  // La Florida (Vicente Valdés / Plaza Vespucio)
+  // La Florida (Vicente Valdés / Vespucio Square)
   { lat: -33.5218, lon: -70.5982, name: "Johnny Rockets Mall Plaza Vespucio", content: "https://www.johnnyrockets.cl/nuestra-carta/" },
   { lat: -33.5225, lon: -70.5975, name: "Tanta Plaza Vespucio", content: "https://www.google.com/search?q=Tanta+Plaza+Vespucio+Menu" },
   { lat: -33.5231, lon: -70.5991, name: "Schopdog La Florida", content: "https://www.google.com/search?q=Schopdog+La+Florida+Menu" },
@@ -244,7 +244,7 @@ const santiagoRestaurants = [
   { lat: -33.4185, lon: -70.6025, name: "Pizzería Tiramisu 2", content: "https://tiramisu.cl/nuestra-carta/" },
   { lat: -33.4192, lon: -70.6011, name: "Kilómetro 0", content: "https://www.google.com/search?q=Kilometro+0+Santiago+Menu" },
 
-  // Santiago Centro (Paseo Ahumada / Huérfanos)
+  // Santiago Centro (Ahumada Pedestrian Mall / Huérfanos)
   { lat: -33.4395, lon: -70.6502, name: "El Rápido", content: "https://www.google.com/search?q=El+Rapido+Santiago+Centro+Menu" },
   { lat: -33.4408, lon: -70.6485, name: "Bar Nacional 2", content: "https://www.google.com/search?q=Bar+Nacional+Huérfanos+Menu" },
   { lat: -33.4382, lon: -70.6518, name: "Don Victorio Centro", content: "https://www.google.com/search?q=Don+Victorio+Centro+Menu" },
@@ -262,20 +262,20 @@ const santiagoRestaurants = [
   { lat: -33.4152, lon: -70.5955, name: "Tavelli El Golf", content: "https://www.tavelli.cl/carta/" },
   { lat: -33.4138, lon: -70.5978, name: "Zanzibar", content: "https://www.google.com/search?q=Zanzibar+Santiago+Menu" },
 
-  // Peñalolén (Consistorial / Paseo Quilín)
+  // Peñalolén (Consistorial / Quilín Mall)
   { lat: -33.4852, lon: -70.5562, name: "Mestizo Peñalolén", content: "https://www.google.com/search?q=Mestizo+Penalolen+Menu" },
   { lat: -33.4865, lon: -70.5575, name: "La Cabaña de Peñalolén", content: "https://www.google.com/search?q=La+Cabana+Penalolen+Menu" },
   { lat: -33.4841, lon: -70.5588, name: "Pizza Hut Quilín", content: "https://www.pizzahut.cl/" },
 
-  // San Miguel (Gran Avenida)
+  // San Miguel (Great Avenue)
   { lat: -33.4982, lon: -70.6515, name: "D'Alfredo Pizzería", content: "https://www.google.com/search?q=D+Alfredo+San+Miguel+Menu" },
   { lat: -33.4995, lon: -70.6528, name: "Bar de la Gran Avenida", content: "https://www.google.com/search?q=Bar+Gran+Avenida+Menu" },
 
-  // Macul (Av. Macul)
+  // Macul (Macul Ave.)
   { lat: -33.4825, lon: -70.6012, name: "La Picá de Macul", content: "https://www.google.com/search?q=La+Pica+de+Macul+Menu" },
   { lat: -33.4838, lon: -70.6025, name: "Sushi House Macul", content: "https://www.sushihouse.cl/" },
 
-  // Huechuraba (Ciudad Empresarial)
+  // Huechuraba (Business City)
   { lat: -33.3752, lon: -70.6125, name: "Starbucks Ciudad Empresarial", content: "https://www.starbucks.cl/menu/" },
   { lat: -33.3765, lon: -70.6138, name: "L'Incontro Ciudad Empresarial", content: "https://www.google.com/search?q=L+Incontro+Ciudad+Empresarial+Menu" },
 
@@ -287,32 +287,32 @@ const santiagoRestaurants = [
   { lat: -33.4512, lon: -70.6815, name: "El Palacio de la Chorrillana", content: "https://www.google.com/search?q=El+Palacio+de+la+Chorrillana+Menu" },
   { lat: -33.4525, lon: -70.6828, name: "San Camilo Estación Central", content: "https://www.sancamilo.cl/" },
 
-  // Recoleta (Patronato / La Vega)
+  // Recoleta (Patronato / La Vega Market)
   { lat: -33.4282, lon: -70.6485, name: "Don Gaviota", content: "https://www.dongaviota.cl/carta" },
   { lat: -33.4295, lon: -70.6498, name: "Café de la Vega", content: "https://www.google.com/search?q=Cafe+de+la+Vega+Menu" },
 
   // Independencia
   { lat: -33.4215, lon: -70.6582, name: "Hipódromo Chile Restaurante", content: "https://www.google.com/search?q=Hipodromo+Chile+Restaurante+Menu" },
 
-  // Lo Barnechea (La Dehesa)
+  // Lo Barnechea (The Dehesa)
   { lat: -33.3512, lon: -70.5185, name: "Rubaiyat La Dehesa", content: "https://www.google.com/search?q=Rubaiyat+La+Dehesa+Menu" },
   { lat: -33.3525, lon: -70.5198, name: "Tanta La Dehesa", content: "https://www.google.com/search?q=Tanta+La+Dehesa+Menu" },
 
   // Pudahuel (Enea)
   { lat: -33.4352, lon: -70.7815, name: "Hilton Garden Inn Restaurant", content: "https://www.google.com/search?q=Hilton+Garden+Inn+Pudahuel+Menu" },
 
-  // Cerrillos (Mall Plaza Oeste)
+  // Cerrillos (West Plaza Mall)
   { lat: -33.5152, lon: -70.7185, name: "P.F. Chang's Mall Plaza Oeste", content: "https://www.pfchangs.cl/menu" },
   { lat: -33.5165, lon: -70.7198, name: "Applebee's Mall Plaza Oeste", content: "https://www.google.com/search?q=Applebees+Mall+Plaza+Oeste+Menu" },
 
-  // Puente Alto (Plaza de Puente Alto)
+  // Puente Alto (Puente Alto Square)
   { lat: -33.6112, lon: -70.5752, name: "Dino's Puente Alto", content: "https://www.google.com/search?q=Dinos+Puente+Alto+Menu" },
   { lat: -33.6125, lon: -70.5765, name: "La Picá del Muertito", content: "https://www.google.com/search?q=La+Pica+del+Muertito+Puente+Alto+Menu" },
 
-  // Padre Hurtado / Peñaflor (Cercanías)
+  // Padre Hurtado / Peñaflor (Vicinity)
   { lat: -33.5712, lon: -70.8185, name: "Don de Juan", content: "https://www.google.com/search?q=Don+de+Juan+Menu" },
 
-  // San Bernardo (Plaza de San Bernardo)
+  // San Bernardo (San Bernardo Square)
   { lat: -33.5912, lon: -70.7015, name: "Club de la Unión San Bernardo", content: "https://www.google.com/search?q=Club+de+la+Union+San+Bernardo+Menu" },
   { lat: -33.5925, lon: -70.7028, name: "Pizzería Las 4 Estaciones", content: "https://www.google.com/search?q=Pizzeria+Las+4+Estaciones+San+Bernardo+Menu" },
 
@@ -323,7 +323,7 @@ const santiagoRestaurants = [
   { lat: -33.2812, lon: -70.6815, name: "Baco Chicureo", content: "https://www.google.com/search?q=Baco+Chicureo+Menu" },
   { lat: -33.2825, lon: -70.6828, name: "Starbucks Chicureo", content: "https://www.starbucks.cl/menu/" },
 
-  // Melipilla (Pomaire)
+  // Melipilla (Pomaire Village)
   { lat: -33.6512, lon: -71.1585, name: "San Antonio Pomaire", content: "https://www.google.com/search?q=San+Antonio+Pomaire+Menu" },
   { lat: -33.6525, lon: -71.1598, name: "Mi Tierra Pomaire", content: "https://www.google.com/search?q=Mi+Tierra+Pomaire+Menu" },
 
@@ -340,62 +340,62 @@ const santiagoRestaurants = [
   // Paine
   { lat: -33.8112, lon: -70.7415, name: "Sandía de Paine Restaurante", content: "https://www.google.com/search?q=Sandia+de+Paine+Restaurante+Menu" },
 
-  // San José de Maipo (Cajón del Maipo)
+  // San José de Maipo (Maipo Canyon)
   { lat: -33.6412, lon: -70.5815, name: "Casa Bosque", content: "https://www.google.com/search?q=Casa+Bosque+Cajon+del+Maipo+Menu" },
   { lat: -33.6812, lon: -70.3585, name: "El Morado Lodge Restaurant", content: "https://www.elmorado.cl/" },
   { lat: -33.6012, lon: -70.5285, name: "Prana Cajón del Maipo", content: "https://www.google.com/search?q=Prana+Cajon+del+Maipo+Menu" },
 
-  // Más Ñuñoa (Irarrázaval)
+  // More Ñuñoa (Irarrázaval)
   { lat: -33.4532, lon: -70.6125, name: "Golfo Di Napoli", content: "https://www.google.com/search?q=Golfo+Di+Napoli+Nunoa+Menu" },
   { lat: -33.4545, lon: -70.6138, name: "La Fuente Suiza", content: "https://www.lafuentesuiza.cl/carta/" },
 
-  // Más Providencia (Pedro de Valdivia)
+  // More Providencia (Pedro de Valdivia)
   { lat: -33.4352, lon: -70.6115, name: "Hamburgo", content: "https://www.google.com/search?q=Hamburgo+Providencia+Menu" },
   { lat: -33.4365, lon: -70.6128, name: "De la Ostia", content: "https://www.google.com/search?q=De+la+Ostia+Providencia+Menu" },
 
-  // Más Vitacura (Pueblo del Inglés)
+  // More Vitacura (Pueblo del Inglés)
   { lat: -33.3982, lon: -70.5715, name: "Fajita Express Pueblito", content: "https://www.fajitaexpress.cl/" },
 
-  // Más Las Condes (Apoquindo)
+  // More Las Condes (Apoquindo)
   { lat: -33.4112, lon: -70.5715, name: "Dominó Apoquindo", content: "https://www.domino.cl/carta/" },
   { lat: -33.4125, lon: -70.5728, name: "Juan Maestro Apoquindo", content: "https://www.juanmaestro.cl/menu" },
 
-  // Más Santiago Centro (Lastarria Extendido)
+  // More Santiago Centro (Extended Lastarria)
   { lat: -33.4392, lon: -70.6385, name: "Mulato", content: "https://www.google.com/search?q=Mulato+Lastarria+Menu" },
   { lat: -33.4405, lon: -70.6398, name: "Urriola", content: "https://www.google.com/search?q=Urriola+Lastarria+Menu" },
 
-  // Más Barrio Italia (Extendido)
+  // More Barrio Italia (Extended)
   { lat: -33.4502, lon: -70.6265, name: "Mamma Pizza", content: "https://www.google.com/search?q=Mamma+Pizza+Barrio+Italia+Menu" },
   { lat: -33.4515, lon: -70.6278, name: "Chipe Libre Barrio Italia", content: "https://www.google.com/search?q=Chipe+Libre+Barrio+Italia+Menu" },
 
-  // Más Maipú (Ciudad Satélite)
+  // More Maipú (Satellite City)
   { lat: -33.5512, lon: -70.8015, name: "Pizzería Ciudad Satélite", content: "https://www.google.com/search?q=Pizzeria+Ciudad+Satelite+Maipu+Menu" },
 
-  // Más La Florida (Walker Martínez)
+  // More La Florida (Walker Martínez)
   { lat: -33.5112, lon: -70.5815, name: "Los Buenos Muchachos La Florida", content: "https://www.losbuenosmuchachos.cl/carta/" },
 
-  // Más San Miguel (El Llano)
+  // More San Miguel (El Llano)
   { lat: -33.4882, lon: -70.6515, name: "Nippon Sushi San Miguel", content: "https://www.nipponsushi.cl/" },
 
-  // Más Macul (Quilín)
+  // More Macul (Quilín)
   { lat: -33.4912, lon: -70.5715, name: "Pedro, Juan y Diego Mall Quilín", content: "https://www.pjyd.cl/menu" },
 
-  // Más Peñalolén (Rotonda Grecia)
+  // More Peñalolén (Grecia Roundabout)
   { lat: -33.4612, lon: -70.5615, name: "Schopdog Rotonda Grecia", content: "https://www.google.com/search?q=Schopdog+Rotonda+Grecia+Menu" },
 
-  // Más Recoleta (Bellavista Norte)
+  // More Recoleta (North Bellavista)
   { lat: -33.4322, lon: -70.6365, name: "Santería", content: "https://www.google.com/search?q=Santeria+Bellavista+Menu" },
 
-  // Más Independencia (Mall Barrio Independencia)
+  // More Independencia (Barrio Independencia Mall)
   { lat: -33.4242, lon: -70.6615, name: "Tony Roma's Independencia", content: "https://www.google.com/search?q=Tony+Romas+Independencia+Menu" },
 
-  // Más Lo Barnechea (Portal La Dehesa)
+  // More Lo Barnechea (Portal La Dehesa)
   { lat: -33.3612, lon: -70.5115, name: "Cinnabon Portal La Dehesa", content: "https://www.cinnabon.cl/" },
 
-  // Más Pudahuel (Aeropuerto)
+  // More Pudahuel (Airport)
   { lat: -33.3912, lon: -70.7915, name: "Gatsby Aeropuerto", content: "https://www.google.com/search?q=Gatsby+Aeropuerto+Santiago+Menu" },
 
-  // Más Cerrillos (Ciudad Parque Bicentenario)
+  // More Cerrillos (Bicentennial City Park)
   { lat: -33.5012, lon: -70.7015, name: "Punto de Encuentro Cerrillos", content: "https://www.google.com/search?q=Punto+de+Encuentro+Cerrillos+Menu" }
 ];
 

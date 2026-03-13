@@ -8,6 +8,7 @@ let collection
 export async function initStorage() {
   const url = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017'
   const dbName = process.env.MONGO_DB || 'alacarte'
+  console.log(`Initializing MongoDB storage at: ${url} (DB: ${dbName})`);
   client = new MongoClient(url)
   await client.connect()
   db = client.db(dbName)

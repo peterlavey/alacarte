@@ -3,39 +3,41 @@ import axios from 'axios';
 const GOOGLE_PLACES_API_URL = 'https://maps.googleapis.com/maps/api/place';
 
 /**
- * Busca el restaurante más cercano usando Google Places API
- * @param {number} lat - Latitud
- * @param {number} lon - Longitud
- * @param {number} radius - Radio de búsqueda en metros (máximo 50000)
- * @returns {Promise<Object|null>} El lugar más cercano encontrado o null
+ * Finds the nearest restaurant using Google Places API
+ * @param {number} lat - Latitude
+ * @param {number} lon - Longitude
+ * @param {number} radius - Search radius in meters (max 50000)
+ * @returns {Promise<Object|null>} The nearest place found or null
  */
 export async function findNearbyRestaurant(lat, lon, radius = 50) {
   const apiKey = process.env.GOOGLE_MAPS_API_KEY;
   if (!apiKey) {
-    console.warn('GOOGLE_MAPS_API_KEY no está configurada. Saltando búsqueda en Google.');
+    console.warn('GOOGLE_MAPS_API_KEY is not configured. Skipping Google search.');
     return null;
   }
 
   try {
-    // 1. Nearby Search para encontrar lugares de tipo 'restaurant' o 'bar'
+    // 1. Nearby Search to find places of type 'restaurant' or 'bar'
     const response = await axios.get(`${GOOGLE_PLACES_API_URL}/nearbysearch/json`, {
       params: {
         location: `${lat},${lon}`,
         radius,
-        type: 'restaurant', // También podrías incluir 'bar' si es necesario
+        type: 'restaurant', // You could also include 'bar' if needed
         key: apiKey,
       },
     });
 
     const results = response.data.results;
     if (!results || results.length === 0) {
+      console.log(`Google Places API: No results found for [${lat}, ${lon}] with radius ${radius}m`);
       return null;
     }
 
-    // Tomamos el primero (que suele ser el más relevante/cercano según el ranking de Google)
+    console.log(`Google Places API: Found ${results.length} results for [${lat}, ${lon}]. Using the most relevant: "${results[0].name}"`);
+    // Take the first one (usually the most relevant/closest according to Google's ranking)
     const place = results[0];
     
-    // 2. Obtener detalles para tener el sitio web o la URL de Google Maps como fallback
+    // 2. Get details to have the website or Google Maps URL as fallback
     const detailsResponse = await axios.get(`${GOOGLE_PLACES_API_URL}/details/json`, {
       params: {
         place_id: place.place_id,
@@ -51,12 +53,12 @@ export async function findNearbyRestaurant(lat, lon, radius = 50) {
       name: details.name,
       lat: details.geometry.location.lat,
       lon: details.geometry.location.lng,
-      // Preferimos el sitio web (donde suele estar la carta), si no la URL de Google Maps
+      // We prefer the website (where the menu usually is), if not the Google Maps URL
       content: details.website || details.url,
       place_id: place.place_id
     };
   } catch (error) {
-    console.error('Error en Google Places API:', error.response?.data || error.message);
+    console.error('Error in Google Places API:', error.response?.data || error.message);
     return null;
   }
 }

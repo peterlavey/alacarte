@@ -4,6 +4,7 @@ import { getDistanceFromLatLonInMeters } from '../../utils/geo.js'
 const records = []
 
 export async function initStorage() {
+  console.log('Initializing In-Memory storage (volatile)');
   // nothing to init for memory
 }
 

@@ -8,9 +8,9 @@
     "lint": "eslint .",
     "format": "prettier -w .",
     "prepare": "husky",
-    "dev:server": "npm run dev --prefix server",
-    "dev:client": "npm run dev --prefix client",
-    "dev:local": "concurrently \"npm run dev:server\" \"npm run dev --prefix client -- --mode development\""
+    "dev:server": "npm run dev --prefix server --inspect",
+    "dev:client": "npm run dev --prefix client -- --mode development",
+    "dev:local": "concurrently \"npm run dev:server\" \"npm run dev --prefix client\""
   },
   "private": true,
   "type": "module",

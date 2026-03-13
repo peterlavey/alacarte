@@ -11,6 +11,7 @@ export async function initStorage() {
     throw new Error('SUPABASE_URL and SUPABASE_KEY are required when USE_DB=supabase')
   }
 
+  console.log(`Initializing Supabase storage at: ${url}`);
   supabase = createClient(url, key)
 }
 

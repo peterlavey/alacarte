@@ -8,12 +8,15 @@ let records = []
 
 export async function initStorage() {
   const currentFilePath = process.env.STORAGE_FILE_PATH || path.join(process.cwd(), 'database.json')
+  console.log(`Initializing JSON file storage at: ${currentFilePath}`);
   try {
     const data = await fs.readFile(currentFilePath, 'utf-8')
     records = JSON.parse(data)
+    console.log(`Loaded ${records.length} records from ${currentFilePath}`);
   } catch (error) {
     if (error.code === 'ENOENT') {
       // If the file doesn't exist, start with an empty array
+      console.log(`Storage file not found. Creating new one at: ${currentFilePath}`);
       records = []
       await saveToFile()
     } else {
