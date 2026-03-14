@@ -5,10 +5,11 @@ import { findNearbyRestaurant } from '../googlePlaces.js';
 vi.mock('axios');
 
 describe('googlePlaces.js - New Google Places API (v1)', () => {
-  const apiKey = 'AIzaSyCTHgZ-ugy6z_KR5wiepE43VBZoDoF3PD8';
+  const apiKey = 'fake-api-key';
   
   beforeEach(() => {
     vi.clearAllMocks();
+    process.env.GOOGLE_MAPS_API_KEY = apiKey;
   });
 
   it('should find a nearby restaurant using the new v1 API', async () => {
