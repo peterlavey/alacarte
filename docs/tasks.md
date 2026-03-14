@@ -202,3 +202,9 @@
     - [x] Implement automatic caching of Google results in local storage.
     - [x] Add integration tests for Google Places fallback.
     - [x] Add logs to verify Google API functionality.
+## Phase 16: Google Places API Upgrade
+- [x] **Migrate to New Google Places API (v1) (Plan: 16.1, Req: 9)**
+    - [x] Update `server/utils/googlePlaces.js` to use `https://places.googleapis.com/v1/places:searchNearby`.
+    - [x] Implement required field masking via `X-Goog-FieldMask` header.
+    - [x] Use POST method for nearby search.
+    - [x] Update unit and integration tests.

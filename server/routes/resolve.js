@@ -11,9 +11,8 @@ router.post('/resolve', async (req, res) => {
     return res.status(400).json({ error: 'lat and lon must be numbers' })
   }
 
-  const threshold = typeof thresholdMeters === 'number' ? thresholdMeters : 30 // default 30m
+  const threshold = typeof thresholdMeters === 'number' ? thresholdMeters : 100 // default 100m
   console.log(`Searching for nearest restaurant via Google Places: [${lat}, ${lon}] (threshold: ${threshold}m)`);
-  
   if (!process.env.GOOGLE_MAPS_API_KEY) {
     console.warn('GOOGLE_MAPS_API_KEY is not configured.');
     return res.status(500).json({ error: 'Search service not configured' });

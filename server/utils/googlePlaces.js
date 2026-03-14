@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const GOOGLE_PLACES_API_URL = 'https://maps.googleapis.com/maps/api/place';
+const GOOGLE_PLACES_API_URL = 'https://places.googleapis.com/v1/places:searchNearby';
 
 /**
- * Finds the nearest restaurant using Google Places API
+ * Finds the nearest restaurant using Google Places API (v1)
  * @param {number} lat - Latitude
  * @param {number} lon - Longitude
  * @param {number} radius - Search radius in meters (max 50000)
@@ -17,45 +17,43 @@ export async function findNearbyRestaurant(lat, lon, radius = 50) {
   }
 
   try {
-    // 1. Nearby Search to find places of type 'restaurant' or 'bar'
-    const response = await axios.get(`${GOOGLE_PLACES_API_URL}/nearbysearch/json`, {
-      params: {
-        type: 'restaurant, bar',
-        location: `${lat},${lon}`,
-        radius,
-        key: apiKey,
+    const response = await axios.post(
+      GOOGLE_PLACES_API_URL,
+      {
+        includedTypes: ['restaurant', 'bar'],
+        maxResultCount: 1,
+        locationRestriction: {
+          circle: {
+            center: { latitude: lat, longitude: lon },
+            radius: radius
+          }
+        }
       },
-    });
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Goog-Api-Key': apiKey,
+          'X-Goog-FieldMask': 'places.displayName,places.location,places.websiteUri,places.googleMapsUri,places.id'
+        }
+      }
+    );
 
-    const results = response.data.results;
-    if (!results || results.length === 0) {
+    const places = response.data.places;
+    if (!places || places.length === 0) {
       console.log(`Google Places API: No results found for [${lat}, ${lon}] with radius ${radius}m`);
       return null;
     }
 
-    console.log(`Google Places API: Found ${results.length} results for [${lat}, ${lon}]. Using the most relevant: "${results[0].name}"`);
-    // Take the first one (usually the most relevant/closest according to Google's ranking)
-    const place = results[0];
-    
-    // 2. Get details to have the website or Google Maps URL as fallback
-    const detailsResponse = await axios.get(`${GOOGLE_PLACES_API_URL}/details/json`, {
-      params: {
-        place_id: place.place_id,
-        fields: 'name,website,url,geometry',
-        key: apiKey,
-      },
-    });
-
-    const details = detailsResponse.data.result;
-    if (!details) return null;
+    const place = places[0];
+    console.log(`Google Places API: Found ${places.length} results for [${lat}, ${lon}]. Using the most relevant: "${place.displayName?.text}"`);
 
     return {
-      name: details.name,
-      lat: details.geometry.location.lat,
-      lon: details.geometry.location.lng,
-      // We prefer the website (where the menu usually is), if not the Google Maps URL
-      content: details.website || details.url,
-      place_id: place.place_id
+      name: place.displayName?.text,
+      lat: place.location?.latitude,
+      lon: place.location?.longitude,
+      // We prefer the websiteUri (where the menu usually is), if not the Google Maps URI
+      content: place.websiteUri || place.googleMapsUri,
+      place_id: place.id
     };
   } catch (error) {
     console.error('Error in Google Places API:', error.response?.data || error.message);

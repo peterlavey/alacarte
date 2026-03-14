@@ -11,7 +11,7 @@ The goal of this project is to develop a Geolocation-based Restaurant Menu Retri
 
 **Acceptance Criteria:**
 - **WHEN** the application loads, **THEN** it SHALL retrieve the user's geographic coordinates (latitude, longitude).
-- **WHEN** the coordinates are sent to the server, **THEN** the system SHALL consult the Google Places API to find the nearest restaurant or bar within a 30-meter radius.
+- **WHEN** the coordinates are sent to the server, **THEN** the system SHALL consult the New Google Places API (v1) to find the nearest restaurant or bar within a 30-meter radius.
 - **WHEN** a place is found within range, **THEN** the system SHALL return its website or Google Maps URL as content.
 - **WHEN** no place is found within range, **THEN** the system SHALL indicate that no restaurant or bar was found for this location.
 
@@ -22,7 +22,7 @@ The goal of this project is to develop a Geolocation-based Restaurant Menu Retri
 
 **Acceptance Criteria:**
 - **WHEN** a user enters coordinates (e.g., lat: 10, lon: 20) into a form, **THEN** the system SHALL allow submission to the API.
-- **WHEN** the manual data is submitted, **THEN** the system SHALL process it exactly as it would real geolocation data (searching Google Places).
+- **WHEN** the manual data is submitted, **THEN** the system SHALL process it exactly as it would real geolocation data (searching New Google Places API).
 
 
 
@@ -86,10 +86,10 @@ The goal of this project is to develop a Geolocation-based Restaurant Menu Retri
 - **WHEN** displaying text and targets, **THEN** it SHALL meet accessibility standards for contrast and tappable size.
 
 
-### 9. Google Places Integration
+### 9. New Google Places API (v1) Integration
 **User Story:**
-> As a user, I want the system to automatically find my current restaurant using Google's database, so that the app works "out of the box" in any established business.
+> As a user, I want the system to automatically find my current restaurant using Google's new API database, so that the app works "out of the box" in any established business.
 
 **Acceptance Criteria:**
-- **WHEN** the user's location is resolved, **THEN** the system SHALL consult the Google Places API.
-- **WHEN** a restaurant or bar is found via Google Places within the threshold, **THEN** the system SHALL return its website or Google Maps URL as content.
+- **WHEN** the user's location is resolved, **THEN** the system SHALL consult the New Google Places API (v1).
+- **WHEN** a restaurant or bar is found via the new API within the threshold, **THEN** the system SHALL return its website or Google Maps URL as content.

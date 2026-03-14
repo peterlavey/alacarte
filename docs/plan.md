@@ -10,12 +10,12 @@ This plan outlines the strategy to build the full-stack Geolocation Restaurant M
     - Configure shared tooling (linting, formatting).
     - *Relates to Requirements: All*
 
-## Phase 2: BFF Layer - Google Places Integration (Priority: High)
-**Goal:** Implement the Node.js backend to handle Google Places API queries.
+## Phase 2: BFF Layer - New Google Places API (v1) Integration (Priority: High)
+**Goal:** Implement the Node.js backend to handle New Google Places API (v1) queries.
 - **2.1 Server Initialization**
     - Setup Express.js server with necessary middleware (CORS, Body Parsing).
-- **2.2 Google Places Module**
-    - Implement the logic to query Google Places API for nearby restaurants/bars within a 30-meter radius.
+- **2.2 New Google Places API (v1) Module**
+    - Implement the logic to query New Google Places API (v1) for nearby restaurants/bars within a 30-meter radius.
 - **2.3 API Endpoints**
     - `POST /api/resolve`: For finding the nearest restaurant menu.
 
@@ -134,3 +134,10 @@ This plan outlines the strategy to build the full-stack Geolocation Restaurant M
 - **10.4 Accessibility & Mobile Optimization**
     - Ensure high contrast and large tappable targets for a mobile-first experience.
     - *Relates to Requirements: 13*
+
+## Phase 16: Google Places API Upgrade (Priority: High)
+**Goal:** Upgrade to the New Google Places API (v1).
+- **16.1 Migrate to New Google Places API (v1)**
+    - Update `server/utils/googlePlaces.js` to use the v1 REST API.
+    - Implement field masking and POST requests.
+    - *Relates to Requirements: 9*
