@@ -25,7 +25,7 @@ export async function findNearbyRestaurant(lat, lon, radius = 50) {
         locationRestriction: {
           circle: {
             center: { latitude: lat, longitude: lon },
-            radius: radius
+            radius: 1500
           }
         }
       },
