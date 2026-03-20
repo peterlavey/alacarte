@@ -33,6 +33,7 @@
     - Updated client `API_BASE` to use relative paths.
     - Fixed Netlify build configuration for monorepo structure (Base: client).
     - Added server dependencies to `client/package.json` and updated `package-lock.json` for Netlify Functions bundling.
+    - Moved Netlify Functions to `client/netlify/functions` to ensure they are within the build's base directory for proper dependency resolution.
     - *(Plan: 6.3, Req: 6)*
 - [x] **Change default threshold to 30m**
     - Update `server/routes/resolve.js` default to 30.
