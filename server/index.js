@@ -18,9 +18,11 @@ app.use(cors({
 app.use(bodyParser.json())
 app.use((req, res, next) => {
   const start = Date.now();
+  // Log request start for observability in serverless environments
+  console.log(`[REQ] ${req.method} ${req.url}`);
   res.on('finish', () => {
     const duration = Date.now() - start;
-    console.log(`${req.method} ${req.originalUrl} - ${res.statusCode} (${duration}ms)`);
+    console.log(`[RES] ${req.method} ${req.originalUrl} - ${res.statusCode} (${duration}ms)`);
   });
   next();
 });

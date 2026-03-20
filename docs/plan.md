@@ -141,3 +141,10 @@ This plan outlines the strategy to build the full-stack Geolocation Restaurant M
     - Update `server/utils/googlePlaces.js` to use the v1 REST API.
     - Implement field masking and POST requests.
     - *Relates to Requirements: 9*
+
+## Phase 17: Observability & Logging (Priority: Medium)
+**Goal:** Improve server-side observability in Netlify Functions.
+- **17.1 Fix Netlify Function Logging**
+    - Ensure standard output and error streams are correctly captured by Netlify.
+    - Add structured logging to the Express-to-Serverless wrapper.
+    - *Relates to Requirements: 6*

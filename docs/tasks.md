@@ -109,6 +109,9 @@
     - [x] Add "Open WhatsApp" button to execute the link and receive the real URL
     - [x] Clarify WhatsApp link request message (final browser URL)
     - [x] Add unit tests for the WhatsApp flow
+- [x] **Fix Netlify Function Logging (Plan: 17.1, Req: 6)**
+    - [x] Add explicit logging to `client/netlify/functions/api.js`.
+    - [x] Verify that Express middleware logging is correctly captured.
 - [x] **WhatsApp API Redirection Fix**
     - [x] Broaden WhatsApp URL detection to include redirection services (e.g., cheetrack)
     - [x] Improve URL validation to handle access restrictions (User-Agent, 403 status)
