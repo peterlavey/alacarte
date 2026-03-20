@@ -7,7 +7,7 @@
     "test": "echo \"Use workspace tests: client/server\"",
     "lint": "eslint .",
     "format": "prettier -w .",
-    "prepare": "is-ci || husky",
+    "prepare": "node -e \"if(!process.env.CI) { try { require('husky').install() } catch (e) { process.exit(0) } }\"",
     "dev:server": "npm run dev --prefix server --inspect",
     "dev:client": "npm run dev --prefix client -- --mode development",
     "dev:netlify": "netlify dev",
