@@ -224,6 +224,7 @@
     - [x] Add integration tests for Google Places fallback.
     - [x] Add logs to verify Google API functionality.
     - [x] Set logical radius for search (Santiago, Chile) and fix hardcoded radius.
+    - [x] Expand `includedTypes` to include categories like cafe, bakery, etc.
 ## Phase 17: Local Dev Convenience
 - [x] **Add script to point to Netlify API (Plan: 17.1, Req: 7)**
     - [x] Create `client/.env.netlify` with `VITE_API_BASE=/.netlify/functions/api`.

@@ -39,7 +39,20 @@ describe('googlePlaces.js - New Google Places API (v1)', () => {
     expect(axios.post).toHaveBeenCalledWith(
       'https://places.googleapis.com/v1/places:searchNearby',
       {
-        includedTypes: ['restaurant', 'bar'],
+        includedTypes: [
+          'restaurant',
+          'bar',
+          'cafe',
+          'bakery',
+          'meal_takeaway',
+          'meal_delivery',
+          'night_club',
+          'ice_cream_shop',
+          'coffee_shop',
+          'pub',
+          'brewery',
+          'winery'
+        ],
         maxResultCount: 1,
         locationRestriction: {
           circle: {
@@ -86,7 +99,20 @@ describe('googlePlaces.js - New Google Places API (v1)', () => {
     expect(axios.post).toHaveBeenCalledWith(
       'https://places.googleapis.com/v1/places:searchNearby',
       {
-        includedTypes: ['restaurant', 'bar'],
+        includedTypes: [
+          'restaurant',
+          'bar',
+          'cafe',
+          'bakery',
+          'meal_takeaway',
+          'meal_delivery',
+          'night_club',
+          'ice_cream_shop',
+          'coffee_shop',
+          'pub',
+          'brewery',
+          'winery'
+        ],
         maxResultCount: 1,
         locationRestriction: {
           circle: {

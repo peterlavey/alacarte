@@ -20,7 +20,20 @@ export async function findNearbyRestaurant(lat, lon, radius = 40) {
     const response = await axios.post(
       GOOGLE_PLACES_API_URL,
       {
-        includedTypes: ['restaurant', 'bar'],
+        includedTypes: [
+          'restaurant',
+          'bar',
+          'cafe',
+          'bakery',
+          'meal_takeaway',
+          'meal_delivery',
+          'night_club',
+          'ice_cream_shop',
+          'coffee_shop',
+          'pub',
+          'brewery',
+          'winery'
+        ],
         maxResultCount: 1,
         locationRestriction: {
           circle: {
