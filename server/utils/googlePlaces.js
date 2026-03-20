@@ -9,7 +9,7 @@ const GOOGLE_PLACES_API_URL = 'https://places.googleapis.com/v1/places:searchNea
  * @param {number} radius - Search radius in meters (max 50000)
  * @returns {Promise<Object|null>} The nearest place found or null
  */
-export async function findNearbyRestaurant(lat, lon, radius = 50) {
+export async function findNearbyRestaurant(lat, lon, radius = 40) {
   const apiKey = process.env.GOOGLE_MAPS_API_KEY;
   if (!apiKey) {
     console.warn('GOOGLE_MAPS_API_KEY is not configured. Skipping Google search.');
@@ -25,7 +25,7 @@ export async function findNearbyRestaurant(lat, lon, radius = 50) {
         locationRestriction: {
           circle: {
             center: { latitude: lat, longitude: lon },
-            radius: 1000
+            radius: radius
           }
         }
       },

@@ -15,7 +15,7 @@ describe('googlePlaces.js - New Google Places API (v1)', () => {
   it('should find a nearby restaurant using the new v1 API', async () => {
     const lat = -33.4189;
     const lon = -70.6033;
-    const radius = 50;
+    const radius = 40;
 
     const mockResponse = {
       data: {
@@ -81,9 +81,22 @@ describe('googlePlaces.js - New Google Places API (v1)', () => {
     };
 
     axios.post.mockResolvedValue(mockResponse);
-
     const result = await findNearbyRestaurant(0, 0);
 
+    expect(axios.post).toHaveBeenCalledWith(
+      'https://places.googleapis.com/v1/places:searchNearby',
+      {
+        includedTypes: ['restaurant', 'bar'],
+        maxResultCount: 1,
+        locationRestriction: {
+          circle: {
+            center: { latitude: 0, longitude: 0 },
+            radius: 40
+          }
+        }
+      },
+      expect.any(Object)
+    );
     expect(result.content).toBe('https://maps.google.com/?cid=123');
   });
 
