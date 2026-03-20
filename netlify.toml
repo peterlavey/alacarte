@@ -1,7 +1,7 @@
 [build]
-  publish = "client/dist"
-  command = "cd client && npm ci && npm run build"
-  functions = "netlify/functions"
+  publish = "dist"
+  command = "npm ci && npm run build"
+  functions = "../netlify/functions"
   node_version = "20"
 
 [functions]
@@ -22,7 +22,7 @@
 
 [dev]
   framework = "#custom"
-  command = "cd client && npm run dev:netlify"
+  command = "npm run dev:netlify"
   targetPort = 5173
   port = 8888
   autoLaunch = true

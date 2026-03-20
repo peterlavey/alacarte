@@ -31,6 +31,7 @@
     - Moved `netlify.toml` to root and configured proper API redirects.
     - Implemented `netlify/functions/api.js` to wrap the Express server.
     - Updated client `API_BASE` to use relative paths.
+    - Fixed Netlify build configuration for monorepo structure (Base: client).
     - *(Plan: 6.3, Req: 6)*
 - [x] **Change default threshold to 30m**
     - Update `server/routes/resolve.js` default to 30.
