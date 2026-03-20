@@ -32,7 +32,7 @@
     - Implemented `netlify/functions/api.js` to wrap the Express server.
     - Updated client `API_BASE` to use relative paths.
     - Fixed Netlify build configuration for monorepo structure (Base: client).
-    - Added server dependencies to `client/package.json` for Netlify Functions bundling.
+    - Added server dependencies to `client/package.json` and updated `package-lock.json` for Netlify Functions bundling.
     - *(Plan: 6.3, Req: 6)*
 - [x] **Change default threshold to 30m**
     - Update `server/routes/resolve.js` default to 30.
