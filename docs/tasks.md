@@ -32,8 +32,9 @@
     - Implemented `netlify/functions/api.js` to wrap the Express server.
     - Updated client `API_BASE` to use relative paths.
     - Fixed Netlify build configuration for monorepo structure (Base: client).
-    - Added server dependencies to `client/package.json` and updated `package-lock.json` for Netlify Functions bundling.
-    - Moved Netlify Functions to `client/netlify/functions` to ensure they are within the build's base directory for proper dependency resolution.
+    - Added server dependencies to root `package.json` using npm workspaces to fix Netlify Functions bundling issues.
+    - Updated `netlify.toml` with root-relative paths for `publish` and `functions`.
+    - Moved Netlify Functions to `client/netlify/functions` to ensure they are within the build's directory for proper dependency resolution.
     - *(Plan: 6.3, Req: 6)*
 - [x] **Change default threshold to 30m**
     - Update `server/routes/resolve.js` default to 30.

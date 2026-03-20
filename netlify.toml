@@ -1,7 +1,7 @@
 [build]
-  publish = "dist"
-  command = "npm ci && npm run build"
-  functions = "netlify/functions"
+  publish = "client/dist"
+  command = "npm ci && npm run build --workspace=alacarte-client"
+  functions = "client/netlify/functions"
   node_version = "20"
 
 [functions]
