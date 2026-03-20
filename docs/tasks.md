@@ -44,6 +44,7 @@
     - Adjusted `netlify.toml` paths (`publish`, `functions`) to match the `base: client` configuration to avoid redundant path segments.
     - Added server-side dependencies (`serverless-http`, `express`, etc.) to `server/package.json` to fix Netlify Functions bundling failures.
     - Removed server-side dependencies from `client/package.json` to maintain clean project structure.
+    - Synchronized `package-lock.json` with root and workspace `package.json` files to fix Netlify build `npm ci` failures.
     - *(Plan: 6.3, Req: 6)*
 - [x] **Change default threshold to 30m**
     - Update `server/routes/resolve.js` default to 30.
