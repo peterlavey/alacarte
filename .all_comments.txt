@@ -1,0 +1,654 @@
+server/tests/googleIntegration.test.js:    // Mocking Google Places response
+server/tests/googleIntegration.test.js:      content: 'https://test-restaurant.com',
+server/tests/googleIntegration.test.js:    expect(response.body.content).toBe('https://test-restaurant.com');
+server/tests/storage.test.js:// Ensure memory backend and avoid server listen side-effects
+server/tests/storage.test.js:    // Define mock inline to avoid referencing hoisted outer variables
+server/tests/validation.test.js:    expect(await validateUrl('https://google.com')).toBe(true)
+server/tests/validation.test.js:    expect(await validateUrl('https://google.com/404')).toBe(false)
+server/tests/validation.test.js:    expect(await validateUrl('https://slow-site.com')).toBe(false)
+server/tests/storage.memory.test.js:// Ensure we use the memory backend and avoid server listening under tests
+server/tests/storage.memory.test.js:    const result = await storage.findNearestRecord(qLat, qLon, 100) // 100m threshold
+server/tests/storage.memory.test.js:    const result = await storage.findNearestRecord(1, 1, 50) // ~157km away, threshold 50m
+server/tests/storage.memory.test.js:    // Record at 40.0, 70.0
+server/tests/storage.memory.test.js:    // Query just within the 0.01 margin (0.009 difference)
+server/tests/storage.memory.test.js:    const within = await storage.findNearestRecord(40.009, 70.009, 2000) // ~1.4km away, threshold 2000m
+server/tests/storage.memory.test.js:    // Query just outside the 0.01 margin (0.011 difference)
+server/tests/storage.memory.test.js:    // We want locations at specific distances: 20m, 15m, 32m, 13m
+server/tests/storage.memory.test.js:    // Roughly, 1 degree is 111,000 meters. 
+server/tests/storage.memory.test.js:    // 1 meter is approx 0.000009 degrees.
+server/tests/storage.memory.test.js:    // We can also check if the distance is roughly 13m
+server/tests/storage.jsonfile.test.js:  // Reset modules to ensure clean state and environment variable pickup
+server/tests/storage.jsonfile.test.js:    // Ignore if file doesn't exist
+server/tests/storage.jsonfile.test.js:    // Simulate restart by clearing in-memory records and re-initializing
+server/tests/storage.jsonfile.test.js:    await jsonfile.initStorage() // This should reload from the same file
+server/tests/santiago.test.js:    // Force use of our newly generated santiago file
+server/tests/santiago.test.js:    // Tiramisu coordinates: -33.4189, -70.6033
+server/tests/santiago.test.js:    expect(response.body.content).toBe('https://tiramisu.cl/nuestra-carta/');
+server/tests/santiago.test.js:    // Slightly offset from Tiramisu: -33.4189, -70.6033
+server/tests/santiago.test.js:    // Let's use -33.4188, -70.6032 (approx 15m away)
+server/tests/santiago.test.js:    expect(response.body.content).toBe('https://tiramisu.cl/nuestra-carta/');
+server/tests/santiago.test.js:    // Way off
+server/tests/routes.test.js:    // We need to mock validateUrl or the axios call within it.
+server/tests/routes.test.js:    // Since it's a integration test, we might want to mock axios globally if possible.
+server/tests/routes.test.js:    // However, validation.js already uses axios.
+server/tests/routes.test.js:    // For now, let's just use a URL that we know will fail if possible, 
+server/tests/routes.test.js:    // but better to mock it.
+server/tests/routes.test.js:    const payload = { lat: 10, lon: 20, content: 'https://invalid-url-that-fails.com' }
+server/tests/routes.test.js:    // Default threshold 30m likely finds one
+server/tests/routes.test.js:    // May be 404 if distance > 30m, so try with custom threshold too
+server/tests/storage.supabase.test.js:    process.env.SUPABASE_URL = 'http://localhost:54321'
+server/tests/storage.supabase.test.js:    // Mock supabase.js
+server/tests/geo.test.js:    expect(d).toBeLessThan(0.2) // < 20 cm
+server/index.js:// Ensure storage is initialized exactly once (works for server and serverless)
+server/index.js:// Middleware
+server/index.js:// API routes
+server/index.js:  // Avoid top-level await for CJS bundlers; initialize before starting server
+server/index.js:      console.log(`Server listening on http://localhost:${PORT}`)
+server/index.js:// Export utility for completeness (optional usage elsewhere)
+server/utils/googlePlaces.js:const GOOGLE_PLACES_API_URL = 'https://maps.googleapis.com/maps/api/place';
+server/utils/googlePlaces.js:    // 1. Nearby Search to find places of type 'restaurant' or 'bar'
+server/utils/googlePlaces.js:        type: 'restaurant', // You could also include 'bar' if needed
+server/utils/googlePlaces.js:    // Take the first one (usually the most relevant/closest according to Google's ranking)
+server/utils/googlePlaces.js:    // 2. Get details to have the website or Google Maps URL as fallback
+server/utils/googlePlaces.js:      // We prefer the website (where the menu usually is), if not the Google Maps URL
+server/utils/geo.js:// Calculate distance between two lat/lon points using the Haversine formula
+server/utils/geo.js:// Returns distance in meters
+server/utils/geo.js:  const R = 6371000 // meters
+server/utils/validation.js:    return true // Not a URL, nothing to validate here
+server/repositories/storage/memory.js:// In-memory storage backend
+server/repositories/storage/memory.js:  // nothing to init for memory
+server/repositories/storage/memory.js:  // nothing to close
+server/repositories/storage/memory.js:// Save a new record: { lat, lon, content, createdAt }
+server/repositories/storage/memory.js:// Return all stored records
+server/repositories/storage/memory.js:// Find the nearest record to the given lat/lon within threshold (meters)
+server/repositories/storage/memory.js:// Returns the record augmented with { distance } if found, else null
+server/repositories/storage/memory.js:  // Optimization: filter by the first two decimal places (approx 1.1km grid)
+server/repositories/storage/memory.js:  // We check the current grid and adjacent grids to be safe, 
+server/repositories/storage/memory.js:  // as the threshold could cross grid boundaries.
+server/repositories/storage/memory.js:  // 0.01 degree is ~1.1km, so checking the immediate neighbors 
+server/repositories/storage/memory.js:  // is plenty for a 30m-100m threshold.
+server/repositories/storage/memory.js:// For testing
+server/repositories/storage/mongo.js:  const url = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017'
+server/repositories/storage/mongo.js:  // Optimization: filter by the first two decimal places (~1.1km grid)
+server/repositories/storage/mongo.js:  // using a range query to keep it efficient at the DB level
+server/repositories/storage/index.js:// Storage facade selecting backend by environment variables
+server/repositories/storage/index.js:// USE_DB=memory (default) | mongo | supabase | jsonfile
+server/repositories/storage/index.js:  backendPromise = null // Force reload backend
+server/repositories/storage/supabase.js:  // Optimization: filter by the first two decimal places (~1.1km grid)
+server/repositories/storage/supabase.js:  // using range queries to keep it efficient at the DB level
+server/repositories/storage/jsonfile.js:// File-based storage backend using a JSON file
+server/repositories/storage/jsonfile.js:      // If the file doesn't exist, start with an empty array
+server/repositories/storage/jsonfile.js:// Save a new record: { lat, lon, content, createdAt }
+server/repositories/storage/jsonfile.js:// Return all stored records
+server/repositories/storage/jsonfile.js:// Find the nearest record to the given lat/lon within threshold (meters)
+server/repositories/storage/jsonfile.js:// Returns the record augmented with { distance } if found, else null
+server/repositories/storage/jsonfile.js:  // Optimization: filter by the first two decimal places (approx 1.1km grid)
+server/repositories/storage/jsonfile.js:  // We check the current grid and adjacent grids to be safe, 
+server/repositories/storage/jsonfile.js:  // as the threshold could cross grid boundaries.
+server/repositories/storage/jsonfile.js:  // 0.01 degree is ~1.1km, so checking the immediate neighbors 
+server/repositories/storage/jsonfile.js:  // is plenty for a 30m-100m threshold.
+server/repositories/storage/jsonfile.js:// For testing
+server/netlify/functions/api.js:  // Ensure storage is ready in serverless runtime without top-level await
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@ampproject/remapping/-/remapping-2.3.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@babel/helper-string-parser/-/helper-string-parser-7.27.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@babel/helper-validator-identifier/-/helper-validator-identifier-7.28.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@babel/parser/-/parser-7.28.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@babel/types/-/types-7.28.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@esbuild/aix-ppc64/-/aix-ppc64-0.21.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@esbuild/android-arm/-/android-arm-0.21.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@esbuild/android-arm64/-/android-arm64-0.21.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@esbuild/android-x64/-/android-x64-0.21.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@esbuild/darwin-arm64/-/darwin-arm64-0.21.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@esbuild/darwin-x64/-/darwin-x64-0.21.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@esbuild/freebsd-arm64/-/freebsd-arm64-0.21.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@esbuild/freebsd-x64/-/freebsd-x64-0.21.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@esbuild/linux-arm/-/linux-arm-0.21.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@esbuild/linux-arm64/-/linux-arm64-0.21.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@esbuild/linux-ia32/-/linux-ia32-0.21.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@esbuild/linux-loong64/-/linux-loong64-0.21.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@esbuild/linux-mips64el/-/linux-mips64el-0.21.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@esbuild/linux-ppc64/-/linux-ppc64-0.21.5.tgz",
+server/package-lock.json:      "integrity": "sha512-1hHV/Z4OEfMwpLO8rp7CvlhBDnjsC3CttJXIhBi+5Aj5r+MBvy4egg7wCbe//hSsT+RvDAG7s81tAvpL2XAE4w==",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@esbuild/linux-riscv64/-/linux-riscv64-0.21.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@esbuild/linux-s390x/-/linux-s390x-0.21.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-0.21.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@esbuild/netbsd-x64/-/netbsd-x64-0.21.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@esbuild/openbsd-x64/-/openbsd-x64-0.21.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@esbuild/sunos-x64/-/sunos-x64-0.21.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@esbuild/win32-arm64/-/win32-arm64-0.21.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@esbuild/win32-ia32/-/win32-ia32-0.21.5.tgz",
+server/package-lock.json:      "integrity": "sha512-SWXFF1CL2RVNMaVs+BBClwtfZSvDgtL//G/smwAc5oVK/UPu2Gu9tIaRgFmYFFKrmg3SyAjSrElf0TiJ1v8fYA==",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-0.21.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@isaacs/cliui/-/cliui-8.0.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@istanbuljs/schema/-/schema-0.1.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@jridgewell/gen-mapping/-/gen-mapping-0.3.13.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@jridgewell/resolve-uri/-/resolve-uri-3.1.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.5.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@jridgewell/trace-mapping/-/trace-mapping-0.3.31.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@mongodb-js/saslprep/-/saslprep-1.3.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@noble/hashes/-/hashes-1.8.0.tgz",
+server/package-lock.json:        "url": "https://paulmillr.com/funding/"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@paralleldrive/cuid2/-/cuid2-2.3.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@pkgjs/parseargs/-/parseargs-0.11.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@rollup/rollup-android-arm-eabi/-/rollup-android-arm-eabi-4.53.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@rollup/rollup-android-arm64/-/rollup-android-arm64-4.53.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@rollup/rollup-darwin-arm64/-/rollup-darwin-arm64-4.53.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@rollup/rollup-darwin-x64/-/rollup-darwin-x64-4.53.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@rollup/rollup-freebsd-arm64/-/rollup-freebsd-arm64-4.53.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@rollup/rollup-freebsd-x64/-/rollup-freebsd-x64-4.53.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-arm-gnueabihf/-/rollup-linux-arm-gnueabihf-4.53.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-arm-musleabihf/-/rollup-linux-arm-musleabihf-4.53.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-arm64-gnu/-/rollup-linux-arm64-gnu-4.53.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-arm64-musl/-/rollup-linux-arm64-musl-4.53.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-loong64-gnu/-/rollup-linux-loong64-gnu-4.53.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-ppc64-gnu/-/rollup-linux-ppc64-gnu-4.53.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-riscv64-gnu/-/rollup-linux-riscv64-gnu-4.53.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-riscv64-musl/-/rollup-linux-riscv64-musl-4.53.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-s390x-gnu/-/rollup-linux-s390x-gnu-4.53.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-x64-gnu/-/rollup-linux-x64-gnu-4.53.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-x64-musl/-/rollup-linux-x64-musl-4.53.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@rollup/rollup-openharmony-arm64/-/rollup-openharmony-arm64-4.53.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@rollup/rollup-win32-arm64-msvc/-/rollup-win32-arm64-msvc-4.53.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@rollup/rollup-win32-ia32-msvc/-/rollup-win32-ia32-msvc-4.53.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@rollup/rollup-win32-x64-gnu/-/rollup-win32-x64-gnu-4.53.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.53.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@supabase/auth-js/-/auth-js-2.97.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@supabase/functions-js/-/functions-js-2.97.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@supabase/postgrest-js/-/postgrest-js-2.97.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@supabase/realtime-js/-/realtime-js-2.97.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@supabase/storage-js/-/storage-js-2.97.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@supabase/supabase-js/-/supabase-js-2.97.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@types/estree/-/estree-1.0.8.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@types/node/-/node-25.3.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@types/phoenix/-/phoenix-1.6.7.tgz",
+server/package-lock.json:      "integrity": "sha512-oN9ive//QSBkf19rfDv45M7eZPi0eEXylht2OLEXicu5b4KoQ1OzXIw+xDSGWxSxe1JmepRR/ZH283vsu518/Q==",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@types/webidl-conversions/-/webidl-conversions-7.0.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@types/whatwg-url/-/whatwg-url-11.0.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@types/ws/-/ws-8.18.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@vitest/coverage-v8/-/coverage-v8-2.1.9.tgz",
+server/package-lock.json:        "url": "https://opencollective.com/vitest"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/debug/-/debug-4.4.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@vitest/expect/-/expect-2.1.9.tgz",
+server/package-lock.json:        "url": "https://opencollective.com/vitest"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@vitest/mocker/-/mocker-2.1.9.tgz",
+server/package-lock.json:        "url": "https://opencollective.com/vitest"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@vitest/pretty-format/-/pretty-format-2.1.9.tgz",
+server/package-lock.json:        "url": "https://opencollective.com/vitest"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@vitest/runner/-/runner-2.1.9.tgz",
+server/package-lock.json:        "url": "https://opencollective.com/vitest"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@vitest/snapshot/-/snapshot-2.1.9.tgz",
+server/package-lock.json:        "url": "https://opencollective.com/vitest"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@vitest/spy/-/spy-2.1.9.tgz",
+server/package-lock.json:        "url": "https://opencollective.com/vitest"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/@vitest/utils/-/utils-2.1.9.tgz",
+server/package-lock.json:        "url": "https://opencollective.com/vitest"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/accepts/-/accepts-1.3.8.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-6.2.2.tgz",
+server/package-lock.json:        "url": "https://github.com/chalk/ansi-regex?sponsor=1"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-6.2.3.tgz",
+server/package-lock.json:        "url": "https://github.com/chalk/ansi-styles?sponsor=1"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/anymatch/-/anymatch-3.1.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/array-flatten/-/array-flatten-1.1.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/asap/-/asap-2.0.6.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/assertion-error/-/assertion-error-2.0.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/asynckit/-/asynckit-0.4.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/axios/-/axios-1.13.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.3.0.tgz",
+server/package-lock.json:        "url": "https://github.com/sponsors/sindresorhus"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/body-parser/-/body-parser-1.20.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.12.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/braces/-/braces-3.0.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/bson/-/bson-6.10.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/bytes/-/bytes-3.1.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/cac/-/cac-6.7.14.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/call-bind-apply-helpers/-/call-bind-apply-helpers-1.0.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/call-bound/-/call-bound-1.0.4.tgz",
+server/package-lock.json:        "url": "https://github.com/sponsors/ljharb"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/chai/-/chai-5.3.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/check-error/-/check-error-2.1.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/chokidar/-/chokidar-3.6.0.tgz",
+server/package-lock.json:        "url": "https://paulmillr.com/funding/"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/color-convert/-/color-convert-2.0.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/color-name/-/color-name-1.1.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/combined-stream/-/combined-stream-1.0.8.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/component-emitter/-/component-emitter-1.3.1.tgz",
+server/package-lock.json:        "url": "https://github.com/sponsors/sindresorhus"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/content-disposition/-/content-disposition-0.5.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/content-type/-/content-type-1.0.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/cookie/-/cookie-0.7.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.0.7.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/cookiejar/-/cookiejar-2.1.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/cors/-/cors-2.8.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.6.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/deep-eql/-/deep-eql-5.0.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/delayed-stream/-/delayed-stream-1.0.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/depd/-/depd-2.0.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/destroy/-/destroy-1.2.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/dezalgo/-/dezalgo-1.0.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/dotenv/-/dotenv-16.6.1.tgz",
+server/package-lock.json:        "url": "https://dotenvx.com"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/dunder-proto/-/dunder-proto-1.0.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/eastasianwidth/-/eastasianwidth-0.2.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/ee-first/-/ee-first-1.1.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-9.2.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/encodeurl/-/encodeurl-2.0.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/es-define-property/-/es-define-property-1.0.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/es-errors/-/es-errors-1.3.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/es-module-lexer/-/es-module-lexer-1.7.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/es-object-atoms/-/es-object-atoms-1.1.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/es-set-tostringtag/-/es-set-tostringtag-2.1.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/esbuild/-/esbuild-0.21.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/escape-html/-/escape-html-1.0.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/estree-walker/-/estree-walker-3.0.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/etag/-/etag-1.8.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/expect-type/-/expect-type-1.3.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/express/-/express-4.22.1.tgz",
+server/package-lock.json:        "url": "https://opencollective.com/express"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/fast-safe-stringify/-/fast-safe-stringify-2.1.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/fill-range/-/fill-range-7.1.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/finalhandler/-/finalhandler-1.3.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.11.tgz",
+server/package-lock.json:          "url": "https://github.com/sponsors/RubenVerborgh"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/foreground-child/-/foreground-child-3.3.1.tgz",
+server/package-lock.json:        "url": "https://github.com/sponsors/isaacs"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/form-data/-/form-data-4.0.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/formidable/-/formidable-3.5.4.tgz",
+server/package-lock.json:        "url": "https://ko-fi.com/tunnckoCore/commissions"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/forwarded/-/forwarded-0.2.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/fresh/-/fresh-0.5.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz",
+server/package-lock.json:        "url": "https://github.com/sponsors/ljharb"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/get-intrinsic/-/get-intrinsic-1.3.0.tgz",
+server/package-lock.json:        "url": "https://github.com/sponsors/ljharb"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/get-proto/-/get-proto-1.0.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/glob/-/glob-10.5.0.tgz",
+server/package-lock.json:        "url": "https://github.com/sponsors/isaacs"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/glob-parent/-/glob-parent-5.1.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-2.0.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-9.0.5.tgz",
+server/package-lock.json:      "integrity": "sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==",
+server/package-lock.json:        "url": "https://github.com/sponsors/isaacs"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/gopd/-/gopd-1.2.0.tgz",
+server/package-lock.json:        "url": "https://github.com/sponsors/ljharb"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/has-flag/-/has-flag-3.0.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/has-symbols/-/has-symbols-1.1.0.tgz",
+server/package-lock.json:        "url": "https://github.com/sponsors/ljharb"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/has-tostringtag/-/has-tostringtag-1.0.2.tgz",
+server/package-lock.json:        "url": "https://github.com/sponsors/ljharb"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/hasown/-/hasown-2.0.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/html-escaper/-/html-escaper-2.0.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/http-errors/-/http-errors-2.0.1.tgz",
+server/package-lock.json:        "url": "https://opencollective.com/express"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/iceberg-js/-/iceberg-js-0.8.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.24.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/ignore-by-default/-/ignore-by-default-1.0.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/ipaddr.js/-/ipaddr.js-1.9.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/is-binary-path/-/is-binary-path-2.1.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/is-extglob/-/is-extglob-2.1.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/is-fullwidth-code-point/-/is-fullwidth-code-point-3.0.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/is-glob/-/is-glob-4.0.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/is-number/-/is-number-7.0.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/isexe/-/isexe-2.0.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/istanbul-lib-coverage/-/istanbul-lib-coverage-3.2.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/istanbul-lib-report/-/istanbul-lib-report-3.0.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/has-flag/-/has-flag-4.0.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/supports-color/-/supports-color-7.2.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/istanbul-lib-source-maps/-/istanbul-lib-source-maps-5.0.6.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/debug/-/debug-4.4.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/istanbul-reports/-/istanbul-reports-3.2.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/jackspeak/-/jackspeak-3.4.3.tgz",
+server/package-lock.json:        "url": "https://github.com/sponsors/isaacs"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/loupe/-/loupe-3.2.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/lru-cache/-/lru-cache-10.4.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/magic-string/-/magic-string-0.30.21.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/magicast/-/magicast-0.3.5.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/make-dir/-/make-dir-4.0.0.tgz",
+server/package-lock.json:      "integrity": "sha512-hXdUTZYIVOt1Ex//jAQi+wTZZpUpwBj/0QsOzqegb3rGMMeJiSEu5xLHnYfBrRV4RH2+OCSOO95Is/7x1WJ4bw==",
+server/package-lock.json:        "url": "https://github.com/sponsors/sindresorhus"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/math-intrinsics/-/math-intrinsics-1.1.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/media-typer/-/media-typer-0.3.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/memory-pager/-/memory-pager-1.5.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/merge-descriptors/-/merge-descriptors-1.0.3.tgz",
+server/package-lock.json:        "url": "https://github.com/sponsors/sindresorhus"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/methods/-/methods-1.1.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/mime/-/mime-1.6.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/mime-db/-/mime-db-1.52.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/mime-types/-/mime-types-2.1.35.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-3.1.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/minipass/-/minipass-7.1.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/mongodb/-/mongodb-6.21.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/mongodb-connection-string-url/-/mongodb-connection-string-url-3.0.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/nanoid/-/nanoid-3.3.11.tgz",
+server/package-lock.json:          "url": "https://github.com/sponsors/ai"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/negotiator/-/negotiator-0.6.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/nodemon/-/nodemon-3.1.11.tgz",
+server/package-lock.json:      "integrity": "sha512-is96t8F/1//UHAjNPHpbsNY46ELPpftGUoSVNXwUfMk/qdjSylYrWSu1XavVTBOn526kFiOR733ATgNBCQyH0g==",
+server/package-lock.json:        "url": "https://opencollective.com/nodemon"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/debug/-/debug-4.4.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/normalize-path/-/normalize-path-3.0.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/object-inspect/-/object-inspect-1.13.4.tgz",
+server/package-lock.json:        "url": "https://github.com/sponsors/ljharb"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/on-finished/-/on-finished-2.4.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/once/-/once-1.4.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/package-json-from-dist/-/package-json-from-dist-1.0.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/parseurl/-/parseurl-1.3.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/path-key/-/path-key-3.1.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/path-scurry/-/path-scurry-1.11.1.tgz",
+server/package-lock.json:        "url": "https://github.com/sponsors/isaacs"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/path-to-regexp/-/path-to-regexp-0.1.12.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/pathe/-/pathe-1.1.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/pathval/-/pathval-2.0.1.tgz",
+server/package-lock.json:      "integrity": "sha512-//nshmD55c46FuFw26xV/xFAaB5HF9Xdap7HJBBnrKdAd6/GxDBaNA1870O79+9ueg61cZLSVc+OaFlfmObYVQ==",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/picocolors/-/picocolors-1.1.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/picomatch/-/picomatch-2.3.1.tgz",
+server/package-lock.json:        "url": "https://github.com/sponsors/jonschlinkert"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/postcss/-/postcss-8.5.6.tgz",
+server/package-lock.json:          "url": "https://opencollective.com/postcss/"
+server/package-lock.json:          "url": "https://tidelift.com/funding/github/npm/postcss"
+server/package-lock.json:          "url": "https://github.com/sponsors/ai"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/proxy-addr/-/proxy-addr-2.0.7.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/proxy-from-env/-/proxy-from-env-1.1.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/pstree.remy/-/pstree.remy-1.1.8.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/qs/-/qs-6.14.0.tgz",
+server/package-lock.json:        "url": "https://github.com/sponsors/ljharb"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/range-parser/-/range-parser-1.2.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/raw-body/-/raw-body-2.5.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/readdirp/-/readdirp-3.6.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/rollup/-/rollup-4.53.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.2.1.tgz",
+server/package-lock.json:          "url": "https://github.com/sponsors/feross"
+server/package-lock.json:          "url": "https://www.patreon.com/feross"
+server/package-lock.json:          "url": "https://feross.org/support"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/semver/-/semver-7.7.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/send/-/send-0.19.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/http-errors/-/http-errors-2.0.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/statuses/-/statuses-2.0.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/serve-static/-/serve-static-1.16.2.tgz",
+server/package-lock.json:      "integrity": "sha512-VqpjJZKadQB/PEbEwvFdO43Ax5dFBZ2UECszz8bQ7pi7wt//PWe1P6MN7eCnjsatYtBT6EuiClbjSWP2WrIoTw==",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/http-errors/-/http-errors-2.0.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/send/-/send-0.19.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/encodeurl/-/encodeurl-1.0.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/statuses/-/statuses-2.0.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/serverless-http/-/serverless-http-3.2.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/setprototypeof/-/setprototypeof-1.2.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/shebang-command/-/shebang-command-2.0.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/shebang-regex/-/shebang-regex-3.0.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/side-channel/-/side-channel-1.1.0.tgz",
+server/package-lock.json:        "url": "https://github.com/sponsors/ljharb"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/side-channel-list/-/side-channel-list-1.0.0.tgz",
+server/package-lock.json:        "url": "https://github.com/sponsors/ljharb"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/side-channel-map/-/side-channel-map-1.0.1.tgz",
+server/package-lock.json:        "url": "https://github.com/sponsors/ljharb"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/side-channel-weakmap/-/side-channel-weakmap-1.0.2.tgz",
+server/package-lock.json:        "url": "https://github.com/sponsors/ljharb"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/siginfo/-/siginfo-2.0.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/signal-exit/-/signal-exit-4.1.0.tgz",
+server/package-lock.json:        "url": "https://github.com/sponsors/isaacs"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/simple-update-notifier/-/simple-update-notifier-2.0.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/source-map-js/-/source-map-js-1.2.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/sparse-bitfield/-/sparse-bitfield-3.0.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/stackback/-/stackback-0.0.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/statuses/-/statuses-2.0.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/std-env/-/std-env-3.10.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/string-width/-/string-width-5.1.2.tgz",
+server/package-lock.json:        "url": "https://github.com/sponsors/sindresorhus"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-7.1.2.tgz",
+server/package-lock.json:        "url": "https://github.com/chalk/strip-ansi?sponsor=1"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/superagent/-/superagent-10.2.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/debug/-/debug-4.4.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/mime/-/mime-2.6.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/supertest/-/supertest-7.1.4.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/supports-color/-/supports-color-5.5.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/test-exclude/-/test-exclude-7.0.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-2.0.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-9.0.5.tgz",
+server/package-lock.json:      "integrity": "sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==",
+server/package-lock.json:        "url": "https://github.com/sponsors/isaacs"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/tinybench/-/tinybench-2.9.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/tinyexec/-/tinyexec-0.3.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/tinypool/-/tinypool-1.1.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/tinyrainbow/-/tinyrainbow-1.2.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/tinyspy/-/tinyspy-3.0.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/to-regex-range/-/to-regex-range-5.0.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/toidentifier/-/toidentifier-1.0.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/touch/-/touch-3.1.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/tr46/-/tr46-5.1.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/tslib/-/tslib-2.8.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/type-is/-/type-is-1.6.18.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/undefsafe/-/undefsafe-2.0.5.tgz",
+server/package-lock.json:      "integrity": "sha512-WxONCrssBM8TSPRqN5EmsjVrsv4A8X12J4ArBiiayv3DyyG3ZlIg6yysuuSYdZsVz3TKcTg2fd//Ujd4CHV1iA==",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/undici-types/-/undici-types-7.18.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/unpipe/-/unpipe-1.0.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/utils-merge/-/utils-merge-1.0.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/vary/-/vary-1.1.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/vite/-/vite-5.4.21.tgz",
+server/package-lock.json:        "url": "https://github.com/vitejs/vite?sponsor=1"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/vite-node/-/vite-node-2.1.9.tgz",
+server/package-lock.json:        "url": "https://opencollective.com/vitest"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/debug/-/debug-4.4.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/vitest/-/vitest-2.1.9.tgz",
+server/package-lock.json:        "url": "https://opencollective.com/vitest"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/debug/-/debug-4.4.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/webidl-conversions/-/webidl-conversions-7.0.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/whatwg-url/-/whatwg-url-14.2.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/which/-/which-2.0.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/why-is-node-running/-/why-is-node-running-2.3.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-8.1.0.tgz",
+server/package-lock.json:        "url": "https://github.com/chalk/wrap-ansi?sponsor=1"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-7.0.0.tgz",
+server/package-lock.json:        "url": "https://github.com/chalk/wrap-ansi?sponsor=1"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-4.3.0.tgz",
+server/package-lock.json:        "url": "https://github.com/chalk/ansi-styles?sponsor=1"
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz",
+server/package-lock.json:      "resolved": "https://registry.npmjs.org/ws/-/ws-8.19.0.tgz",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Mercado+Central+Santiago+Menu",
+server/scripts/santiago_data.js:    content: "https://www.liguria.cl/cartas-en-pdf/",
+server/scripts/santiago_data.js:    content: "https://tiramisu.cl/nuestra-carta/",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Patio+Bellavista+Menus",
+server/scripts/santiago_data.js:    content: "https://www.borago.cl/",
+server/scripts/santiago_data.js:    content: "https://confiteriatorres.cl/carta/",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Baco+Vino+Bistro+Santiago+Menu",
+server/scripts/santiago_data.js:    content: "https://www.la-diana.cl/carta",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Galindo+Santiago+Menu",
+server/scripts/santiago_data.js:    content: "https://giratorio.cl/la-carta/",
+server/scripts/santiago_data.js:      content: "https://www.instagram.com/p/CoI-j8PuS4Z/",
+server/scripts/santiago_data.js:      content: "https://www.google.com/search?q=Barrio+Italia+Santiago+Menus",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Bocanariz+Lastarria+Menu",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Chipe+Libre+Lastarria+Menu",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Aqui+esta+Coco+Santiago+Menu",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Le+Bistrot+de+Gaetan+Menu",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Peluqueria+Francesa+Santiago+Menu",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Ocean+Pacifics+Santiago+Menu",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Sarita+Colonia+Santiago+Menu",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Rivoli+Providencia+Menu",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=La+Mar+Cebicheria+Santiago+Menu",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=The+Singular+Santiago+Bar+Menu",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Happening+Costanera+Menu",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Nolita+Isidora+Goyenechea+Menu",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Silvestre+Bistro+Santiago+Menu",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Da+Noi+Barrio+Italia+Menu",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Invernadero+Barrio+Italia+Menu",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Krossbar+Bellavista+Menu",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Krossbar+Orrego+Luco+Menu",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Uncle+Fletch+Bellavista+Menu",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Ambrosia+Bistro+Providencia+Menu",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Don+Victorio+Santiago+Centro+Menu",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=El+Hoyo+Santiago+Menu",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Las+Lanzas+Santiago+Menu",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Bar+Nacional+Santiago+Menu",
+server/scripts/santiago_data.js:    content: "https://www.google.com/search?q=Casino+Social+J+R+Menu",
+server/scripts/santiago_data.js:  // --- MASSIVE EXPANSION ---
+server/scripts/santiago_data.js:  // Ñuñoa (Ñuñoa Square)
+server/scripts/santiago_data.js:  { lat: -33.4542, lon: -70.5976, name: "La Tecla", content: "https://www.latecla.cl/carta" },
+server/scripts/santiago_data.js:  { lat: -33.4545, lon: -70.5982, name: "El Mesón del Buen Comer", content: "https://www.google.com/search?q=El+Meson+del+Buen+Comer+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4538, lon: -70.5968, name: "Bar de René (Ñuñoa)", content: "https://www.google.com/search?q=Bar+de+Rene+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4548, lon: -70.5971, name: "Las Lanzas Plaza Ñuñoa", content: "https://www.google.com/search?q=Las+Lanzas+Plaza+Nunoa+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4532, lon: -70.5985, name: "Underground Bar", content: "https://www.google.com/search?q=Underground+Bar+Nunoa+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4551, lon: -70.5979, name: "Hops", content: "https://www.google.com/search?q=Hops+Nunoa+Menu" },
+server/scripts/santiago_data.js:  // Maipú (Maipú Square / Pajaritos)
+server/scripts/santiago_data.js:  { lat: -33.5104, lon: -70.7572, name: "El Palacio del Choclo", content: "https://www.google.com/search?q=El+Palacio+del+Choclo+Maipu+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.5112, lon: -70.7585, name: "Fuente Maipú", content: "https://www.google.com/search?q=Fuente+Maipu+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.5095, lon: -70.7561, name: "Bar Central Maipú", content: "https://www.google.com/search?q=Bar+Central+Maipu+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.5125, lon: -70.7592, name: "Pizzería La Nostra", content: "https://www.google.com/search?q=Pizzeria+La+Nostra+Maipu+Menu" },
+server/scripts/santiago_data.js:  // La Florida (Vicente Valdés / Vespucio Square)
+server/scripts/santiago_data.js:  { lat: -33.5218, lon: -70.5982, name: "Johnny Rockets Mall Plaza Vespucio", content: "https://www.johnnyrockets.cl/nuestra-carta/" },
+server/scripts/santiago_data.js:  { lat: -33.5225, lon: -70.5975, name: "Tanta Plaza Vespucio", content: "https://www.google.com/search?q=Tanta+Plaza+Vespucio+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.5231, lon: -70.5991, name: "Schopdog La Florida", content: "https://www.google.com/search?q=Schopdog+La+Florida+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.5205, lon: -70.6012, name: "Mamut Restaurant", content: "https://www.mamut.cl/carta/" },
+server/scripts/santiago_data.js:  // Providencia (Manuel Montt / Tobalaba)
+server/scripts/santiago_data.js:  { lat: -33.4278, lon: -70.6205, name: "Liguria Manuel Montt", content: "https://www.liguria.cl/cartas-en-pdf/" },
+server/scripts/santiago_data.js:  { lat: -33.4285, lon: -70.6212, name: "Little Tokyo", content: "https://www.google.com/search?q=Little+Tokyo+Manuel+Montt+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4265, lon: -70.6191, name: "Bar de René", content: "https://www.google.com/search?q=Bar+de+Rene+Providencia+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4292, lon: -70.6218, name: "Rambla Bar", content: "https://www.google.com/search?q=Rambla+Bar+Providencia+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4185, lon: -70.6025, name: "Pizzería Tiramisu 2", content: "https://tiramisu.cl/nuestra-carta/" },
+server/scripts/santiago_data.js:  { lat: -33.4192, lon: -70.6011, name: "Kilómetro 0", content: "https://www.google.com/search?q=Kilometro+0+Santiago+Menu" },
+server/scripts/santiago_data.js:  // Santiago Centro (Ahumada Pedestrian Mall / Huérfanos)
+server/scripts/santiago_data.js:  { lat: -33.4395, lon: -70.6502, name: "El Rápido", content: "https://www.google.com/search?q=El+Rapido+Santiago+Centro+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4408, lon: -70.6485, name: "Bar Nacional 2", content: "https://www.google.com/search?q=Bar+Nacional+Huérfanos+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4382, lon: -70.6518, name: "Don Victorio Centro", content: "https://www.google.com/search?q=Don+Victorio+Centro+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4412, lon: -70.6472, name: "Naturista", content: "https://www.google.com/search?q=Restaurante+Naturista+Santiago+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4375, lon: -70.6525, name: "La Piojera", content: "https://www.google.com/search?q=La+Piojera+Menu" },
+server/scripts/santiago_data.js:  // Vitacura (Alonso de Córdova / Nueva Costanera)
+server/scripts/santiago_data.js:  { lat: -33.4012, lon: -70.5815, name: "Osaka", content: "https://大阪 Osaka Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4028, lon: -70.5822, name: "Coquinaria", content: "https://www.google.com/search?q=Coquinaria+Vitacura+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4035, lon: -70.5801, name: "Cuerovaca", content: "https://www.google.com/search?q=Cuerovaca+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4042, lon: -70.5795, name: "Miraolas", content: "https://www.google.com/search?q=Miraolas+Vitacura+Menu" },
+server/scripts/santiago_data.js:  // Las Condes (El Golf / Escuela Militar)
+server/scripts/santiago_data.js:  { lat: -33.4145, lon: -70.5962, name: "Flannery's Irish Geo", content: "https://www.google.com/search?q=Flannerys+Irish+Geo+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4152, lon: -70.5955, name: "Tavelli El Golf", content: "https://www.tavelli.cl/carta/" },
+server/scripts/santiago_data.js:  { lat: -33.4138, lon: -70.5978, name: "Zanzibar", content: "https://www.google.com/search?q=Zanzibar+Santiago+Menu" },
+server/scripts/santiago_data.js:  // Peñalolén (Consistorial / Quilín Mall)
+server/scripts/santiago_data.js:  { lat: -33.4852, lon: -70.5562, name: "Mestizo Peñalolén", content: "https://www.google.com/search?q=Mestizo+Penalolen+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4865, lon: -70.5575, name: "La Cabaña de Peñalolén", content: "https://www.google.com/search?q=La+Cabana+Penalolen+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4841, lon: -70.5588, name: "Pizza Hut Quilín", content: "https://www.pizzahut.cl/" },
+server/scripts/santiago_data.js:  // San Miguel (Great Avenue)
+server/scripts/santiago_data.js:  { lat: -33.4982, lon: -70.6515, name: "D'Alfredo Pizzería", content: "https://www.google.com/search?q=D+Alfredo+San+Miguel+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4995, lon: -70.6528, name: "Bar de la Gran Avenida", content: "https://www.google.com/search?q=Bar+Gran+Avenida+Menu" },
+server/scripts/santiago_data.js:  // Macul (Macul Ave.)
+server/scripts/santiago_data.js:  { lat: -33.4825, lon: -70.6012, name: "La Picá de Macul", content: "https://www.google.com/search?q=La+Pica+de+Macul+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4838, lon: -70.6025, name: "Sushi House Macul", content: "https://www.sushihouse.cl/" },
+server/scripts/santiago_data.js:  // Huechuraba (Business City)
+server/scripts/santiago_data.js:  { lat: -33.3752, lon: -70.6125, name: "Starbucks Ciudad Empresarial", content: "https://www.starbucks.cl/menu/" },
+server/scripts/santiago_data.js:  { lat: -33.3765, lon: -70.6138, name: "L'Incontro Ciudad Empresarial", content: "https://www.google.com/search?q=L+Incontro+Ciudad+Empresarial+Menu" },
+server/scripts/santiago_data.js:  // Quilicura (Lo Boza / San Ignacio)
+server/scripts/santiago_data.js:  { lat: -33.3452, lon: -70.7215, name: "Mcdonald's Quilicura", content: "https://www.mcdonalds.cl/menu" },
+server/scripts/santiago_data.js:  { lat: -33.3465, lon: -70.7228, name: "Dunkin' Quilicura", content: "https://www.dunkinchile.cl/menu" },
+server/scripts/santiago_data.js:  // Estación Central
+server/scripts/santiago_data.js:  { lat: -33.4512, lon: -70.6815, name: "El Palacio de la Chorrillana", content: "https://www.google.com/search?q=El+Palacio+de+la+Chorrillana+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4525, lon: -70.6828, name: "San Camilo Estación Central", content: "https://www.sancamilo.cl/" },
+server/scripts/santiago_data.js:  // Recoleta (Patronato / La Vega Market)
+server/scripts/santiago_data.js:  { lat: -33.4282, lon: -70.6485, name: "Don Gaviota", content: "https://www.dongaviota.cl/carta" },
+server/scripts/santiago_data.js:  { lat: -33.4295, lon: -70.6498, name: "Café de la Vega", content: "https://www.google.com/search?q=Cafe+de+la+Vega+Menu" },
+server/scripts/santiago_data.js:  // Independencia
+server/scripts/santiago_data.js:  { lat: -33.4215, lon: -70.6582, name: "Hipódromo Chile Restaurante", content: "https://www.google.com/search?q=Hipodromo+Chile+Restaurante+Menu" },
+server/scripts/santiago_data.js:  // Lo Barnechea (The Dehesa)
+server/scripts/santiago_data.js:  { lat: -33.3512, lon: -70.5185, name: "Rubaiyat La Dehesa", content: "https://www.google.com/search?q=Rubaiyat+La+Dehesa+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.3525, lon: -70.5198, name: "Tanta La Dehesa", content: "https://www.google.com/search?q=Tanta+La+Dehesa+Menu" },
+server/scripts/santiago_data.js:  // Pudahuel (Enea)
+server/scripts/santiago_data.js:  { lat: -33.4352, lon: -70.7815, name: "Hilton Garden Inn Restaurant", content: "https://www.google.com/search?q=Hilton+Garden+Inn+Pudahuel+Menu" },
+server/scripts/santiago_data.js:  // Cerrillos (West Plaza Mall)
+server/scripts/santiago_data.js:  { lat: -33.5152, lon: -70.7185, name: "P.F. Chang's Mall Plaza Oeste", content: "https://www.pfchangs.cl/menu" },
+server/scripts/santiago_data.js:  { lat: -33.5165, lon: -70.7198, name: "Applebee's Mall Plaza Oeste", content: "https://www.google.com/search?q=Applebees+Mall+Plaza+Oeste+Menu" },
+server/scripts/santiago_data.js:  // Puente Alto (Puente Alto Square)
+server/scripts/santiago_data.js:  { lat: -33.6112, lon: -70.5752, name: "Dino's Puente Alto", content: "https://www.google.com/search?q=Dinos+Puente+Alto+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.6125, lon: -70.5765, name: "La Picá del Muertito", content: "https://www.google.com/search?q=La+Pica+del+Muertito+Puente+Alto+Menu" },
+server/scripts/santiago_data.js:  // Padre Hurtado / Peñaflor (Vicinity)
+server/scripts/santiago_data.js:  { lat: -33.5712, lon: -70.8185, name: "Don de Juan", content: "https://www.google.com/search?q=Don+de+Juan+Menu" },
+server/scripts/santiago_data.js:  // San Bernardo (San Bernardo Square)
+server/scripts/santiago_data.js:  { lat: -33.5912, lon: -70.7015, name: "Club de la Unión San Bernardo", content: "https://www.google.com/search?q=Club+de+la+Union+San+Bernardo+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.5925, lon: -70.7028, name: "Pizzería Las 4 Estaciones", content: "https://www.google.com/search?q=Pizzeria+Las+4+Estaciones+San+Bernardo+Menu" },
+server/scripts/santiago_data.js:  // Lampa (Valle Grande)
+server/scripts/santiago_data.js:  { lat: -33.3012, lon: -70.7585, name: "Sabor a Campo", content: "https://www.google.com/search?q=Sabor+a+Campo+Lampa+Menu" },
+server/scripts/santiago_data.js:  // Colina (Chicureo)
+server/scripts/santiago_data.js:  { lat: -33.2812, lon: -70.6815, name: "Baco Chicureo", content: "https://www.google.com/search?q=Baco+Chicureo+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.2825, lon: -70.6828, name: "Starbucks Chicureo", content: "https://www.starbucks.cl/menu/" },
+server/scripts/santiago_data.js:  // Melipilla (Pomaire Village)
+server/scripts/santiago_data.js:  { lat: -33.6512, lon: -71.1585, name: "San Antonio Pomaire", content: "https://www.google.com/search?q=San+Antonio+Pomaire+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.6525, lon: -71.1598, name: "Mi Tierra Pomaire", content: "https://www.google.com/search?q=Mi+Tierra+Pomaire+Menu" },
+server/scripts/santiago_data.js:  // Pirque
+server/scripts/santiago_data.js:  { lat: -33.6312, lon: -70.5815, name: "Las Majadas de Pirque Restaurant", content: "https://www.lasmajadas.cl/restaurant/" },
+server/scripts/santiago_data.js:  { lat: -33.6325, lon: -70.5828, name: "Concha y Toro Wine Bar", content: "https://www.conchaytoro.com/wine-bar/" },
+server/scripts/santiago_data.js:  // Buin
+server/scripts/santiago_data.js:  { lat: -33.7312, lon: -70.7415, name: "Buin Zoo Restaurant", content: "https://www.buinzoo.cl/" },
+server/scripts/santiago_data.js:  // Talagante
+server/scripts/santiago_data.js:  { lat: -33.6612, lon: -70.9285, name: "Las Palmeras de Talagante", content: "https://www.google.com/search?q=Las+Palmeras+Talagante+Menu" },
+server/scripts/santiago_data.js:  // Paine
+server/scripts/santiago_data.js:  { lat: -33.8112, lon: -70.7415, name: "Sandía de Paine Restaurante", content: "https://www.google.com/search?q=Sandia+de+Paine+Restaurante+Menu" },
+server/scripts/santiago_data.js:  // San José de Maipo (Maipo Canyon)
+server/scripts/santiago_data.js:  { lat: -33.6412, lon: -70.5815, name: "Casa Bosque", content: "https://www.google.com/search?q=Casa+Bosque+Cajon+del+Maipo+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.6812, lon: -70.3585, name: "El Morado Lodge Restaurant", content: "https://www.elmorado.cl/" },
+server/scripts/santiago_data.js:  { lat: -33.6012, lon: -70.5285, name: "Prana Cajón del Maipo", content: "https://www.google.com/search?q=Prana+Cajon+del+Maipo+Menu" },
+server/scripts/santiago_data.js:  // More Ñuñoa (Irarrázaval)
+server/scripts/santiago_data.js:  { lat: -33.4532, lon: -70.6125, name: "Golfo Di Napoli", content: "https://www.google.com/search?q=Golfo+Di+Napoli+Nunoa+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4545, lon: -70.6138, name: "La Fuente Suiza", content: "https://www.lafuentesuiza.cl/carta/" },
+server/scripts/santiago_data.js:  // More Providencia (Pedro de Valdivia)
+server/scripts/santiago_data.js:  { lat: -33.4352, lon: -70.6115, name: "Hamburgo", content: "https://www.google.com/search?q=Hamburgo+Providencia+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4365, lon: -70.6128, name: "De la Ostia", content: "https://www.google.com/search?q=De+la+Ostia+Providencia+Menu" },
+server/scripts/santiago_data.js:  // More Vitacura (Pueblo del Inglés)
+server/scripts/santiago_data.js:  { lat: -33.3982, lon: -70.5715, name: "Fajita Express Pueblito", content: "https://www.fajitaexpress.cl/" },
+server/scripts/santiago_data.js:  // More Las Condes (Apoquindo)
+server/scripts/santiago_data.js:  { lat: -33.4112, lon: -70.5715, name: "Dominó Apoquindo", content: "https://www.domino.cl/carta/" },
+server/scripts/santiago_data.js:  { lat: -33.4125, lon: -70.5728, name: "Juan Maestro Apoquindo", content: "https://www.juanmaestro.cl/menu" },
+server/scripts/santiago_data.js:  // More Santiago Centro (Extended Lastarria)
+server/scripts/santiago_data.js:  { lat: -33.4392, lon: -70.6385, name: "Mulato", content: "https://www.google.com/search?q=Mulato+Lastarria+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4405, lon: -70.6398, name: "Urriola", content: "https://www.google.com/search?q=Urriola+Lastarria+Menu" },
+server/scripts/santiago_data.js:  // More Barrio Italia (Extended)
+server/scripts/santiago_data.js:  { lat: -33.4502, lon: -70.6265, name: "Mamma Pizza", content: "https://www.google.com/search?q=Mamma+Pizza+Barrio+Italia+Menu" },
+server/scripts/santiago_data.js:  { lat: -33.4515, lon: -70.6278, name: "Chipe Libre Barrio Italia", content: "https://www.google.com/search?q=Chipe+Libre+Barrio+Italia+Menu" },
+server/scripts/santiago_data.js:  // More Maipú (Satellite City)
+server/scripts/santiago_data.js:  { lat: -33.5512, lon: -70.8015, name: "Pizzería Ciudad Satélite", content: "https://www.google.com/search?q=Pizzeria+Ciudad+Satelite+Maipu+Menu" },
+server/scripts/santiago_data.js:  // More La Florida (Walker Martínez)
+server/scripts/santiago_data.js:  { lat: -33.5112, lon: -70.5815, name: "Los Buenos Muchachos La Florida", content: "https://www.losbuenosmuchachos.cl/carta/" },
+server/scripts/santiago_data.js:  // More San Miguel (El Llano)
+server/scripts/santiago_data.js:  { lat: -33.4882, lon: -70.6515, name: "Nippon Sushi San Miguel", content: "https://www.nipponsushi.cl/" },
+server/scripts/santiago_data.js:  // More Macul (Quilín)
+server/scripts/santiago_data.js:  { lat: -33.4912, lon: -70.5715, name: "Pedro, Juan y Diego Mall Quilín", content: "https://www.pjyd.cl/menu" },
+server/scripts/santiago_data.js:  // More Peñalolén (Grecia Roundabout)
+server/scripts/santiago_data.js:  { lat: -33.4612, lon: -70.5615, name: "Schopdog Rotonda Grecia", content: "https://www.google.com/search?q=Schopdog+Rotonda+Grecia+Menu" },
+server/scripts/santiago_data.js:  // More Recoleta (North Bellavista)
+server/scripts/santiago_data.js:  { lat: -33.4322, lon: -70.6365, name: "Santería", content: "https://www.google.com/search?q=Santeria+Bellavista+Menu" },
+server/scripts/santiago_data.js:  // More Independencia (Barrio Independencia Mall)
+server/scripts/santiago_data.js:  { lat: -33.4242, lon: -70.6615, name: "Tony Roma's Independencia", content: "https://www.google.com/search?q=Tony+Romas+Independencia+Menu" },
+server/scripts/santiago_data.js:  // More Lo Barnechea (Portal La Dehesa)
+server/scripts/santiago_data.js:  { lat: -33.3612, lon: -70.5115, name: "Cinnabon Portal La Dehesa", content: "https://www.cinnabon.cl/" },
+server/scripts/santiago_data.js:  // More Pudahuel (Airport)
+server/scripts/santiago_data.js:  { lat: -33.3912, lon: -70.7915, name: "Gatsby Aeropuerto", content: "https://www.google.com/search?q=Gatsby+Aeropuerto+Santiago+Menu" },
+server/scripts/santiago_data.js:  // More Cerrillos (Bicentennial City Park)
+server/scripts/santiago_data.js:  { lat: -33.5012, lon: -70.7015, name: "Punto de Encuentro Cerrillos", content: "https://www.google.com/search?q=Punto+de+Encuentro+Cerrillos+Menu" }
+server/routes/health.js:// GET /api/health
+server/routes/index.js:// Mount individual route modules under /api/* paths
+server/routes/register.js:// POST /api/register
+server/routes/register.js:  // Validate URL content before saving
+server/routes/resolve.js:// POST /api/resolve — finds nearest record within threshold and returns its content
+server/routes/resolve.js:  const threshold = typeof thresholdMeters === 'number' ? thresholdMeters : 30 // default 30m
+server/routes/resolve.js:  // Fallback: If no record in local DB, try Google Places API
+server/routes/resolve.js:      // Automatically register the found place in our DB for caching
+server/routes/history.js:// GET /api/history — return all records

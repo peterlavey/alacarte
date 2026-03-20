@@ -202,9 +202,8 @@
     - [x] Implement automatic caching of Google results in local storage.
     - [x] Add integration tests for Google Places fallback.
     - [x] Add logs to verify Google API functionality.
-## Phase 16: Google Places API Upgrade
-- [x] **Migrate to New Google Places API (v1) (Plan: 16.1, Req: 9)**
-    - [x] Update `server/utils/googlePlaces.js` to use `https://places.googleapis.com/v1/places:searchNearby`.
-    - [x] Implement required field masking via `X-Goog-FieldMask` header.
-    - [x] Use POST method for nearby search.
-    - [x] Update unit and integration tests.
+## Phase 17: Local Dev Convenience
+- [x] **Add script to point to Netlify API (Plan: 17.1, Req: 7)**
+    - [x] Create `client/.env.netlify` with `VITE_API_BASE=/.netlify/functions/api`.
+    - [x] Add `dev:netlify` script to root `package.json` and `client/package.json`.
+    - [x] Update `client/netlify.toml` to use `npm run dev:netlify`.

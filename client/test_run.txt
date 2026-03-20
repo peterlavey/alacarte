@@ -1,0 +1,2049 @@
+
+> alacarte-client@0.1.0 test
+> vitest run --run
+
+
+ RUN  v2.1.9 /Users/peter/Workspace/alacarte/client
+
+stderr | src/tests/integration.test.tsx > Integration Flows (Client + Server) > Flow 2: Unknown location + valid URL scan
+Resolve error: {
+  response: {
+    status: 404,
+    data: { error: 'No record found within threshold' },
+    headers: {}
+  },
+  isAxiosError: true,
+  config: {}
+}
+
+stderr | src/tests/integration.test.tsx > Integration Flows (Client + Server) > Flow 3: Unknown location + invalid Google Drive URL scan
+Resolve error: {
+  response: {
+    status: 404,
+    data: { error: 'No record found within threshold' },
+    headers: {}
+  },
+  isAxiosError: true,
+  config: {}
+}
+
+stderr | src/tests/integration.test.tsx > Integration Flows (Client + Server) > Flow 4: Unknown location + WhatsApp API flow
+Resolve error: {
+  response: {
+    status: 404,
+    data: { error: 'No record found within threshold' },
+    headers: {}
+  },
+  isAxiosError: true,
+  config: {}
+}
+
+ ❯ src/tests/integration.test.tsx (4 tests | 4 failed) 3037ms
+   × Integration Flows (Client + Server) > Flow 1: Happy path - redirect to previously saved URL 20ms
+     → Unable to find an element with the text: /Found Content/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_contentSection_da09e4"[39m
+      [36m>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mWelcome[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe've located your menu.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-bottom: 2.5rem;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"_urlContent_1f21c9"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"_urlText_1f21c9"[39m
+            [36m>[39m
+              [0mhttps://gour.media/krossbar/antofagasta[0m
+            [36m</span>[39m
+            [36m<a[39m
+              [33mclass[39m=[32m"btn"[39m
+              [33mhref[39m=[32m"https://gour.media/krossbar/antofagasta"[39m
+              [33mrel[39m=[32m"noopener noreferrer"[39m
+              [33mstyle[39m=[32m"text-decoration: none; display: inline-block;"[39m
+              [33mtarget[39m=[32m"_blank"[39m
+            [36m>[39m
+              [0mOpen Menu[0m
+            [36m</a>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<button[39m
+          [33mclass[39m=[32m"_secondaryButton_da09e4"[39m
+        [36m>[39m
+          [0mScan different QR[0m
+        [36m</button>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+   × Integration Flows (Client + Server) > Flow 2: Unknown location + valid URL scan 1004ms
+     → Unable to find an element with the text: /Menu not available/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+      [36m>[39m
+        [36m<img[39m
+          [33malt[39m=[32m"Not found"[39m
+          [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+          [33msrc[39m=[32m"/images/not found.jpeg"[39m
+        [36m/>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mDiscover Your Menu[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe couldn't locate a menu at this exact spot.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"_button_da09e4"[39m
+          [36m>[39m
+            [0mScan QR Code[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m"Not found"[39m
+            [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+            [33msrc[39m=[32m"/images/not found.jpeg"[39m
+          [36m/>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"_title_da09e4"[39m
+          [36m>[39m
+            [0mDiscover Your Menu[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+          [36m>[39m
+            [0mWe couldn't locate a menu at this exact spot.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"_button_da09e4"[39m
+            [36m>[39m
+              [0mScan QR Code[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+   × Integration Flows (Client + Server) > Flow 3: Unknown location + invalid Google Drive URL scan 1007ms
+     → Unable to find an element with the text: /Menu not available/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+      [36m>[39m
+        [36m<img[39m
+          [33malt[39m=[32m"Not found"[39m
+          [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+          [33msrc[39m=[32m"/images/not found.jpeg"[39m
+        [36m/>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mDiscover Your Menu[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe couldn't locate a menu at this exact spot.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"_button_da09e4"[39m
+          [36m>[39m
+            [0mScan QR Code[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m"Not found"[39m
+            [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+            [33msrc[39m=[32m"/images/not found.jpeg"[39m
+          [36m/>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"_title_da09e4"[39m
+          [36m>[39m
+            [0mDiscover Your Menu[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+          [36m>[39m
+            [0mWe couldn't locate a menu at this exact spot.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"_button_da09e4"[39m
+            [36m>[39m
+              [0mScan QR Code[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+   × Integration Flows (Client + Server) > Flow 4: Unknown location + WhatsApp API flow 1006ms
+     → Unable to find an element with the text: /Menu not available/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+      [36m>[39m
+        [36m<img[39m
+          [33malt[39m=[32m"Not found"[39m
+          [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+          [33msrc[39m=[32m"/images/not found.jpeg"[39m
+        [36m/>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mDiscover Your Menu[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe couldn't locate a menu at this exact spot.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"_button_da09e4"[39m
+          [36m>[39m
+            [0mScan QR Code[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m"Not found"[39m
+            [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+            [33msrc[39m=[32m"/images/not found.jpeg"[39m
+          [36m/>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"_title_da09e4"[39m
+          [36m>[39m
+            [0mDiscover Your Menu[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+          [36m>[39m
+            [0mWe couldn't locate a menu at this exact spot.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"_button_da09e4"[39m
+            [36m>[39m
+              [0mScan QR Code[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ src/pages/Home/__tests__/Home.test.tsx (9 tests | 8 failed) 35041ms
+   × Home Page > renders loading state initially and then calls resolve 3ms
+     → Unable to find an element with the text: /Found Content/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_contentSection_da09e4"[39m
+      [36m>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mWelcome[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe've located your menu.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-bottom: 2.5rem;"[39m
+        [36m>[39m
+          [36m<pre[39m
+            [33mclass[39m=[32m"_pre_1f21c9"[39m
+          [36m>[39m
+            [0msome content[0m
+          [36m</pre>[39m
+        [36m</div>[39m
+        [36m<button[39m
+          [33mclass[39m=[32m"_secondaryButton_da09e4"[39m
+        [36m>[39m
+          [0mScan different QR[0m
+        [36m</button>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+   × Home Page > shows unavailable message if no content is found at location 1004ms
+     → Unable to find an element with the text: /Menu not available/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+      [36m>[39m
+        [36m<img[39m
+          [33malt[39m=[32m"Not found"[39m
+          [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+          [33msrc[39m=[32m"/images/not found.jpeg"[39m
+        [36m/>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mDiscover Your Menu[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe couldn't locate a menu at this exact spot.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"_button_da09e4"[39m
+          [36m>[39m
+            [0mScan QR Code[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m"Not found"[39m
+            [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+            [33msrc[39m=[32m"/images/not found.jpeg"[39m
+          [36m/>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"_title_da09e4"[39m
+          [36m>[39m
+            [0mDiscover Your Menu[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+          [36m>[39m
+            [0mWe couldn't locate a menu at this exact spot.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"_button_da09e4"[39m
+            [36m>[39m
+              [0mScan QR Code[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+   × Home Page > calls register when a QR code is scanned 1005ms
+     → Unable to find an element with the text: /Menu not available/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+      [36m>[39m
+        [36m<img[39m
+          [33malt[39m=[32m"Not found"[39m
+          [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+          [33msrc[39m=[32m"/images/not found.jpeg"[39m
+        [36m/>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mDiscover Your Menu[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe couldn't locate a menu at this exact spot.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"_button_da09e4"[39m
+          [36m>[39m
+            [0mScan QR Code[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m"Not found"[39m
+            [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+            [33msrc[39m=[32m"/images/not found.jpeg"[39m
+          [36m/>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"_title_da09e4"[39m
+          [36m>[39m
+            [0mDiscover Your Menu[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+          [36m>[39m
+            [0mWe couldn't locate a menu at this exact spot.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"_button_da09e4"[39m
+            [36m>[39m
+              [0mScan QR Code[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+   × Home Page > shows Redirect failed if registration fails with validation error (422) 1005ms
+     → Unable to find an element with the text: /Menu not available/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+      [36m>[39m
+        [36m<img[39m
+          [33malt[39m=[32m"Not found"[39m
+          [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+          [33msrc[39m=[32m"/images/not found.jpeg"[39m
+        [36m/>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mDiscover Your Menu[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe couldn't locate a menu at this exact spot.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"_button_da09e4"[39m
+          [36m>[39m
+            [0mScan QR Code[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m"Not found"[39m
+            [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+            [33msrc[39m=[32m"/images/not found.jpeg"[39m
+          [36m/>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"_title_da09e4"[39m
+          [36m>[39m
+            [0mDiscover Your Menu[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+          [36m>[39m
+            [0mWe couldn't locate a menu at this exact spot.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"_button_da09e4"[39m
+            [36m>[39m
+              [0mScan QR Code[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+   × Home Page > shows unavailable message if registration fails 1004ms
+     → Unable to find an element with the text: /Menu not available/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+      [36m>[39m
+        [36m<img[39m
+          [33malt[39m=[32m"Not found"[39m
+          [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+          [33msrc[39m=[32m"/images/not found.jpeg"[39m
+        [36m/>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mDiscover Your Menu[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe couldn't locate a menu at this exact spot.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"_button_da09e4"[39m
+          [36m>[39m
+            [0mScan QR Code[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m"Not found"[39m
+            [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+            [33msrc[39m=[32m"/images/not found.jpeg"[39m
+          [36m/>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"_title_da09e4"[39m
+          [36m>[39m
+            [0mDiscover Your Menu[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+          [36m>[39m
+            [0mWe couldn't locate a menu at this exact spot.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"_button_da09e4"[39m
+            [36m>[39m
+              [0mScan QR Code[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+   × Home Page > redirects to URL in a new tab if content is a link (register) 15002ms
+     → Unable to find an element with the text: /Menu not available/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+      [36m>[39m
+        [36m<img[39m
+          [33malt[39m=[32m"Not found"[39m
+          [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+          [33msrc[39m=[32m"/images/not found.jpeg"[39m
+        [36m/>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mDiscover Your Menu[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe couldn't locate a menu at this exact spot.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"_button_da09e4"[39m
+          [36m>[39m
+            [0mScan QR Code[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m"Not found"[39m
+            [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+            [33msrc[39m=[32m"/images/not found.jpeg"[39m
+          [36m/>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"_title_da09e4"[39m
+          [36m>[39m
+            [0mDiscover Your Menu[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+          [36m>[39m
+            [0mWe couldn't locate a menu at this exact spot.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"_button_da09e4"[39m
+            [36m>[39m
+              [0mScan QR Code[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+   × Home Page > shows unavailable message if window.open returns null (popup blocked) 15005ms
+     → Unable to find an element with the text: /Redirect failed/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+      [36m>[39m
+        [36m<img[39m
+          [33malt[39m=[32m"Not found"[39m
+          [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+          [33msrc[39m=[32m"/images/not found.jpeg"[39m
+        [36m/>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mMenu Unavailable[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe found a link, but it seems unreachable at the moment.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_invalidUrl_da09e4"[39m
+        [36m>[39m
+          [36m<code>[39m
+            [0mhttps://example.com[0m
+          [36m</code>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"_button_da09e4"[39m
+          [36m>[39m
+            [0mScan QR Code[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m"Not found"[39m
+            [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+            [33msrc[39m=[32m"/images/not found.jpeg"[39m
+          [36m/>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"_title_da09e4"[39m
+          [36m>[39m
+            [0mMenu Unavailable[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+          [36m>[39m
+            [0mWe found a link, but it seems unreachable at the moment.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"_invalidUrl_da09e4"[39m
+          [36m>[39m
+            [36m<code>[39m
+              [0mhttps://example.com[0m
+            [36m</code>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"_button_da09e4"[39m
+            [36m>[39m
+              [0mScan QR Code[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+   × Home Page > shows unavailable message if registration fails with validation error 1005ms
+     → Unable to find an element with the text: /Menu not available/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+      [36m>[39m
+        [36m<img[39m
+          [33malt[39m=[32m"Not found"[39m
+          [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+          [33msrc[39m=[32m"/images/not found.jpeg"[39m
+        [36m/>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mDiscover Your Menu[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe couldn't locate a menu at this exact spot.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"_button_da09e4"[39m
+          [36m>[39m
+            [0mScan QR Code[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m"Not found"[39m
+            [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+            [33msrc[39m=[32m"/images/not found.jpeg"[39m
+          [36m/>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"_title_da09e4"[39m
+          [36m>[39m
+            [0mDiscover Your Menu[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+          [36m>[39m
+            [0mWe couldn't locate a menu at this exact spot.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"_button_da09e4"[39m
+            [36m>[39m
+              [0mScan QR Code[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+stderr | src/pages/WhatsAppLinkRequest/__tests__/WhatsAppLinkRequest.test.tsx > WhatsAppLinkRequest > shows error if URL registration fails with validation error
+Registration failed: Error: Validation failed
+    at /Users/peter/Workspace/alacarte/client/src/pages/WhatsAppLinkRequest/__tests__/WhatsAppLinkRequest.test.tsx:100:29
+    at file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:146:14
+    at file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:533:11
+    at runWithTimeout (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:39:7)
+    at runTest (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1056:17)
+    at runSuite (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1205:15)
+    at runSuite (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1205:15)
+    at runFiles (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1262:5)
+    at startTests (file:///Users/peter/Workspace/alacarte/client/node_modules/@vitest/runner/dist/index.js:1271:3)
+    at file:///Users/peter/Workspace/alacarte/client/node_modules/vitest/dist/chunks/runBaseTests.3qpJUEJM.js:126:11 {
+  response: { status: 422, data: { error: 'Validation failed' } },
+  isAxiosError: true
+}
+
+ ✓ src/pages/WhatsAppLinkRequest/__tests__/WhatsAppLinkRequest.test.tsx (5 tests) 21ms
+ ✓ src/pages/Debug/__tests__/Debug.test.tsx (4 tests) 145ms
+ ✓ src/components/JsonInput/__tests__/JsonInput.test.tsx (6 tests) 15ms
+ ✓ src/components/Scanner/__tests__/Scanner.test.tsx (5 tests) 3ms
+ ✓ src/api.test.js (3 tests) 0ms
+ ✓ src/hooks/__tests__/useNetworkStatus.test.ts (3 tests) 1ms
+ ✓ src/pages/Offline/__tests__/Offline.test.tsx (3 tests) 3ms
+ ✓ src/components/SplashScreen/__tests__/SplashScreen.test.tsx (3 tests) 2ms
+ ✓ src/components/Canvas/__tests__/Canvas.test.tsx (3 tests) 1ms
+ ✓ src/utils/__tests__/whatsapp.test.ts (4 tests) 1ms
+ ✓ src/components/__tests__/History.test.tsx (1 test) 0ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 12 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/tests/integration.test.tsx > Integration Flows (Client + Server) > Flow 1: Happy path - redirect to previously saved URL
+TestingLibraryElementError: Unable to find an element with the text: /Found Content/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_contentSection_da09e4"[39m
+      [36m>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mWelcome[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe've located your menu.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-bottom: 2.5rem;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"_urlContent_1f21c9"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"_urlText_1f21c9"[39m
+            [36m>[39m
+              [0mhttps://gour.media/krossbar/antofagasta[0m
+            [36m</span>[39m
+            [36m<a[39m
+              [33mclass[39m=[32m"btn"[39m
+              [33mhref[39m=[32m"https://gour.media/krossbar/antofagasta"[39m
+              [33mrel[39m=[32m"noopener noreferrer"[39m
+              [33mstyle[39m=[32m"text-decoration: none; display: inline-block;"[39m
+              [33mtarget[39m=[32m"_blank"[39m
+            [36m>[39m
+              [0mOpen Menu[0m
+            [36m</a>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<button[39m
+          [33mclass[39m=[32m"_secondaryButton_da09e4"[39m
+        [36m>[39m
+          [0mScan different QR[0m
+        [36m</button>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/tests/integration.test.tsx:260:19
+    258|     }, { timeout: 10000 })
+    259|     
+    260|     expect(screen.getByText(/Found Content/i)).toBeInTheDocument()
+       |                   ^
+    261|   })
+    262| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/12]⎯
+
+ FAIL  src/tests/integration.test.tsx > Integration Flows (Client + Server) > Flow 2: Unknown location + valid URL scan
+TestingLibraryElementError: Unable to find an element with the text: /Menu not available/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+      [36m>[39m
+        [36m<img[39m
+          [33malt[39m=[32m"Not found"[39m
+          [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+          [33msrc[39m=[32m"/images/not found.jpeg"[39m
+        [36m/>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mDiscover Your Menu[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe couldn't locate a menu at this exact spot.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"_button_da09e4"[39m
+          [36m>[39m
+            [0mScan QR Code[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m"Not found"[39m
+            [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+            [33msrc[39m=[32m"/images/not found.jpeg"[39m
+          [36m/>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"_title_da09e4"[39m
+          [36m>[39m
+            [0mDiscover Your Menu[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+          [36m>[39m
+            [0mWe couldn't locate a menu at this exact spot.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"_button_da09e4"[39m
+            [36m>[39m
+              [0mScan QR Code[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ Proxy.waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ src/tests/integration.test.tsx:275:11
+    273|     )
+    274| 
+    275|     await waitFor(() => expect(screen.getByText(/Menu not available/i)…
+       |           ^
+    276| 
+    277|     fireEvent.click(screen.getByText(/Scan QR code/i))
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/12]⎯
+
+ FAIL  src/tests/integration.test.tsx > Integration Flows (Client + Server) > Flow 3: Unknown location + invalid Google Drive URL scan
+TestingLibraryElementError: Unable to find an element with the text: /Menu not available/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+      [36m>[39m
+        [36m<img[39m
+          [33malt[39m=[32m"Not found"[39m
+          [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+          [33msrc[39m=[32m"/images/not found.jpeg"[39m
+        [36m/>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mDiscover Your Menu[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe couldn't locate a menu at this exact spot.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"_button_da09e4"[39m
+          [36m>[39m
+            [0mScan QR Code[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m"Not found"[39m
+            [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+            [33msrc[39m=[32m"/images/not found.jpeg"[39m
+          [36m/>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"_title_da09e4"[39m
+          [36m>[39m
+            [0mDiscover Your Menu[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+          [36m>[39m
+            [0mWe couldn't locate a menu at this exact spot.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"_button_da09e4"[39m
+            [36m>[39m
+              [0mScan QR Code[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ Proxy.waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ src/tests/integration.test.tsx:310:11
+    308|     )
+    309| 
+    310|     await waitFor(() => expect(screen.getByText(/Menu not available/i)…
+       |           ^
+    311| 
+    312|     fireEvent.click(screen.getByText(/Scan QR code/i))
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/12]⎯
+
+ FAIL  src/tests/integration.test.tsx > Integration Flows (Client + Server) > Flow 4: Unknown location + WhatsApp API flow
+TestingLibraryElementError: Unable to find an element with the text: /Menu not available/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+      [36m>[39m
+        [36m<img[39m
+          [33malt[39m=[32m"Not found"[39m
+          [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+          [33msrc[39m=[32m"/images/not found.jpeg"[39m
+        [36m/>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mDiscover Your Menu[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe couldn't locate a menu at this exact spot.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"_button_da09e4"[39m
+          [36m>[39m
+            [0mScan QR Code[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m"Not found"[39m
+            [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+            [33msrc[39m=[32m"/images/not found.jpeg"[39m
+          [36m/>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"_title_da09e4"[39m
+          [36m>[39m
+            [0mDiscover Your Menu[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+          [36m>[39m
+            [0mWe couldn't locate a menu at this exact spot.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"_button_da09e4"[39m
+            [36m>[39m
+              [0mScan QR Code[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ Proxy.waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ src/tests/integration.test.tsx:347:11
+    345|     )
+    346| 
+    347|     await waitFor(() => expect(screen.getByText(/Menu not available/i)…
+       |           ^
+    348| 
+    349|     fireEvent.click(screen.getByText(/Scan QR code/i))
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/12]⎯
+
+ FAIL  src/pages/Home/__tests__/Home.test.tsx > Home Page > renders loading state initially and then calls resolve
+TestingLibraryElementError: Unable to find an element with the text: /Found Content/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_contentSection_da09e4"[39m
+      [36m>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mWelcome[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe've located your menu.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-bottom: 2.5rem;"[39m
+        [36m>[39m
+          [36m<pre[39m
+            [33mclass[39m=[32m"_pre_1f21c9"[39m
+          [36m>[39m
+            [0msome content[0m
+          [36m</pre>[39m
+        [36m</div>[39m
+        [36m<button[39m
+          [33mclass[39m=[32m"_secondaryButton_da09e4"[39m
+        [36m>[39m
+          [0mScan different QR[0m
+        [36m</button>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/pages/Home/__tests__/Home.test.tsx:87:19
+     85|     })
+     86|     
+     87|     expect(screen.getByText(/Found Content/i)).toBeInTheDocument()
+       |                   ^
+     88|     expect(screen.getByText(/some content/i)).toBeInTheDocument()
+     89|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/12]⎯
+
+ FAIL  src/pages/Home/__tests__/Home.test.tsx > Home Page > shows unavailable message if no content is found at location
+TestingLibraryElementError: Unable to find an element with the text: /Menu not available/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+      [36m>[39m
+        [36m<img[39m
+          [33malt[39m=[32m"Not found"[39m
+          [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+          [33msrc[39m=[32m"/images/not found.jpeg"[39m
+        [36m/>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mDiscover Your Menu[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe couldn't locate a menu at this exact spot.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"_button_da09e4"[39m
+          [36m>[39m
+            [0mScan QR Code[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m"Not found"[39m
+            [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+            [33msrc[39m=[32m"/images/not found.jpeg"[39m
+          [36m/>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"_title_da09e4"[39m
+          [36m>[39m
+            [0mDiscover Your Menu[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+          [36m>[39m
+            [0mWe couldn't locate a menu at this exact spot.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"_button_da09e4"[39m
+            [36m>[39m
+              [0mScan QR Code[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ Proxy.waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ src/pages/Home/__tests__/Home.test.tsx:96:11
+     94|     render(<Home />)
+     95|     
+     96|     await waitFor(() => {
+       |           ^
+     97|       expect(screen.getByText(/Menu not available/i)).toBeInTheDocumen…
+     98|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/12]⎯
+
+ FAIL  src/pages/Home/__tests__/Home.test.tsx > Home Page > calls register when a QR code is scanned
+TestingLibraryElementError: Unable to find an element with the text: /Menu not available/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+      [36m>[39m
+        [36m<img[39m
+          [33malt[39m=[32m"Not found"[39m
+          [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+          [33msrc[39m=[32m"/images/not found.jpeg"[39m
+        [36m/>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mDiscover Your Menu[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe couldn't locate a menu at this exact spot.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"_button_da09e4"[39m
+          [36m>[39m
+            [0mScan QR Code[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m"Not found"[39m
+            [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+            [33msrc[39m=[32m"/images/not found.jpeg"[39m
+          [36m/>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"_title_da09e4"[39m
+          [36m>[39m
+            [0mDiscover Your Menu[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+          [36m>[39m
+            [0mWe couldn't locate a menu at this exact spot.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"_button_da09e4"[39m
+            [36m>[39m
+              [0mScan QR Code[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ Proxy.waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ src/pages/Home/__tests__/Home.test.tsx:114:11
+    112|     render(<Home />)
+    113|     
+    114|     await waitFor(() => {
+       |           ^
+    115|       expect(screen.getByText(/Menu not available/i)).toBeInTheDocumen…
+    116|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/12]⎯
+
+ FAIL  src/pages/Home/__tests__/Home.test.tsx > Home Page > shows Redirect failed if registration fails with validation error (422)
+TestingLibraryElementError: Unable to find an element with the text: /Menu not available/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+      [36m>[39m
+        [36m<img[39m
+          [33malt[39m=[32m"Not found"[39m
+          [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+          [33msrc[39m=[32m"/images/not found.jpeg"[39m
+        [36m/>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mDiscover Your Menu[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe couldn't locate a menu at this exact spot.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"_button_da09e4"[39m
+          [36m>[39m
+            [0mScan QR Code[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m"Not found"[39m
+            [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+            [33msrc[39m=[32m"/images/not found.jpeg"[39m
+          [36m/>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"_title_da09e4"[39m
+          [36m>[39m
+            [0mDiscover Your Menu[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+          [36m>[39m
+            [0mWe couldn't locate a menu at this exact spot.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"_button_da09e4"[39m
+            [36m>[39m
+              [0mScan QR Code[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ Proxy.waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ src/pages/Home/__tests__/Home.test.tsx:154:11
+    152|     render(<Home />)
+    153|     
+    154|     await waitFor(() => {
+       |           ^
+    155|       expect(screen.getByText(/Menu not available/i)).toBeInTheDocumen…
+    156|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/12]⎯
+
+ FAIL  src/pages/Home/__tests__/Home.test.tsx > Home Page > shows unavailable message if registration fails
+TestingLibraryElementError: Unable to find an element with the text: /Menu not available/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+      [36m>[39m
+        [36m<img[39m
+          [33malt[39m=[32m"Not found"[39m
+          [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+          [33msrc[39m=[32m"/images/not found.jpeg"[39m
+        [36m/>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mDiscover Your Menu[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe couldn't locate a menu at this exact spot.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"_button_da09e4"[39m
+          [36m>[39m
+            [0mScan QR Code[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m"Not found"[39m
+            [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+            [33msrc[39m=[32m"/images/not found.jpeg"[39m
+          [36m/>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"_title_da09e4"[39m
+          [36m>[39m
+            [0mDiscover Your Menu[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+          [36m>[39m
+            [0mWe couldn't locate a menu at this exact spot.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"_button_da09e4"[39m
+            [36m>[39m
+              [0mScan QR Code[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ Proxy.waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ src/pages/Home/__tests__/Home.test.tsx:186:11
+    184|     render(<Home />)
+    185|     
+    186|     await waitFor(() => {
+       |           ^
+    187|       expect(screen.getByText(/Menu not available/i)).toBeInTheDocumen…
+    188|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/12]⎯
+
+ FAIL  src/pages/Home/__tests__/Home.test.tsx > Home Page > redirects to URL in a new tab if content is a link (register)
+TestingLibraryElementError: Unable to find an element with the text: /Menu not available/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+      [36m>[39m
+        [36m<img[39m
+          [33malt[39m=[32m"Not found"[39m
+          [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+          [33msrc[39m=[32m"/images/not found.jpeg"[39m
+        [36m/>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mDiscover Your Menu[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe couldn't locate a menu at this exact spot.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"_button_da09e4"[39m
+          [36m>[39m
+            [0mScan QR Code[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m"Not found"[39m
+            [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+            [33msrc[39m=[32m"/images/not found.jpeg"[39m
+          [36m/>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"_title_da09e4"[39m
+          [36m>[39m
+            [0mDiscover Your Menu[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+          [36m>[39m
+            [0mWe couldn't locate a menu at this exact spot.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"_button_da09e4"[39m
+            [36m>[39m
+              [0mScan QR Code[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ Proxy.waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ src/pages/Home/__tests__/Home.test.tsx:228:13
+    226|       render(<Home />)
+    227| 
+    228|       await waitFor(() => {
+       |             ^
+    229|         expect(screen.getByText(/Menu not available/i)).toBeInTheDocum…
+    230|       }, { timeout: 15000 })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/12]⎯
+
+ FAIL  src/pages/Home/__tests__/Home.test.tsx > Home Page > shows unavailable message if window.open returns null (popup blocked)
+TestingLibraryElementError: Unable to find an element with the text: /Redirect failed/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+      [36m>[39m
+        [36m<img[39m
+          [33malt[39m=[32m"Not found"[39m
+          [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+          [33msrc[39m=[32m"/images/not found.jpeg"[39m
+        [36m/>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mMenu Unavailable[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe found a link, but it seems unreachable at the moment.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_invalidUrl_da09e4"[39m
+        [36m>[39m
+          [36m<code>[39m
+            [0mhttps://example.com[0m
+          [36m</code>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"_button_da09e4"[39m
+          [36m>[39m
+            [0mScan QR Code[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m"Not found"[39m
+            [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+            [33msrc[39m=[32m"/images/not found.jpeg"[39m
+          [36m/>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"_title_da09e4"[39m
+          [36m>[39m
+            [0mMenu Unavailable[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+          [36m>[39m
+            [0mWe found a link, but it seems unreachable at the moment.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"_invalidUrl_da09e4"[39m
+          [36m>[39m
+            [36m<code>[39m
+              [0mhttps://example.com[0m
+            [36m</code>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"_button_da09e4"[39m
+            [36m>[39m
+              [0mScan QR Code[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ Proxy.waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ src/pages/Home/__tests__/Home.test.tsx:256:13
+    254|       render(<Home />)
+    255| 
+    256|       await waitFor(() => {
+       |             ^
+    257|         expect(screen.getByText(/Redirect failed/i)).toBeInTheDocument…
+    258|       }, { timeout: 15000 })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/12]⎯
+
+ FAIL  src/pages/Home/__tests__/Home.test.tsx > Home Page > shows unavailable message if registration fails with validation error
+TestingLibraryElementError: Unable to find an element with the text: /Menu not available/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+      [36m>[39m
+        [36m<img[39m
+          [33malt[39m=[32m"Not found"[39m
+          [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+          [33msrc[39m=[32m"/images/not found.jpeg"[39m
+        [36m/>[39m
+        [36m<h1[39m
+          [33mclass[39m=[32m"_title_da09e4"[39m
+        [36m>[39m
+          [0mDiscover Your Menu[0m
+        [36m</h1>[39m
+        [36m<p[39m
+          [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+        [36m>[39m
+          [0mWe couldn't locate a menu at this exact spot.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"_button_da09e4"[39m
+          [36m>[39m
+            [0mScan QR Code[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_container_da09e4 fade-in"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_unavailableSection_da09e4"[39m
+        [36m>[39m
+          [36m<img[39m
+            [33malt[39m=[32m"Not found"[39m
+            [33mclass[39m=[32m"_notFoundImage_da09e4"[39m
+            [33msrc[39m=[32m"/images/not found.jpeg"[39m
+          [36m/>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"_title_da09e4"[39m
+          [36m>[39m
+            [0mDiscover Your Menu[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mstyle[39m=[32m"color: var(--muted-text); margin-bottom: 2rem;"[39m
+          [36m>[39m
+            [0mWe couldn't locate a menu at this exact spot.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mstyle[39m=[32m"margin-top: 2rem;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"_button_da09e4"[39m
+            [36m>[39m
+              [0mScan QR Code[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ Proxy.waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ src/pages/Home/__tests__/Home.test.tsx:285:13
+    283|       render(<Home />)
+    284|       
+    285|       await waitFor(() => {
+       |             ^
+    286|         expect(screen.getByText(/Menu not available/i)).toBeInTheDocum…
+    287|       })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/12]⎯
+
+ Test Files  2 failed | 11 passed (13)
+      Tests  12 failed | 41 passed (53)
+   Start at  16:13:55
+   Duration  38.70s (transform 115ms, setup 21ms, collect 214ms, tests 38.27s, environment 112ms, prepare 20ms)
+

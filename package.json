@@ -10,6 +10,7 @@
     "prepare": "husky",
     "dev:server": "npm run dev --prefix server --inspect",
     "dev:client": "npm run dev --prefix client -- --mode development",
+    "dev:netlify": "netlify dev",
     "dev:local": "concurrently \"npm run dev:server\" \"npm run dev --prefix client\""
   },
   "private": true,
