@@ -7,7 +7,7 @@
     "test": "echo \"Use workspace tests: client/server\"",
     "lint": "eslint .",
     "format": "prettier -w .",
-    "prepare": "husky",
+    "prepare": "is-ci || husky",
     "dev:server": "npm run dev --prefix server --inspect",
     "dev:client": "npm run dev --prefix client -- --mode development",
     "dev:netlify": "netlify dev",
@@ -40,6 +40,7 @@
     "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-react-hooks": "^5.0.0",
     "husky": "^9.1.7",
+    "is-ci": "^4.1.0",
     "prettier": "^3.3.3",
     "typescript-eslint": "^8.50.0"
   }

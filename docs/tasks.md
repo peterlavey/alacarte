@@ -35,6 +35,7 @@
     - Added server dependencies to root `package.json` using npm workspaces to fix Netlify Functions bundling issues.
     - Updated `netlify.toml` with root-relative paths for `publish` and `functions`.
     - Moved Netlify Functions to `client/netlify/functions` to ensure they are within the build's directory for proper dependency resolution.
+    - Added `is-ci` and updated `prepare` script to avoid husky installation failure in Netlify build.
     - *(Plan: 6.3, Req: 6)*
 - [x] **Change default threshold to 30m**
     - Update `server/routes/resolve.js` default to 30.
