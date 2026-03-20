@@ -27,8 +27,10 @@
 - [x] **Netlify Functions: Mongo backend support**
     - Add `mongodb` to root `package.json` and configure Functions bundler to externalize it.
     - *(Plan: 6.2, Req: 6)*
-- [x] **Secrets & Environment Setup on Netlify**
-    - Configure `VITE_API_BASE=/.netlify/functions/api` for client builds and DB env vars.
+- [x] **Fix Production API Connectivity (ERR_CONNECTION_REFUSED)**
+    - Moved `netlify.toml` to root and configured proper API redirects.
+    - Implemented `netlify/functions/api.js` to wrap the Express server.
+    - Updated client `API_BASE` to use relative paths.
     - *(Plan: 6.3, Req: 6)*
 - [x] **Change default threshold to 30m**
     - Update `server/routes/resolve.js` default to 30.
