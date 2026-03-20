@@ -36,6 +36,7 @@
     - Updated `netlify.toml` with root-relative paths for `publish` and `functions`.
     - Moved Netlify Functions to `client/netlify/functions` to ensure they are within the build's directory for proper dependency resolution.
     - Added a robust `prepare` script that checks `process.env.CI` to skip `husky` installation in Netlify build.
+    - Added `axios` to `client/package.json` to ensure Vite can resolve it during production build in the monorepo workspace.
     - *(Plan: 6.3, Req: 6)*
 - [x] **Change default threshold to 30m**
     - Update `server/routes/resolve.js` default to 30.
