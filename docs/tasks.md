@@ -27,6 +27,10 @@
 - [x] **Netlify Functions: Mongo backend support**
     - Add `mongodb` to root `package.json` and configure Functions bundler to externalize it.
     - *(Plan: 6.2, Req: 6)*
+- [x] **Fix git push failure due to missing commitlint**
+    - Installed `@commitlint/cli` and `@commitlint/config-conventional` in root `devDependencies`.
+    - Cleaned up root `package.json` by moving server dependencies to `devDependencies`.
+    - *(Plan: 7.6, Req: 7)*
 - [x] **Fix Production API Connectivity (ERR_CONNECTION_REFUSED)**
     - Moved `netlify.toml` to root and configured proper API redirects.
     - Implemented `netlify/functions/api.js` to wrap the Express server.
@@ -38,7 +42,8 @@
     - Added a robust `prepare` script that checks `process.env.CI` to skip `husky` installation in Netlify build.
     - Added `axios` to `client/package.json` to ensure Vite can resolve it during production build in the monorepo workspace.
     - Adjusted `netlify.toml` paths (`publish`, `functions`) to match the `base: client` configuration to avoid redundant path segments.
-    - Added server-side dependencies (`serverless-http`, `express`, etc.) to `client/package.json` to fix Netlify Functions bundling failures in the monorepo workspace.
+    - Added server-side dependencies (`serverless-http`, `express`, etc.) to `server/package.json` to fix Netlify Functions bundling failures.
+    - Removed server-side dependencies from `client/package.json` to maintain clean project structure.
     - *(Plan: 6.3, Req: 6)*
 - [x] **Change default threshold to 30m**
     - Update `server/routes/resolve.js` default to 30.
