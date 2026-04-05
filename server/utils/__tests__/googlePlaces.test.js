@@ -53,7 +53,7 @@ describe('googlePlaces.js - New Google Places API (v1)', () => {
           'brewery',
           'winery'
         ],
-        maxResultCount: 1,
+        maxResultCount: 6,
         locationRestriction: {
           circle: {
             center: { latitude: lat, longitude: lon },
@@ -65,18 +65,19 @@ describe('googlePlaces.js - New Google Places API (v1)', () => {
         headers: {
           'Content-Type': 'application/json',
           'X-Goog-Api-Key': apiKey,
-          'X-Goog-FieldMask': 'places.displayName,places.location,places.websiteUri,places.googleMapsUri,places.id'
+          'X-Goog-FieldMask': 'places.displayName,places.location,places.websiteUri,places.googleMapsUri,places.id,places.photos'
         }
       }
     );
 
-    expect(result).toEqual({
+    expect(result).toEqual([{
       name: 'Test Restaurant',
       lat: -33.41891,
       lon: -70.60331,
       content: 'https://test-restaurant.com',
-      place_id: 'ChIJNxW8_6P_YpYR4_17_zX_9_0'
-    });
+      place_id: 'ChIJNxW8_6P_YpYR4_17_zX_9_0',
+      photo_reference: undefined
+    }]);
   });
 
   it('should fallback to googleMapsUri if websiteUri is missing', async () => {
@@ -113,7 +114,7 @@ describe('googlePlaces.js - New Google Places API (v1)', () => {
           'brewery',
           'winery'
         ],
-        maxResultCount: 1,
+        maxResultCount: 6,
         locationRestriction: {
           circle: {
             center: { latitude: 0, longitude: 0 },
@@ -123,7 +124,7 @@ describe('googlePlaces.js - New Google Places API (v1)', () => {
       },
       expect.any(Object)
     );
-    expect(result.content).toBe('https://maps.google.com/?cid=123');
+    expect(result[0].content).toBe('https://maps.google.com/?cid=123');
   });
 
   it('should return null if no results found', async () => {

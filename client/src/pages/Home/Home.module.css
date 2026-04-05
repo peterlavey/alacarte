@@ -92,3 +92,66 @@
     transform: translateY(0);
   }
 }
+
+.candidateCard {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: var(--warm-beige);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.candidateLogo {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-sm);
+  border: 3px solid var(--white);
+}
+
+.candidateName {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--charcoal);
+  margin: 0;
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.candidateList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  text-align: left;
+}
+
+.candidateListItem {
+  padding: 1rem 1.5rem;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--charcoal);
+  transition: all 0.2s ease;
+  text-align: left;
+  display: block;
+  width: 100%;
+}
+
+.candidateListItem:hover {
+  background: var(--warm-beige);
+  border-color: var(--accent-color);
+  transform: translateX(4px);
+}

@@ -34,7 +34,7 @@ export async function findNearbyRestaurant(lat, lon, radius = 40) {
           'brewery',
           'winery'
         ],
-        maxResultCount: 1,
+        maxResultCount: 6,
         locationRestriction: {
           circle: {
             center: { latitude: lat, longitude: lon },
@@ -46,7 +46,7 @@ export async function findNearbyRestaurant(lat, lon, radius = 40) {
         headers: {
           'Content-Type': 'application/json',
           'X-Goog-Api-Key': apiKey,
-          'X-Goog-FieldMask': 'places.displayName,places.location,places.websiteUri,places.googleMapsUri,places.id'
+          'X-Goog-FieldMask': 'places.displayName,places.location,places.websiteUri,places.googleMapsUri,places.id,places.photos'
         }
       }
     );
@@ -57,17 +57,17 @@ export async function findNearbyRestaurant(lat, lon, radius = 40) {
       return null;
     }
 
-    const place = places[0];
-    console.log(`Google Places API: Found ${places.length} results for [${lat}, ${lon}]. Using the most relevant: "${place.displayName?.text}"`);
+    console.log(`Google Places API: Found ${places.length} results for [${lat}, ${lon}].`);
 
-    return {
+    return places.map(place => ({
       name: place.displayName?.text,
       lat: place.location?.latitude,
       lon: place.location?.longitude,
       // We prefer the websiteUri (where the menu usually is), if not the Google Maps URI
       content: place.websiteUri || place.googleMapsUri,
-      place_id: place.id
-    };
+      place_id: place.id,
+      photo_reference: place.photos?.[0]?.name // This is the resource name for the photo
+    }));
   } catch (error) {
     console.error('Error in Google Places API:', error.response?.data || error.message);
     return null;

@@ -18,15 +18,23 @@ router.post('/resolve', async (req, res) => {
     return res.status(500).json({ error: 'Search service not configured' });
   }
 
-  const googlePlace = await findNearbyRestaurant(lat, lon, threshold);
+  const googlePlaces = await findNearbyRestaurant(lat, lon, threshold);
   
-  if (!googlePlace) {
+  if (!googlePlaces || googlePlaces.length === 0) {
     console.log(`No restaurant found for [${lat}, ${lon}] within ${threshold}m`);
     return res.status(404).json({ error: 'No restaurant found within threshold' })
   }
 
-  console.log(`Found restaurant: "${googlePlace.name}" at [${googlePlace.lat}, ${googlePlace.lon}]`);
-  return res.json({ content: googlePlace.content, record: googlePlace })
+  const primaryPlace = googlePlaces[0];
+  console.log(`Found ${googlePlaces.length} restaurants. Primary: "${primaryPlace.name}" at [${primaryPlace.lat}, ${primaryPlace.lon}]`);
+  
+  const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+  const candidates = googlePlaces.map(p => ({
+    ...p,
+    photo_url: p.photo_reference ? `https://places.googleapis.com/v1/${p.photo_reference}/media?maxHeightPx=400&maxWidthPx=400&key=${apiKey}` : null
+  }));
+
+  return res.json({ content: primaryPlace.content, record: candidates[0], candidates })
 })
 
 export default router

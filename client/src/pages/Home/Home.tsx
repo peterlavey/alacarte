@@ -10,9 +10,17 @@ interface Coords {
   lon: number
 }
 
+interface Candidate {
+  name: string
+  content: string
+  photo_url?: string
+}
+
 export default function Home() {
   const [coords, setCoords] = useState<Coords | null>(null)
   const [content, setContent] = useState<unknown>(null)
+  const [candidates, setCandidates] = useState<Candidate[]>([])
+  const [showConfirmation, setShowConfirmation] = useState(false)
   const [loading, setLoading] = useState(true)
   const [splashVisible, setSplashVisible] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -48,32 +56,54 @@ export default function Home() {
     getLocation()
   }, [getLocation])
 
+  const handleCandidateSelection = useCallback((index: number) => {
+    const candidate = candidates[index]
+    if (!candidate) return
+
+    setContent(candidate.content)
+    setShowConfirmation(false)
+    setMenuUnavailable(false)
+    setErrorType(null)
+    setInvalidUrl(null)
+
+    if (candidate.content.startsWith('http')) {
+      const win = window.open('about:blank', '_blank')
+      if (!win) {
+        setInvalidUrl(candidate.content)
+        setErrorType('redirectFailed')
+        setMenuUnavailable(true)
+        return
+      }
+      if (win) win.close()
+      window.open(candidate.content, '_blank')
+    }
+  }, [candidates])
+
   useEffect(() => {
-    if (coords && !content) {
+    if (coords && !content && candidates.length === 0) {
       setLoading(true)
       resolve(coords)
-        .then(async (data: { content: string }) => {
-          if (data && data.content) {
-            const contentValue = data.content
-            setContent(contentValue)
+        .then(async (data: { content: string, candidates?: Candidate[] }) => {
+          if (data && data.candidates && data.candidates.length > 0) {
+            setCandidates(data.candidates)
+            setShowConfirmation(true)
+            setMenuUnavailable(false)
+            setErrorType(null)
+          } else if (data && data.content) {
+            setContent(data.content)
             setMenuUnavailable(false)
             setErrorType(null)
             setInvalidUrl(null)
-
-            // If content is a URL, open it in a new tab
-            if (contentValue.startsWith('http')) {
-              // Open window immediately to avoid popup blocker
+            if (data.content.startsWith('http')) {
               const win = window.open('about:blank', '_blank')
-
               if (!win) {
-                setInvalidUrl(contentValue)
+                setInvalidUrl(data.content)
                 setErrorType('redirectFailed')
                 setMenuUnavailable(true)
                 return
               }
-
               if (win) win.close()
-              window.open(contentValue, '_blank')
+              window.open(data.content, '_blank')
             }
           } else {
             setErrorType('notFound')
@@ -89,7 +119,7 @@ export default function Home() {
           setLoading(false)
         })
     }
-  }, [coords, content])
+  }, [coords, content, candidates.length])
 
   if (splashVisible) {
     return (
@@ -120,11 +150,17 @@ export default function Home() {
 
   return (
     <div className={`${styles.container} wood-background fade-in`}>
-      {content && !menuUnavailable ? (
+      {(content || candidates.length > 0) && !menuUnavailable ? (
         <ContentSection 
           content={content} 
+          candidates={candidates}
+          showConfirmation={showConfirmation}
+          onConfirm={handleCandidateSelection}
+          onReject={() => setShowConfirmation(false)}
           onScanAnother={() => { 
             setContent(null); 
+            setCandidates([]);
+            setShowConfirmation(false);
             getLocation();
           }} 
         />

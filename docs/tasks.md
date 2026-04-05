@@ -230,3 +230,13 @@
     - [x] Create `client/.env.netlify` with `VITE_API_BASE=/.netlify/functions/api`.
     - [x] Add `dev:netlify` script to root `package.json` and `client/package.json`.
     - [x] Update `client/netlify.toml` to use `npm run dev:netlify`.
+## Phase 18: Enhanced Restaurant Selection
+- [x] **Support Multi-Result Confirmation Flow (Plan: 18.1, Req: 17)**
+    - [x] Update Google Places search to return up to 6 results with photo references.
+    - [x] Update `/api/resolve` to return candidates with photo URLs.
+    - [x] Implement "Are you here?" confirmation UI for the first result.
+    - [x] Implement "Select Restaurant" list UI for alternative results.
+    - [x] Add selection and redirection logic in Home page.
+    - [x] Add styling for candidate cards and lists.
+    - [x] Update server-side tests for multi-result support.
+    - [x] Fix linter issues in Home page and ContentSection.
